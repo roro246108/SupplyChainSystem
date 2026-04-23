@@ -11,6 +11,8 @@ package supplychaintrackingsystem;
 public class SupplyChainTrackingSystem {
 
     public static void main(String[] args) {
+           DBConnection.connect();
+        
         Customer customer = new Customer(1, "Amina Hassan", "amina@example.com", "secret123",
                 "Customer", "12 Nile Street");
         Supplier supplier = new Supplier(2, "Delta Supplier", "supplier@example.com", "secret123",
