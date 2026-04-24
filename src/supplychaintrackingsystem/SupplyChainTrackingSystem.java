@@ -15,8 +15,8 @@ public class SupplyChainTrackingSystem {
         
         Customer customer = new Customer(1, "Amina Hassan", "amina@example.com", "secret123",
                 "Customer", "12 Nile Street");
-        Supplier supplier = new Supplier(2, "Delta Supplier", "supplier@example.com", "secret123",
-                "Supplier", 201234567);
+        Supplier supplier = new Supplier(2, "Delta Supplier", "supplier@example.com", "secret123",//nany
+                "Supplier", 2001, "Delta Supplier Co.", "201234567", "Alexandria");//nany
         Distributor distributor = new Distributor(3, "North Distributor", "dist@example.com", "secret123",
                 "Distributor", "Cairo Warehouse");
         Logistics logistics = new Logistics(4, "Logistics Team", "logistics@example.com", "secret123",
