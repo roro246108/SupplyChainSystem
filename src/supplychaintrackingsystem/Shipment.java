@@ -11,10 +11,15 @@ public class Shipment implements ShipmentSubject {
     private String currentLocation;
     private double weight;
     private double distance;
-    private double temperature;
-    private double humidity;
     private Date departureDate;
     private Date arrivalDate;
+    private Date scheduledDeliveryDate;//////////////////////
+    private Date deliveryRecordedDate;
+    private String receiverName;
+    private String deliveryLocation;//nany
+    private String deliveryStatus;
+    private String deliveryIssue;
+    private SensorData latestSensorData;//////////////////
     private String status;
     private ShippingStrategy shippingStrategy;
     private final List<ShipmentObserver> observers = new ArrayList<>();
@@ -22,7 +27,7 @@ public class Shipment implements ShipmentSubject {
     private Customer customer;
     private Supplier supplier;
     private Distributor distributor;
-    private Logistics logistics;
+    private Logistics logistics; //nany
     private Retailer retailer;
     private Manufacturer manufacturer;
 
@@ -58,14 +63,6 @@ public class Shipment implements ShipmentSubject {
         return distance;
     }
 
-    public double getTemperature() {
-        return temperature;
-    }
-
-    public double getHumidity() {
-        return humidity;
-    }
-
     public Date getDepartureDate() {
         return departureDate;
     }
@@ -74,8 +71,41 @@ public class Shipment implements ShipmentSubject {
         return arrivalDate;
     }
 
+    public Date getScheduledDeliveryDate() {///////nanyyyyyy
+        return scheduledDeliveryDate;
+    }
+
+    public Date getDeliveryRecordedDate() {
+        return deliveryRecordedDate;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public String getDeliveryLocation() {
+        return deliveryLocation;
+    }
+
+    public String getDeliveryStatus() {
+        return deliveryStatus;
+    }
+
+    public String getDeliveryIssue() {
+        return deliveryIssue;
+    }
+
+    public SensorData getLatestSensorData() {
+        return latestSensorData;
+    }
+    ////////////////////////////////nanyyyyyyyyyyyyyyyyyy
+    
     public String getStatus() {
         return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setStrategy(ShippingStrategy strategy) {
@@ -124,17 +154,55 @@ public class Shipment implements ShipmentSubject {
         notifyObservers("Shipment location updated to " + location);
     }
 
-    public void updateConditions(double temp, double humidity) {
-        this.temperature = temp;
-        this.humidity = humidity;
+    public void updateConditions(double temp, double humidity) {////////////////nany
+        this.latestSensorData = new SensorData(temp, humidity, currentLocation, new Date());
         notifyObservers("Shipment conditions updated");
-    }
+    }//nany
 
-    public void markAsDelivered() {
-        this.status = "DELIVERED";
+    public void updateConditions(SensorData sensorData) {//nany
+        this.latestSensorData = sensorData;
+        if (sensorData != null && sensorData.getLocation() != null) {
+            this.currentLocation = sensorData.getLocation();
+        }
+        notifyObservers("Shipment conditions updated");
+    }//////////nany
+
+    public void markAsDelivered() {//nany
+        this.status = "Delivered";
         this.arrivalDate = new Date();
+    }//nany
+
+    public void setScheduledDeliveryDate(Date scheduledDeliveryDate) {/////////////nany////////////////////////
+        this.scheduledDeliveryDate = scheduledDeliveryDate;
     }
 
+    public void setDeliveryRecordedDate(Date deliveryRecordedDate) {
+        this.deliveryRecordedDate = deliveryRecordedDate;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+
+    public void setDeliveryLocation(String deliveryLocation) {
+        this.deliveryLocation = deliveryLocation;
+    }
+
+    public void setDeliveryStatus(String deliveryStatus) {
+        this.deliveryStatus = deliveryStatus;
+    }
+
+    public void setDeliveryIssue(String deliveryIssue) {
+        this.deliveryIssue = deliveryIssue;
+    }
+
+    public void setLatestSensorData(SensorData latestSensorData) {
+        this.latestSensorData = latestSensorData;
+        if (latestSensorData != null) {
+            updateConditions(latestSensorData);
+        }
+    }
+/////////////////////////////////////////////////////////////////////////////////////nany
     public Date calculateETA() {
         return new Date();
     }
@@ -175,13 +243,13 @@ public class Shipment implements ShipmentSubject {
         this.distributor = distributor;
     }
 
-    public Logistics getLogistics() {
+    public Logistics getLogistics() {//////////////////nany
         return logistics;
-    }
+    }//nany
 
-    public void setLogistics(Logistics logistics) {
+    public void setLogistics(Logistics logistics) {//nany
         this.logistics = logistics;
-    }
+    }//nany
 
     public Retailer getRetailer() {
         return retailer;
@@ -218,8 +286,12 @@ public class Shipment implements ShipmentSubject {
         }
     }
 
-    @Override
+    @Override//////////////nany 
     public String toString() {
-        return "Shipment{" + "shipmentID=" + shipmentID + ", status='" + status + '\'' + '}';
-    }
+        return "Shipment{" + "shipmentID=" + shipmentID
+                + ", status='" + status + '\''
+                + ", deliveryStatus='" + deliveryStatus + '\''
+                + ", receiverName='" + receiverName + '\''
+                + '}';
+    }/////////nany
 }

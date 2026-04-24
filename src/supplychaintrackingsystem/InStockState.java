@@ -3,23 +3,37 @@ package supplychaintrackingsystem;
 public class InStockState implements InventoryState {
     @Override
     public void addStock(Inventory inventory, int quantity) {
+        if (quantity <= 0) {
+            System.out.println("Quantity must be positive.");
+            return;
+        }
+
         inventory.increaseQuantity(quantity);
+        updateStock(inventory);
+        System.out.println("Stock added. Inventory is still in stock.");
     }
 
     @Override
     public void updateStock(Inventory inventory) {
-        // No-op for this simple model.
+        if (inventory.getStockLevel() == 0) {
+            inventory.setState(new OutOfStockState());
+        } else if (inventory.getStockLevel() <= inventory.getReorderThreshold()) {
+            inventory.setState(new LowStockState());
+        } else {
+            inventory.setState(new InStockState());
+        }
     }
 
     @Override
     public boolean checkAvailability(Inventory inventory) {
-        return inventory.getQuantity() > 0;
+        return true;
     }
 
     @Override
     public void detectLowStock(Inventory inventory) {
-        if (inventory.getQuantity() <= inventory.getLowStockThreshold()) {
+        if (inventory.isBelowThreshold()) {
             inventory.setState(new LowStockState());
+            inventory.generateLowStockAlert();
         }
     }
 }
