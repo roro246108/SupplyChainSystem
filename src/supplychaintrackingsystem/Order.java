@@ -9,7 +9,7 @@ public class Order {
 
     private int orderID;
     private String status;
-    private int customerID;
+   
     private LocalDate orderDate;
     private double totalAmount;
     private LocalDate estimatedDelivery;
@@ -41,7 +41,7 @@ public class Order {
             REFUNDED
     );
 
-    public Order(int orderID, int customerID, List<Product> products) {
+    public Order(int orderID, Customer customer, List<Product> products) {
         if (orderID <= 0) {
             throw new IllegalArgumentException("Order ID must be positive.");
         }
@@ -55,7 +55,7 @@ public class Order {
         }
 
         this.orderID = orderID;
-        this.customerID = customerID;
+        this.customer = customer;
         this.orderDate = LocalDate.now();
         this.status = PENDING;
         this.estimatedDelivery = orderDate.plusDays(5);
@@ -67,6 +67,35 @@ public class Order {
         }
 
         this.totalAmount = calculateTotal();
+   
+    private String trackingNumber;//rawan
+    private OrderType orderType;
+   private Customer customer;// rawan
+ 
+    
+
+    public Order() {
+        this.orderDate = new Date();
+        this.status = "NEW";
+        this.orderType = OrderType.STANDARD;
+    }
+      
+   
+         //rawan
+    public Order(int orderID, int quantity, Date orderDate, String status, Date estimatedDelivery, String trackingNumber, OrderType orderType, Customer customer, Shipment shipment) {
+        this.orderID = orderID;
+        this.quantity = quantity;
+        this.orderDate = orderDate;
+        this.status = status;
+        this.estimatedDelivery = estimatedDelivery;
+        this.trackingNumber = trackingNumber;
+        this.orderType = orderType;
+        this.customer = customer;
+        this.shipment = shipment;
+    }
+   
+    
+   
     }
 
     public void addProduct(Product product) {
@@ -374,19 +403,38 @@ public class Order {
     public Shipment getShipment() {
         return shipment;
     }
+    
+    //assign shipement rawan
+    public void assignShipment(Shipment shipment) {
+    if (shipment == null) {
+        throw new IllegalArgumentException("Shipment is null");
+    }
+    this.shipment = shipment;
+}
+    // track order rawan 
+    public String trackOrder() {
+    if (shipment == null) {
+        return "Order not shipped yet";
+    }
+    return shipment.trackShipment(shipment.getShipmentID());
+}
+
 
     @Override
     public String toString() {
         return "Order{"
                 + "orderID=" + orderID
+                ", quantity=" + quantity +
                 + ", status='" + status + '\''
-                + ", customerID=" + customerID
+                + ", customerID=" + customer
                 + ", orderDate=" + orderDate
                 + ", totalAmount=" + totalAmount
                 + ", estimatedDelivery=" + estimatedDelivery
                 + ", paid=" + paid
                 + ", refunded=" + refunded
                 + ", products=" + products.size()
+                 ", trackingNumber='" + trackingNumber + '\'' +
+                ", orderType=" + orderType +
                 + '}';
     }
 }

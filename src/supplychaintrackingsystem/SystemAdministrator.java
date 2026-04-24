@@ -121,6 +121,10 @@ public class SystemAdministrator extends User {
         }
     }
 
+    public void sendNotification(String message) {//////////nany
+        receiveSystemAlert(message);
+    }/////////nany
+
     public void sendRequestToSupplier(int supplierID, String requestType) {
         Supplier supplier = findSupplierByID(supplierID);
 
