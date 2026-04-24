@@ -9,46 +9,119 @@ public class Regulator extends User {
     private String agencyName;
     private String accessLevel;
     private String auditRegion;
-    // Multiplicity: Regulator 1 -> * Manufacturer
     private final List<Manufacturer> manufacturers = new ArrayList<>();
 
-    public Regulator(int userID, String name, String email, String password, String role,
-                     int regulatorId, String agencyName, String accessLevel, String auditRegion) {
+    public Regulator(int regulatorId, String agencyName, String accessLevel, String auditRegion, int userID, String name, String email, String password, String role) {
         super(userID, name, email, password, role);
         this.regulatorId = regulatorId;
         this.agencyName = agencyName;
         this.accessLevel = accessLevel;
         this.auditRegion = auditRegion;
+        
     }
 
+    public int getRegulatorId() {
+        return regulatorId;
+    }
+
+    public String getAgencyName() {
+        return agencyName;
+    }
+
+    public String getAccessLevel() {
+        return accessLevel;
+    }
+
+    public String getAuditRegion() {
+        return auditRegion;
+    }
+
+    // audit rawan
+    
     public void auditSupplyChainActivity() {
-        System.out.println("Auditing supply chain activity in " + auditRegion);
-    }
 
-    public void viewTrackingRecords() {
-        System.out.println("Viewing tracking records.");
-    }
+        if (manufacturers.isEmpty()) {
+            System.out.println("No manufacturers assigned for audit.");
+            return;
+        }
 
+        System.out.println(
+            "Audit started by " + agencyName +
+            " in region " + auditRegion +
+            " for " + manufacturers.size() + " manufacturer(s)."
+        );
+    }
+    
+    //view rawan
+    
+   public void viewTrackingRecords(Order order) {
+
+        if (order == null) {
+            System.out.println("Order not found.");
+            return;
+        }
+
+        System.out.println("Order ID: " + order.getOrderID());
+        System.out.println("Status: " + order.getOrderStatus());
+        System.out.println("Tracking Number: " + order.getTrackingNumber());
+    }
+   
+   // review rawan
+   
     public void reviewStorageRecord(String productID) {
-        System.out.println("Reviewing storage record for product " + productID);
+
+        if (productID == null || productID.trim().isEmpty()) {
+            System.out.println("Invalid product ID.");
+            return;
+        }
+
+        System.out.println(
+            "Storage record reviewed for product " + productID +
+            " in region " + auditRegion
+        );
     }
 
-    public boolean verifyCompliance() {
-        return true;
-    }
+    // generate rawan
 
-    public void generateAuditReport() {
-        System.out.println("Audit report generated.");
+   public Report generateAuditReport() {
+
+        String details =
+            "Audit Report | Agency: " + agencyName +
+            " | Region: " + auditRegion +
+            " | Manufacturers: " + manufacturers.size();
+
+        return new Report(details);
     }
 
     public List<Manufacturer> getManufacturers() {
         return Collections.unmodifiableList(manufacturers);
     }
+    
+    // add manufacture rawan 
+public void addManufacturer(Manufacturer manufacturer) {
 
-    public void addManufacturer(Manufacturer manufacturer) {
-        if (manufacturer != null && !manufacturers.contains(manufacturer)) {
+        if (manufacturer == null) {
+            throw new IllegalArgumentException("Manufacturer is null");
+        }
+
+        if (!manufacturers.contains(manufacturer)) {
             manufacturers.add(manufacturer);
             manufacturer.setRegulator(this);
         }
     }
+// remove manfacture rawan
+public void removeManufacturer(Manufacturer manufacturer) {
+
+        if (manufacturer == null) {
+            return;
+        }
+
+        if (manufacturers.remove(manufacturer)) {
+            manufacturer.setRegulator(null);
+        }
+    }
+
+
+
+
 }
