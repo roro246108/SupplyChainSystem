@@ -6,6 +6,10 @@ import java.util.List;
 
 public class Supplier extends User implements ShipmentObserver {
     private int contactNumber;
+    
+    private boolean verified = false; //Fatma
+private final List<String> receivedRequests = new ArrayList<>();  //fatma
+
     private SystemAdministrator administrator;
     // Multiplicity: Supplier 1 -> * Shipment
     private final List<Shipment> shipments = new ArrayList<>();
@@ -16,6 +20,44 @@ public class Supplier extends User implements ShipmentObserver {
         super(userID, name, email, password, role);
         this.contactNumber = contactNumber;
     }
+    
+    //////////////////////////////////////////////////
+    //Fatma
+    
+        // Needed by SystemAdministrator
+    public int getSupplierID() {
+        return getUserID();
+    }
+
+    // Needed by SystemAdministrator
+    public boolean isVerified() {
+        return verified;
+    }
+
+    // Needed by SystemAdministrator
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+
+        if (verified) {
+            receiveNotification("Your supplier account has been verified.");
+        } else {
+            receiveNotification("Your supplier account verification has been removed.");
+        }
+    }
+
+    // Needed by SystemAdministrator
+    public void receiveRequest(String request) {
+        if (request == null || request.isBlank()) {
+            throw new IllegalArgumentException("Admin request cannot be empty.");
+        }
+
+        receivedRequests.add(request);
+        receiveNotification("New admin request received: " + request);
+    }
+    
+    ///////////////////////////////////////////////////////
+    
+    
 
     public Report generateSupplyReport() {
         return new Report("Supply Report for " + getName());

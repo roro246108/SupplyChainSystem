@@ -9,12 +9,48 @@ public class ProductionRecord {
     private final List<RawMaterial> materials = new ArrayList<>();
     private Product product;
     private String status;
+    
+       /////////////////////////////////
+  
+    //fatma
+    private int productID;
+    private String productName;
+    private double price;
+    private int quantity;
+    private boolean available;
+    
+    public String getProductName() {
+    return productName;
+    }
+    public int getQuantity() {
+    return quantity;
+    }
+    
+    public int getProductID() {
+    return productID;
+    }
+
+    public double getPrice() {
+    return price;
+    }
+
+    public boolean isAvailable() {
+    return available && quantity > 0;
+} 
+
+    /////////////////////////////////////////////////////////////
+    
+    
 
     public ProductionRecord() {
     }
 
     public ProductionRecord(int batchID) {
         this.batchID = batchID;
+    }
+
+    public ProductionRecord(String status) {
+        this.status = status;
     }
 
     public void assignToProduction(int batchID) {
@@ -53,5 +89,9 @@ public class ProductionRecord {
         if (material != null) {
             materials.add(material);
         }
+    }
+
+    public String getStatus() {
+        return status;
     }
 }
