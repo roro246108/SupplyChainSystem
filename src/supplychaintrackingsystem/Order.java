@@ -11,24 +11,44 @@ public class Order implements OrderReadOnly {
     private int quantity;
     private Date orderDate;
     private String status;
-    private int customerID;
     private Date estimatedDelivery;
-    private String trackingNumber;
+    private String trackingNumber;//rawan
     private OrderType orderType;
+   private Customer customer;// rawan
+ private Shipment shipment; //rawan
+    
 
     public Order() {
         this.orderDate = new Date();
         this.status = "NEW";
         this.orderType = OrderType.STANDARD;
     }
+      
+    //rawan 
+    public Order(int orderID, Customer customer, List<Product> products) {
+    this.orderID = orderID;
+    this.customer = customer;
+    this.orderDate = new Date();
+    this.status = "NEW";
+    this.orderType = OrderType.STANDARD;
 
-    public Order(int orderID, int customerID, List<Product> products) {
-        this();
+    setProducts(products); 
+}
+    
+         //rawan
+    public Order(int orderID, int quantity, Date orderDate, String status, Date estimatedDelivery, String trackingNumber, OrderType orderType, Customer customer, Shipment shipment) {
         this.orderID = orderID;
-        this.customerID = customerID;
-        setProducts(products);
+        this.quantity = quantity;
+        this.orderDate = orderDate;
+        this.status = status;
+        this.estimatedDelivery = estimatedDelivery;
+        this.trackingNumber = trackingNumber;
+        this.orderType = orderType;
+        this.customer = customer;
+        this.shipment = shipment;
     }
-
+   
+    
     public int getOrderID() {
         return orderID;
     }
@@ -45,10 +65,7 @@ public class Order implements OrderReadOnly {
         return status;
     }
 
-    public int getCustomerID() {
-        return customerID;
-    }
-
+    
     public Date getEstimatedDelivery() {
         return estimatedDelivery;
     }
@@ -104,6 +121,22 @@ public class Order implements OrderReadOnly {
             this.quantity = this.products.size();
         }
     }
+    
+    //assign shipement rawan
+    public void assignShipment(Shipment shipment) {
+    if (shipment == null) {
+        throw new IllegalArgumentException("Shipment is null");
+    }
+    this.shipment = shipment;
+}
+    // track order rawan 
+    public String trackOrder() {
+    if (shipment == null) {
+        return "Order not shipped yet";
+    }
+    return shipment.trackShipment(shipment.getShipmentID());
+}
+
 
     @Override
     public String toString() {
@@ -112,7 +145,7 @@ public class Order implements OrderReadOnly {
                 ", quantity=" + quantity +
                 ", orderDate=" + orderDate +
                 ", status='" + status + '\'' +
-                ", customerID=" + customerID +
+                ", customerID=" + customer +
                 ", estimatedDelivery=" + estimatedDelivery +
                 ", trackingNumber='" + trackingNumber + '\'' +
                 ", orderType=" + orderType +
