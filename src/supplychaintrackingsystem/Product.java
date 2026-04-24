@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Product {
+    private static int nextProductID = 1;
+
     private int productID;
     private String productName;
     private String category;
@@ -201,11 +203,7 @@ public class Product {
     }
 
     public double getPrice() {
-        return basePrice;
-    }
-
-    public String getStatus() {
-        return status;
+        return unitPrice;
     }
 
     public boolean isAvailable() {

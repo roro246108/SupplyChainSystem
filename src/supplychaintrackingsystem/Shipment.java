@@ -11,30 +11,34 @@ public class Shipment implements ShipmentSubject {
     private String currentLocation;
     private double weight;
     private double distance;
+    private double temperature;
+    private double humidity;
     private Date departureDate;
     private Date arrivalDate;
-    private ShipmentStatus status;//rawan
-  
-    private Date scheduledDeliveryDate;//////////////////////
+    private ShipmentStatus status;
+
+    private Date scheduledDeliveryDate;
     private Date deliveryRecordedDate;
     private String receiverName;
-    private String deliveryLocation;//nany
+    private String deliveryLocation;
     private String deliveryStatus;
     private String deliveryIssue;
-    private SensorData latestSensorData;/////////////////
+    private SensorData latestSensorData;
     private ShippingStrategy shippingStrategy;
     private final List<ShipmentObserver> observers = new ArrayList<>();
     private Order order;
     private Customer customer;
     private Supplier supplier;
     private Distributor distributor;
-    private Logistics logistics; //nany
+    private Logistics logistics;
     private Retailer retailer;
     private Manufacturer manufacturer;
 
-    
-    //rawan 
-    public Shipment(int shipmentID, String origin, String destination, String currentLocation, double weight, double distance, double temperature, double humidity, Date departureDate, Date arrivalDate, ShipmentStatus status, ShippingStrategy shippingStrategy, Order order, Customer customer, Supplier supplier, Distributor distributor, Logistics logistics, Retailer retailer, Manufacturer manufacturer) {
+    public Shipment(int shipmentID, String origin, String destination, String currentLocation, double weight,
+                    double distance, double temperature, double humidity, Date departureDate, Date arrivalDate,
+                    ShipmentStatus status, ShippingStrategy shippingStrategy, Order order, Customer customer,
+                    Supplier supplier, Distributor distributor, Logistics logistics, Retailer retailer,
+                    Manufacturer manufacturer) {
         this.shipmentID = shipmentID;
         this.origin = origin;
         this.destination = destination;
@@ -45,7 +49,7 @@ public class Shipment implements ShipmentSubject {
         this.humidity = humidity;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
-        this.status = status;
+        this.status = status == null ? ShipmentStatus.CREATED : status;
         this.shippingStrategy = shippingStrategy;
         this.order = order;
         this.customer = customer;
@@ -56,13 +60,14 @@ public class Shipment implements ShipmentSubject {
         this.manufacturer = manufacturer;
     }
 
- 
     public Shipment(int shipmentID) {
         this.shipmentID = shipmentID;
+        this.status = ShipmentStatus.CREATED;
     }
 
     public Shipment(Order order) {
         this.order = order;
+        this.status = ShipmentStatus.CREATED;
     }
 
     public int getShipmentID() {
@@ -101,8 +106,7 @@ public class Shipment implements ShipmentSubject {
         return status;
     }
 
-   
-    public Date getScheduledDeliveryDate() {///////nanyyyyyy
+    public Date getScheduledDeliveryDate() {
         return scheduledDeliveryDate;
     }
 
@@ -129,34 +133,34 @@ public class Shipment implements ShipmentSubject {
     public SensorData getLatestSensorData() {
         return latestSensorData;
     }
-    ////////////////////////////////nanyyyyyyyyyyyyyyyyyy
- 
-
-   
 
     public void setStrategy(ShippingStrategy strategy) {
         this.shippingStrategy = strategy;
     }
 
-    // set order rawan
     public void setOrder(Order order) {
-    if (order == null) {
-        throw new IllegalArgumentException("Order is null");
+        if (order == null) {
+            throw new IllegalArgumentException("Order is null");
+        }
+        this.order = order;
     }
-    this.order = order;
-}
 
-    
-    // main function of observer rawan
+    public Order getOrder() {
+        return order;
+    }
+
     public void setCustomer(Customer customer) {
-    this.customer = customer;
+        if (this.customer != null && this.customer != customer) {
+            removeObserver(this.customer);
+        }
 
-    if (customer != null) {
-        registerObserver(customer); //from here start the pattern
+        this.customer = customer;
+
+        if (customer != null) {
+            registerObserver(customer);
+        }
     }
-}
-    
-    
+
     public void sendShipmentToRetailer(int shipmentID, int retailerID) {
         this.shipmentID = shipmentID;
         System.out.println("Send shipment " + shipmentID + " to retailer " + retailerID);
@@ -175,10 +179,15 @@ public class Shipment implements ShipmentSubject {
         this.shipmentID = shipmentID;
     }
 
-    public void updateShipmentStatus(int shipmentID, ShipmentStatus  status) {
+    public void updateShipmentStatus(int shipmentID, ShipmentStatus status) {
         this.shipmentID = shipmentID;
-        this.status  = status ;
-        notifyObservers("Shipment " + shipmentID + " status updated to " + status);
+        updateShipmentStatus(status);
+    }
+
+    public void updateShipmentStatus(int shipmentID, String status) {
+        this.shipmentID = shipmentID;
+        setStatus(status);
+        notifyObservers("Shipment " + shipmentID + " status updated to " + this.status);
     }
 
     public void updateInventoryAfterShipment(int shipmentID) {
@@ -199,27 +208,34 @@ public class Shipment implements ShipmentSubject {
         notifyObservers("Shipment location updated to " + location);
     }
 
-    public void updateConditions(double temp, double humidity) {////////////////nany
+    public void updateConditions(double temp, double humidity) {
+        this.temperature = temp;
+        this.humidity = humidity;
         this.latestSensorData = new SensorData(temp, humidity, currentLocation, new Date());
         notifyObservers("Shipment conditions updated");
-    }//nany
+    }
 
-    public void markAsDelivered() {
-        this.status  = ShipmentStatus.DELIVERED;
-    public void updateConditions(SensorData sensorData) {//nany
+    public void updateConditions(SensorData sensorData) {
         this.latestSensorData = sensorData;
-        if (sensorData != null && sensorData.getLocation() != null) {
-            this.currentLocation = sensorData.getLocation();
+        if (sensorData != null) {
+            this.temperature = sensorData.getTemperature();
+            this.humidity = sensorData.getHumidity();
+            if (sensorData.getLocation() != null) {
+                this.currentLocation = sensorData.getLocation();
+            }
         }
         notifyObservers("Shipment conditions updated");
-    }//////////nany
+    }
 
-    public void markAsDelivered() {//nany
-        this.status = "Delivered";
+    public void markAsDelivered() {
+        this.status = ShipmentStatus.DELIVERED;
         this.arrivalDate = new Date();
-    }//nany
+        if (deliveryStatus == null || deliveryStatus.isBlank()) {
+            deliveryStatus = "Delivered";
+        }
+    }
 
-    public void setScheduledDeliveryDate(Date scheduledDeliveryDate) {/////////////nany////////////////////////
+    public void setScheduledDeliveryDate(Date scheduledDeliveryDate) {
         this.scheduledDeliveryDate = scheduledDeliveryDate;
     }
 
@@ -249,9 +265,13 @@ public class Shipment implements ShipmentSubject {
             updateConditions(latestSensorData);
         }
     }
-/////////////////////////////////////////////////////////////////////////////////////nany
+
+    public void setStatus(String status) {
+        this.status = parseStatus(status);
+    }
+
     public Date calculateETA() {
-        return new Date();
+        return scheduledDeliveryDate == null ? new Date() : scheduledDeliveryDate;
     }
 
     public void reviewShipmentHistory(int shipmentID) {
@@ -269,7 +289,7 @@ public class Shipment implements ShipmentSubject {
     public Customer getCustomer() {
         return customer;
     }
-    
+
     public Supplier getSupplier() {
         return supplier;
     }
@@ -286,13 +306,13 @@ public class Shipment implements ShipmentSubject {
         this.distributor = distributor;
     }
 
-    public Logistics getLogistics() {//////////////////nany
+    public Logistics getLogistics() {
         return logistics;
-    }//nany
+    }
 
-    public void setLogistics(Logistics logistics) {//nany
+    public void setLogistics(Logistics logistics) {
         this.logistics = logistics;
-    }//nany
+    }
 
     public Retailer getRetailer() {
         return retailer;
@@ -309,31 +329,35 @@ public class Shipment implements ShipmentSubject {
     public void setManufacturer(Manufacturer manufacturer) {
         this.manufacturer = manufacturer;
     }
-    
-    // rawan
-   public enum ShipmentStatus {
-    CREATED, IN_TRANSIT, DELIVERED, CANCELLED
-}
-    
-   
-   //rawan
-  public void updateShipmentStatus(ShipmentStatus newStatus) {
 
-    if (newStatus == null) {
-        throw new IllegalArgumentException("Invalid status");
+    public void updateShipmentStatus(ShipmentStatus newStatus) {
+        if (newStatus == null) {
+            throw new IllegalArgumentException("Invalid status");
+        }
+
+        this.status = newStatus;
+        notifyObservers("Shipment " + shipmentID + " updated to " + newStatus);
+
+        if (newStatus == ShipmentStatus.DELIVERED) {
+            markAsDelivered();
+        }
     }
 
-    this.status = newStatus;
+    private ShipmentStatus parseStatus(String rawStatus) {
+        if (rawStatus == null || rawStatus.isBlank()) {
+            throw new IllegalArgumentException("Invalid status");
+        }
 
-    notifyObservers("Shipment " + shipmentID + " updated to " + newStatus);
+        String normalized = rawStatus.trim().replace(' ', '_').toUpperCase();
+        if ("RECEIVED".equals(normalized)) {
+            return ShipmentStatus.DELIVERED;
+        }
+        if ("SCHEDULED".equals(normalized) || "ISSUE_REPORTED".equals(normalized)) {
+            return ShipmentStatus.IN_TRANSIT;
+        }
 
-    if (newStatus == ShipmentStatus.DELIVERED) {
-        markAsDelivered();
+        return ShipmentStatus.valueOf(normalized);
     }
-}
-   
-   
-    
 
     @Override
     public void registerObserver(ShipmentObserver observer) {
@@ -354,12 +378,17 @@ public class Shipment implements ShipmentSubject {
         }
     }
 
-    @Override//////////////nany 
+    @Override
     public String toString() {
-        return "Shipment{" + "shipmentID=" + shipmentID
-                + ", status='" + status + '\''
+        return "Shipment{"
+                + "shipmentID=" + shipmentID
+                + ", status=" + status
                 + ", deliveryStatus='" + deliveryStatus + '\''
                 + ", receiverName='" + receiverName + '\''
                 + '}';
-    }/////////nany
+    }
+
+    public enum ShipmentStatus {
+        CREATED, IN_TRANSIT, DELIVERED, CANCELLED
+    }
 }

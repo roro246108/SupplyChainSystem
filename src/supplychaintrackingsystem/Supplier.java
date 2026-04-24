@@ -6,10 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 public class Supplier extends User implements ShipmentObserver {
-   
-    
-   
-private final List<String> receivedRequests = new ArrayList<>();  //fatma
+    private final List<String> receivedRequests = new ArrayList<>();
+    private boolean verified;
 
     private int supplierID;
     private String companyName;
@@ -31,16 +29,12 @@ private final List<String> receivedRequests = new ArrayList<>();  //fatma
         this.contactNumber = contactNumber;
         this.address = address;
         this.verificationStatus = "Pending";
+        this.verified = false;
     }
     
     //////////////////////////////////////////////////
     //Fatma
     
-        // Needed by SystemAdministrator
-    public int getSupplierID() {
-        return getUserID();
-    }
-
     // Needed by SystemAdministrator
     public boolean isVerified() {
         return verified;

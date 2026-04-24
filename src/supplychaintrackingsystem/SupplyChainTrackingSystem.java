@@ -27,8 +27,8 @@ public class SupplyChainTrackingSystem {
                 "Manufacturer", "Industrial Zone");
         SystemAdministrator admin = new SystemAdministrator(7, "Admin User", "admin@example.com",
                 "secret123", "SystemAdministrator");
-        Regulator regulator = new Regulator(8, "Reg Office", "reg@example.com", "secret123",
-                "Regulator", 8001, "Trade Authority", "High", "Cairo");
+        Regulator regulator = new Regulator(8001, "Trade Authority", "High", "Cairo",
+                8, "Reg Office", "reg@example.com", "secret123", "Regulator");
 
         Shipment shipment = new Shipment(1001);
 

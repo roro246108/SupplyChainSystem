@@ -1,18 +1,23 @@
 package supplychaintrackingsystem;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
-public class Order {
+public class Order implements OrderReadOnly {
 
     private int orderID;
     private String status;
-   
+    private int customerID;
+    private Customer customer;
     private LocalDate orderDate;
     private double totalAmount;
     private LocalDate estimatedDelivery;
+    private String trackingNumber;
+    private OrderType orderType;
 
     private final List<Product> products = new ArrayList<>();
     private Shipment shipment;
@@ -41,24 +46,67 @@ public class Order {
             REFUNDED
     );
 
-    public Order(int orderID, Customer customer, List<Product> products) {
-        if (orderID <= 0) {
-            throw new IllegalArgumentException("Order ID must be positive.");
-        }
+    public Order() {
+        this.orderDate = LocalDate.now();
+        this.estimatedDelivery = orderDate.plusDays(5);
+        this.status = PENDING;
+        this.orderType = OrderType.STANDARD;
+    }
+
+    public Order(int orderID, int customerID, List<Product> products) {
+        validateOrderID(orderID);
 
         if (customerID <= 0) {
             throw new IllegalArgumentException("Customer ID must be positive.");
         }
 
-        if (products == null || products.isEmpty()) {
-            throw new IllegalArgumentException("Order must contain at least one product.");
+        this.orderID = orderID;
+        this.customerID = customerID;
+        initializeOrder(products);
+    }
+
+    public Order(int orderID, Customer customer, List<Product> products) {
+        validateOrderID(orderID);
+
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer cannot be null.");
         }
 
         this.orderID = orderID;
         this.customer = customer;
+        this.customerID = customer.getUserID();
+        initializeOrder(products);
+    }
+
+    public Order(int orderID, int quantity, Date orderDate, String status, Date estimatedDelivery,
+                 String trackingNumber, OrderType orderType, Customer customer, Shipment shipment) {
+        validateOrderID(orderID);
+
+        this.orderID = orderID;
+        this.customer = customer;
+        this.customerID = customer == null ? 0 : customer.getUserID();
+        this.orderDate = toLocalDate(orderDate == null ? new Date() : orderDate);
+        this.status = normalizeStatus(status);
+        this.estimatedDelivery = estimatedDelivery == null
+                ? this.orderDate.plusDays(5)
+                : toLocalDate(estimatedDelivery);
+        this.trackingNumber = trackingNumber;
+        this.orderType = orderType == null ? OrderType.STANDARD : orderType;
+        this.shipment = shipment;
+        this.paid = false;
+        this.refunded = false;
+        this.totalAmount = calculateTotal();
+    }
+
+    private void initializeOrder(List<Product> products) {
+        if (products == null || products.isEmpty()) {
+            throw new IllegalArgumentException("Order must contain at least one product.");
+        }
+
         this.orderDate = LocalDate.now();
         this.status = PENDING;
         this.estimatedDelivery = orderDate.plusDays(5);
+        this.orderType = OrderType.STANDARD;
         this.paid = false;
         this.refunded = false;
 
@@ -67,35 +115,6 @@ public class Order {
         }
 
         this.totalAmount = calculateTotal();
-   
-    private String trackingNumber;//rawan
-    private OrderType orderType;
-   private Customer customer;// rawan
- 
-    
-
-    public Order() {
-        this.orderDate = new Date();
-        this.status = "NEW";
-        this.orderType = OrderType.STANDARD;
-    }
-      
-   
-         //rawan
-    public Order(int orderID, int quantity, Date orderDate, String status, Date estimatedDelivery, String trackingNumber, OrderType orderType, Customer customer, Shipment shipment) {
-        this.orderID = orderID;
-        this.quantity = quantity;
-        this.orderDate = orderDate;
-        this.status = status;
-        this.estimatedDelivery = estimatedDelivery;
-        this.trackingNumber = trackingNumber;
-        this.orderType = orderType;
-        this.customer = customer;
-        this.shipment = shipment;
-    }
-   
-    
-   
     }
 
     public void addProduct(Product product) {
@@ -137,6 +156,29 @@ public class Order {
         totalAmount = calculateTotal();
     }
 
+    public void setProducts(List<Product> products) {
+        if (!canModifyProducts()) {
+            throw new IllegalStateException("Products cannot be modified when order status is: " + status);
+        }
+
+        if (products == null || products.isEmpty()) {
+            throw new IllegalArgumentException("Order must contain at least one product.");
+        }
+
+        this.products.clear();
+        for (Product product : products) {
+            if (product == null) {
+                throw new IllegalArgumentException("Product cannot be null.");
+            }
+            if (!product.isAvailable()) {
+                throw new IllegalStateException("Product is not available.");
+            }
+            this.products.add(product);
+        }
+
+        totalAmount = calculateTotal();
+    }
+
     public double calculateTotal() {
         double total = 0;
 
@@ -145,11 +187,12 @@ public class Order {
                 throw new IllegalStateException("Order contains invalid product.");
             }
 
-            if (product.getPrice() < 0) {
+            double price = product.getBasePrice();
+            if (price < 0) {
                 throw new IllegalStateException("Product price cannot be negative.");
             }
 
-            total += product.getPrice();
+            total += price;
         }
 
         return total;
@@ -187,12 +230,11 @@ public class Order {
                 return false;
             }
 
-            if (product.getPrice() < 0) {
+            if (product.getBasePrice() < 0) {
                 return false;
             }
 
-            if (!product.isAvailable()
-                    && status.equals(PENDING)) {
+            if (!product.isAvailable() && status.equals(PENDING)) {
                 return false;
             }
         }
@@ -251,7 +293,7 @@ public class Order {
             throw new IllegalStateException("Only processing orders can be shipped.");
         }
 
-        this.shipment = shipment;
+        assignShipment(shipment);
         status = SHIPPED;
         estimatedDelivery = LocalDate.now().plusDays(3);
     }
@@ -286,6 +328,11 @@ public class Order {
         }
     }
 
+    public boolean cancelOrder() {
+        cancelOrder("Cancelled by user.");
+        return true;
+    }
+
     public void returnOrder(String reason) {
         if (!status.equals(DELIVERED)) {
             throw new IllegalStateException("Only delivered orders can be returned.");
@@ -296,6 +343,7 @@ public class Order {
         }
 
         status = RETURNED;
+        cancellationReason = reason.trim();
 
         if (paid) {
             refundOrder();
@@ -324,11 +372,12 @@ public class Order {
             throw new IllegalArgumentException("Status cannot be empty.");
         }
 
-        if (!VALID_STATUSES.contains(newStatus)) {
+        String normalizedStatus = normalizeStatus(newStatus);
+        if (!VALID_STATUSES.contains(normalizedStatus)) {
             throw new IllegalArgumentException("Invalid order status: " + newStatus);
         }
 
-        if (status.equals(DELIVERED) && !newStatus.equals(RETURNED)) {
+        if (status.equals(DELIVERED) && !normalizedStatus.equals(RETURNED)) {
             throw new IllegalStateException("Delivered order can only move to Returned.");
         }
 
@@ -336,15 +385,37 @@ public class Order {
             throw new IllegalStateException("Final order status cannot be changed.");
         }
 
-        status = newStatus;
+        status = normalizedStatus;
+    }
+
+    public void updateOrderStatus(String status) {
+        updateStatus(status);
+    }
+
+    public void assignShipment(Shipment shipment) {
+        if (shipment == null) {
+            throw new IllegalArgumentException("Shipment is null");
+        }
+
+        this.shipment = shipment;
+        if (trackingNumber == null || trackingNumber.isBlank()) {
+            trackingNumber = "SHP-" + shipment.getShipmentID();
+        }
+    }
+
+    public Invoice generateInvoice() {
+        return new Invoice(this);
     }
 
     public String trackOrder() {
         if (shipment == null) {
-            return "Order " + orderID + " status: " + status + ". No shipment assigned yet.";
+            if (trackingNumber == null || trackingNumber.isBlank()) {
+                return "Order " + orderID + " status: " + status + ". No shipment assigned yet.";
+            }
+            return "Order " + orderID + " status: " + status + ". Tracking number: " + trackingNumber;
         }
 
-        return "Order " + orderID + " status: " + status + ". Shipment details: " + shipment;
+        return shipment.trackShipment(shipment.getShipmentID());
     }
 
     private boolean allProductsAvailable() {
@@ -360,8 +431,58 @@ public class Order {
         return status.equals(PENDING) || status.equals(CONFIRMED);
     }
 
+    private void validateOrderID(int orderID) {
+        if (orderID <= 0) {
+            throw new IllegalArgumentException("Order ID must be positive.");
+        }
+    }
+
+    private String normalizeStatus(String rawStatus) {
+        String trimmed = rawStatus.trim();
+
+        if ("NEW".equalsIgnoreCase(trimmed)) {
+            return PENDING;
+        }
+
+        for (String validStatus : VALID_STATUSES) {
+            if (validStatus.equalsIgnoreCase(trimmed)) {
+                return validStatus;
+            }
+        }
+
+        return trimmed;
+    }
+
+    private LocalDate toLocalDate(Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    private Date toDate(LocalDate localDate) {
+        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+
+    @Override
     public int getOrderID() {
         return orderID;
+    }
+
+    @Override
+    public int getQuantity() {
+        return products.size();
+    }
+
+    @Override
+    public Date getOrderDate() {
+        return toDate(orderDate);
+    }
+
+    public LocalDate getOrderLocalDate() {
+        return orderDate;
+    }
+
+    @Override
+    public String getOrderStatus() {
+        return status;
     }
 
     public String getStatus() {
@@ -369,19 +490,45 @@ public class Order {
     }
 
     public int getCustomerID() {
-        return customerID;
+        if (customerID > 0) {
+            return customerID;
+        }
+        return customer == null ? 0 : customer.getUserID();
     }
 
-    public LocalDate getOrderDate() {
-        return orderDate;
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+        this.customerID = customer == null ? 0 : customer.getUserID();
     }
 
     public double getTotalAmount() {
         return totalAmount;
     }
 
-    public LocalDate getEstimatedDelivery() {
+    @Override
+    public Date getEstimatedDelivery() {
+        return estimatedDelivery == null ? null : toDate(estimatedDelivery);
+    }
+
+    public LocalDate getEstimatedDeliveryLocalDate() {
         return estimatedDelivery;
+    }
+
+    @Override
+    public OrderTypeReadOnly getOrderType() {
+        return orderType;
+    }
+
+    public OrderType getOrderTypeValue() {
+        return orderType;
+    }
+
+    public void setOrderType(OrderType orderType) {
+        this.orderType = orderType == null ? OrderType.STANDARD : orderType;
     }
 
     public boolean isPaid() {
@@ -396,6 +543,14 @@ public class Order {
         return cancellationReason;
     }
 
+    public String getTrackingNumber() {
+        return trackingNumber;
+    }
+
+    public void setTrackingNumber(String trackingNumber) {
+        this.trackingNumber = trackingNumber;
+    }
+
     public List<Product> getProducts() {
         return Collections.unmodifiableList(products);
     }
@@ -403,38 +558,21 @@ public class Order {
     public Shipment getShipment() {
         return shipment;
     }
-    
-    //assign shipement rawan
-    public void assignShipment(Shipment shipment) {
-    if (shipment == null) {
-        throw new IllegalArgumentException("Shipment is null");
-    }
-    this.shipment = shipment;
-}
-    // track order rawan 
-    public String trackOrder() {
-    if (shipment == null) {
-        return "Order not shipped yet";
-    }
-    return shipment.trackShipment(shipment.getShipmentID());
-}
-
 
     @Override
     public String toString() {
         return "Order{"
                 + "orderID=" + orderID
-                ", quantity=" + quantity +
+                + ", quantity=" + getQuantity()
                 + ", status='" + status + '\''
-                + ", customerID=" + customer
+                + ", customerID=" + getCustomerID()
                 + ", orderDate=" + orderDate
                 + ", totalAmount=" + totalAmount
                 + ", estimatedDelivery=" + estimatedDelivery
+                + ", trackingNumber='" + trackingNumber + '\''
+                + ", orderType=" + orderType
                 + ", paid=" + paid
                 + ", refunded=" + refunded
-                + ", products=" + products.size()
-                 ", trackingNumber='" + trackingNumber + '\'' +
-                ", orderType=" + orderType +
                 + '}';
     }
 }
