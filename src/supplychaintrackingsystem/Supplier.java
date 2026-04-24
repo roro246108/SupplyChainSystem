@@ -6,6 +6,11 @@ import java.util.Date;
 import java.util.List;
 
 public class Supplier extends User implements ShipmentObserver {
+   
+    
+   
+private final List<String> receivedRequests = new ArrayList<>();  //fatma
+
     private int supplierID;
     private String companyName;
     private String contactNumber;
@@ -27,6 +32,44 @@ public class Supplier extends User implements ShipmentObserver {
         this.address = address;
         this.verificationStatus = "Pending";
     }
+    
+    //////////////////////////////////////////////////
+    //Fatma
+    
+        // Needed by SystemAdministrator
+    public int getSupplierID() {
+        return getUserID();
+    }
+
+    // Needed by SystemAdministrator
+    public boolean isVerified() {
+        return verified;
+    }
+
+    // Needed by SystemAdministrator
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+
+        if (verified) {
+            receiveNotification("Your supplier account has been verified.");
+        } else {
+            receiveNotification("Your supplier account verification has been removed.");
+        }
+    }
+
+    // Needed by SystemAdministrator
+    public void receiveRequest(String request) {
+        if (request == null || request.isBlank()) {
+            throw new IllegalArgumentException("Admin request cannot be empty.");
+        }
+
+        receivedRequests.add(request);
+        receiveNotification("New admin request received: " + request);
+    }
+    
+    ///////////////////////////////////////////////////////
+    
+    
 
     public Report generateSupplyReport() {
         String reportText = "Supplier Report for " + companyName

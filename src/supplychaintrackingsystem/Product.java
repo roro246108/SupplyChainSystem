@@ -21,6 +21,7 @@ public class Product {
     private final List<ProductionRecord> productionRecords = new ArrayList<>();
 
     public Product() {
+        this.productID = nextProductID++;
     }
 
     public Product(int productID, String productName, String category, Date manufactureDate,
@@ -35,6 +36,7 @@ public class Product {
     }
 
     public Product(String productName, double basePrice, String description, String category) {
+        this();
         this.productName = productName;
         this.unitPrice = basePrice;
         this.category = category;
@@ -196,6 +198,18 @@ public class Product {
 
     public void setProduction(Production production) {
         this.production = production;
+    }
+
+    public double getPrice() {
+        return basePrice;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public boolean isAvailable() {
+        return status == null || !"OUT_OF_STOCK".equalsIgnoreCase(status);
     }
 
     @Override

@@ -24,6 +24,11 @@ public class ProductionRecord {
         }
     }
 
+    public ProductionRecord(String status) {
+        this.status = status;
+    }
+
+    
     public String getStatus() {
         return status;
     }
