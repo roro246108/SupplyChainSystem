@@ -44,6 +44,10 @@ public class SystemAdministrator extends User {
         System.out.println("System alert: " + message);
     }
 
+    public void sendNotification(String message) {//////////nany
+        receiveSystemAlert(message);
+    }/////////nany
+
     public void sendRequestToSupplier(int supplierID, String requestType) {
         System.out.println("Sent " + requestType + " request to supplier " + supplierID);
     }
