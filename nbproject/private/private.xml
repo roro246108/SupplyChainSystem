@@ -3,12 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/User.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/SystemAdministrator.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/Order.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/Manufacturer.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/ProductionRecord.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/Product.java</file>
+            <file>file:/C:/Users/zeina/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/SupplyChainTrackingSystem.java</file>
+            <file>file:/C:/Users/zeina/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/ShipmentGUI.java</file>
+            <file>file:/C:/Users/zeina/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/SupplierGUI.java</file>
+            <file>file:/C:/Users/zeina/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/SignUpGUI.java</file>
+            <file>file:/C:/Users/zeina/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/ProductGUI.java</file>
+            <file>file:/C:/Users/zeina/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/ProductRecordGUI.java</file>
+            <file>file:/C:/Users/zeina/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/OrderGUI.java</file>
+            <file>file:/C:/Users/zeina/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/LogisticsUI.java</file>
+            <file>file:/C:/Users/zeina/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/CustomerGUI.java</file>
+            <file>file:/C:/Users/zeina/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/DistributorGUI.java</file>
+            <file>file:/C:/Users/zeina/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/InventoryGUI.java</file>
+            <file>file:/C:/Users/zeina/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/RegulatorGUI.java</file>
+            <file>file:/C:/Users/zeina/OneDrive/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/RetailerGUI.java</file>
         </group>
     </open-files>
 </project-private>
