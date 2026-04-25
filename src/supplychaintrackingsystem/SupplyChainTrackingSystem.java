@@ -15,8 +15,8 @@ public class SupplyChainTrackingSystem {
         
         Customer customer = new Customer(1, "Amina Hassan", "amina@example.com", "secret123",
                 "Customer", "12 Nile Street");
-        Supplier supplier = new Supplier(2, "Delta Supplier", "supplier@example.com", "secret123",
-                "Supplier", 201234567);
+        Supplier supplier = new Supplier(2, "Delta Supplier", "supplier@example.com", "secret123",//nany
+                "Supplier", 2001, "Delta Supplier Co.", "201234567", "Alexandria");//nany
         Distributor distributor = new Distributor(3, "North Distributor", "dist@example.com", "secret123",
                 "Distributor", "Cairo Warehouse");
         Logistics logistics = new Logistics(4, "Logistics Team", "logistics@example.com", "secret123",
@@ -27,8 +27,8 @@ public class SupplyChainTrackingSystem {
                 "Manufacturer", "Industrial Zone");
         SystemAdministrator admin = new SystemAdministrator(7, "Admin User", "admin@example.com",
                 "secret123", "SystemAdministrator");
-        Regulator regulator = new Regulator(8, "Reg Office", "reg@example.com", "secret123",
-                "Regulator", 8001, "Trade Authority", "High", "Cairo");
+        Regulator regulator = new Regulator(8001, "Trade Authority", "High", "Cairo",
+                8, "Reg Office", "reg@example.com", "secret123", "Regulator");
 
         Shipment shipment = new Shipment(1001);
 

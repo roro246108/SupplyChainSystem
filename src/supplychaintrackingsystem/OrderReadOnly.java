@@ -11,8 +11,6 @@ public interface OrderReadOnly {
 
     String getOrderStatus();
 
-    int getCustomerID();
-
     Date getEstimatedDelivery();
 
     OrderTypeReadOnly getOrderType();

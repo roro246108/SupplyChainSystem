@@ -1,18 +1,22 @@
 package supplychaintrackingsystem;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public class Inventory {
-    private InventoryState currentState;
-    private final List<Product> products = new ArrayList<>();
-    private final List<RawMaterial> rawMaterials = new ArrayList<>();
+    private int inventoryID;
+    private int stockLevel;
     private int quantity;
-    private int lowStockThreshold = 5;
+    private String stockData;
+    private int reorderThreshold;
+    private InventoryState currentState;
+    private NotificationService notificationService;
+    private Product product;
 
     public Inventory() {
+        this.stockLevel = 0;
+        this.quantity = 0;
+        this.reorderThreshold = 10;
         this.currentState = new OutOfStockState();
+        this.notificationService = new NotificationService();
+        this.stockData = "Inventory initialized";
     }
 
     public void setState(InventoryState state) {
@@ -23,8 +27,22 @@ public class Inventory {
         return currentState;
     }
 
-    public void addStock(int qty) {
-        currentState.addStock(this, qty);
+    public void addStock(int quantity) {
+        currentState.addStock(this, quantity);
+    }
+
+    public void removeStock(int quantity) {
+        if (quantity <= 0) {
+            System.out.println("Quantity must be positive.");
+            return;
+        }
+        if (quantity > stockLevel) {
+            System.out.println("Not enough stock available.");
+            return;
+        }
+
+        decreaseQuantity(quantity);
+        updateStock();
     }
 
     public void updateStock() {
@@ -35,43 +53,85 @@ public class Inventory {
         return currentState.checkAvailability(this);
     }
 
+    public void trackStockLevels() {
+        System.out.println("Current stock level: " + stockLevel);
+        System.out.println("Current inventory state: " + currentState.getClass().getSimpleName());
+    }
+
     public void detectLowStock() {
         currentState.detectLowStock(this);
     }
 
+    public void generateLowStockAlert() {
+        String message = "Low stock alert: inventory is below reorder threshold.";
+        if (notificationService != null) {
+            notificationService.notifyAdmin(message);
+        } else {
+            System.out.println(message);
+        }
+    }
+
+    public boolean isBelowThreshold() {
+        return stockLevel <= reorderThreshold;
+    }
+
     public void increaseQuantity(int qty) {
-        this.quantity += Math.max(0, qty);
+        if (qty > 0) {
+            this.stockLevel += qty;
+            this.quantity = this.stockLevel;
+            this.stockData = "Added " + qty + " units. Current stock: " + stockLevel;
+        }
+    }
+
+    public void decreaseQuantity(int qty) {
+        if (qty > 0 && qty <= stockLevel) {
+            this.stockLevel -= qty;
+            this.quantity = this.stockLevel;
+            this.stockData = "Removed " + qty + " units. Current stock: " + stockLevel;
+        }
+    }
+
+    public int getInventoryID() {
+        return inventoryID;
+    }
+
+    public void setInventoryID(int inventoryID) {
+        this.inventoryID = inventoryID;
+    }
+
+    public int getStockLevel() {
+        return stockLevel;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
+    public int getReorderThreshold() {
+        return reorderThreshold;
+    }
+
     public int getLowStockThreshold() {
-        return lowStockThreshold;
+        return reorderThreshold;
     }
 
-    public List<Product> getProducts() {
-        return Collections.unmodifiableList(products);
+    public String getStockData() {
+        return stockData;
     }
 
-    public List<RawMaterial> getRawMaterials() {
-        return Collections.unmodifiableList(rawMaterials);
+    public NotificationService getNotificationService() {
+        return notificationService;
     }
 
-    public void addProductToInventory(Product product) {
-        if (product != null) {
-            products.add(product);
-        }
+    public void setNotificationService(NotificationService notificationService) {
+        this.notificationService = notificationService;
     }
 
-    public void addRawMaterial(RawMaterial material) {
-        if (material != null) {
-            rawMaterials.add(material);
-        }
+    public Product getProduct() {
+        return product;
     }
 
-    public void consumeRawMaterial(RawMaterial material) {
-        rawMaterials.remove(material);
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }
