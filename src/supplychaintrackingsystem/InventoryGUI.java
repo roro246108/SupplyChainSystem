@@ -303,26 +303,32 @@ public class InventoryGUI extends javax.swing.JFrame {
         );
 
         btnAddStock.setBackground(new java.awt.Color(76, 175, 80));
+        btnAddStock.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAddStock.setForeground(new java.awt.Color(242, 242, 242));
         btnAddStock.setText("Add Stock");
 
         btnUpdateStock.setBackground(new java.awt.Color(33, 150, 243));
+        btnUpdateStock.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnUpdateStock.setForeground(new java.awt.Color(242, 242, 242));
         btnUpdateStock.setText("Update Stock");
 
         btnCheckAvailability.setBackground(new java.awt.Color(255, 152, 0));
+        btnCheckAvailability.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCheckAvailability.setForeground(new java.awt.Color(242, 242, 242));
         btnCheckAvailability.setText("Check Availability");
 
         btnDetectLowStock.setBackground(new java.awt.Color(244, 67, 54));
+        btnDetectLowStock.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDetectLowStock.setForeground(new java.awt.Color(242, 242, 242));
         btnDetectLowStock.setText("Detect Low Stock");
 
         btnClear.setBackground(new java.awt.Color(158, 158, 158));
+        btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnClear.setForeground(new java.awt.Color(242, 242, 242));
         btnClear.setText("Clear");
 
         btnBack.setBackground(new java.awt.Color(96, 125, 139));
+        btnBack.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnBack.setForeground(new java.awt.Color(242, 242, 242));
         btnBack.setText("Back");
 
@@ -353,7 +359,7 @@ public class InventoryGUI extends javax.swing.JFrame {
                         .addComponent(btnClear)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBack)))
-                .addGap(0, 8, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -150,11 +150,9 @@ public class RetailerGUI extends javax.swing.JFrame {
                             .addComponent(txtShopName, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(22, 22, 22)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(23, 23, 23))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(156, 156, 156)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -297,18 +295,22 @@ public class RetailerGUI extends javax.swing.JFrame {
         );
 
         btnConfirmDelivery.setBackground(new java.awt.Color(76, 175, 80));
+        btnConfirmDelivery.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnConfirmDelivery.setForeground(new java.awt.Color(242, 242, 242));
         btnConfirmDelivery.setText("Confirm Delivery");
 
         btnReqestStockView.setBackground(new java.awt.Color(0, 172, 193));
+        btnReqestStockView.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnReqestStockView.setForeground(new java.awt.Color(242, 242, 242));
         btnReqestStockView.setText("Request Stock View");
 
         btnCreateOrder.setBackground(new java.awt.Color(255, 152, 0));
+        btnCreateOrder.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCreateOrder.setForeground(new java.awt.Color(242, 242, 242));
         btnCreateOrder.setText("Create Order");
 
         btnClear.setBackground(new java.awt.Color(158, 158, 158));
+        btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnClear.setForeground(new java.awt.Color(242, 242, 242));
         btnClear.setText("Clear");
         btnClear.addActionListener(new java.awt.event.ActionListener() {
@@ -318,6 +320,7 @@ public class RetailerGUI extends javax.swing.JFrame {
         });
 
         btnBack.setBackground(new java.awt.Color(96, 125, 139));
+        btnBack.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnBack.setForeground(new java.awt.Color(242, 242, 242));
         btnBack.setText("Back");
 

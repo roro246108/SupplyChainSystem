@@ -83,10 +83,12 @@ public class CustomerGUI extends javax.swing.JFrame {
         txtCustomerAddress.setText("txtCustomerAddress");
 
         btnAddCustomer.setBackground(new java.awt.Color(76, 175, 80));
+        btnAddCustomer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAddCustomer.setForeground(new java.awt.Color(242, 242, 242));
         btnAddCustomer.setText("Add Customer");
 
         btnUpdateCustomer.setBackground(new java.awt.Color(33, 150, 243));
+        btnUpdateCustomer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnUpdateCustomer.setForeground(new java.awt.Color(242, 242, 242));
         btnUpdateCustomer.setText("Update");
         btnUpdateCustomer.addActionListener(new java.awt.event.ActionListener() {
@@ -96,18 +98,22 @@ public class CustomerGUI extends javax.swing.JFrame {
         });
 
         btnDeleteCustomer.setBackground(new java.awt.Color(244, 67, 54));
+        btnDeleteCustomer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDeleteCustomer.setForeground(new java.awt.Color(242, 242, 242));
         btnDeleteCustomer.setText("Delete");
 
         btnSearchCustomer.setBackground(new java.awt.Color(156, 39, 176));
+        btnSearchCustomer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSearchCustomer.setForeground(new java.awt.Color(255, 255, 255));
         btnSearchCustomer.setText("Search");
 
         btnClear.setBackground(new java.awt.Color(255, 152, 0));
+        btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnClear.setForeground(new java.awt.Color(242, 242, 242));
         btnClear.setText("Clear");
 
         btnBack.setBackground(new java.awt.Color(158, 158, 158));
+        btnBack.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnBack.setForeground(new java.awt.Color(255, 255, 255));
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {

@@ -102,30 +102,37 @@ public class DistributorGUI extends javax.swing.JFrame {
         jLabel17.setText("Status:");
 
         btnAddDistributer.setBackground(new java.awt.Color(33, 150, 243));
+        btnAddDistributer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAddDistributer.setForeground(new java.awt.Color(242, 242, 242));
         btnAddDistributer.setText("Add Distributor");
 
         btnUpdateDistributer.setBackground(new java.awt.Color(156, 39, 176));
+        btnUpdateDistributer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnUpdateDistributer.setForeground(new java.awt.Color(242, 242, 242));
         btnUpdateDistributer.setText("Update Distributor");
 
         btnReceiveProducts.setBackground(new java.awt.Color(76, 175, 80));
+        btnReceiveProducts.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnReceiveProducts.setForeground(new java.awt.Color(242, 242, 242));
         btnReceiveProducts.setText(" Receive Products");
 
         btnSendProducts.setBackground(new java.awt.Color(255, 152, 0));
+        btnSendProducts.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSendProducts.setForeground(new java.awt.Color(242, 242, 242));
         btnSendProducts.setText("Send Products");
 
         btnViewShipments.setBackground(new java.awt.Color(0, 172, 193));
+        btnViewShipments.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnViewShipments.setForeground(new java.awt.Color(242, 242, 242));
         btnViewShipments.setText("View Shipments");
 
         btnClear.setBackground(new java.awt.Color(158, 158, 158));
+        btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnClear.setForeground(new java.awt.Color(242, 242, 242));
         btnClear.setText("Clear");
 
         btnBack.setBackground(new java.awt.Color(96, 125, 139));
+        btnBack.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnBack.setForeground(new java.awt.Color(242, 242, 242));
         btnBack.setText("Back       ");
 
