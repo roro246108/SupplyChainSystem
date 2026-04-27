@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(javac -d /tmp src/supplychaintrackingsystem/User.java src/supplychaintrackingsystem/UserGUI.java)",
+      "Bash(javac -d /tmp src/supplychaintrackingsystem/RawMaterial.java src/supplychaintrackingsystem/RawMaterialGUI.java)",
+      "Bash(where node *)",
+      "Bash(node extract.js)",
+      "Bash(node extract.cjs)",
+      "Bash(node extract2.cjs)",
+      "Bash(javac -d /tmp src/supplychaintrackingsystem/*.java)"
+    ]
+  }
+}
