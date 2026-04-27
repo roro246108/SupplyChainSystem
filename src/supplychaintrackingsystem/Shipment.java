@@ -750,6 +750,14 @@ public class Shipment implements ShipmentSubject {
         this.manufacturer = manufacturer;
     }
 
+   @Override
+public void notifyObservers(String message) {
+
+    for (ShipmentObserver observer : observers) {
+        try {
+            observer.update(message);
+        } catch (Exception e) {
+            System.out.println("Observer update failed.");
     public void setLatestSensorData(SensorData latestSensorData) {
         if (latestSensorData == null) {
             throw new NullPointerException("Sensor data cannot be null.");
@@ -757,6 +765,8 @@ public class Shipment implements ShipmentSubject {
 
         updateConditions(latestSensorData);
     }
+}
+
 
     @Override
     public String toString() {

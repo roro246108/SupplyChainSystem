@@ -19,17 +19,64 @@ public class Distributor extends User implements ShipmentObserver {
     }
 
     public String organizeDistributionPlan() {
-        return "Distribution plan for " + warehouseLocation;
+
+    if (warehouseLocation == null || warehouseLocation.trim().isEmpty()) {
+        throw new IllegalStateException("Warehouse location is not defined");
     }
 
-    public Report generateDistributionReport() {
-        return new Report("Distribution Report");
+    if (retailers.isEmpty()) {
+        return "No retailers assigned. Distribution plan cannot be created.";
     }
 
-    public void updateDistributionRecords() {
-        System.out.println("Distribution records updated.");
+    if (shipments.isEmpty()) {
+        return "No shipments available for distribution.";
     }
+
+    return "Distribution Plan | Warehouse: " + warehouseLocation +
+           " | Retailers: " + retailers.size() +
+           " | Shipments: " + shipments.size() +
+           " | Logistics Staff: " + logistics.size();
+}
     
+public Report generateDistributionReport() {
+
+    String reportData =
+            "Distribution Report\n" +
+            "Warehouse: " + warehouseLocation + "\n" +
+            "Retailers: " + retailers.size() + "\n" +
+            "Shipments: " + shipments.size() + "\n" +
+            "Logistics Team: " + logistics.size();
+
+    return new Report(reportData);
+}
+  public boolean updateDistributionRecords() {
+
+    try {
+
+        if (shipments.isEmpty()) {
+            return false;
+        }
+
+        int activeShipments = 0;
+
+        for (Shipment shipment : shipments) {
+            if (shipment != null) {
+                activeShipments++;
+            }
+        }
+
+        System.out.println(
+            "Distribution records updated successfully. " +
+            activeShipments + " shipment(s) reviewed."
+        );
+
+        return true;
+
+    } catch (Exception e) {
+        System.out.println("Failed to update distribution records.");
+        return false;
+    }
+}
     
     //rawan
     public List<String> getNotifications() {
@@ -149,6 +196,7 @@ public List<Logistics> getLogistics() {
 
     System.out.println("Distributor received: " + message);
 }
+   
     //rawan
   @Override
   public void update(String msg) {

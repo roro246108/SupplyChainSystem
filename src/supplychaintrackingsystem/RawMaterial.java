@@ -88,12 +88,7 @@ public RawMaterial(String materialID, String materialData) {
         return true;
     }
 
-   
-    public void revokeApproval() {
-        approved = false;
-    }
-
-    
+ 
    public boolean revokeApproval(String reason) {
 
     if (!approved) {
