@@ -9,12 +9,29 @@ package supplychaintrackingsystem;
  * @author zeina
  */
 public class InventoryGUI extends javax.swing.JFrame {
+    private final InventoryBoundary inventoryBoundary;
+    private final Product productContext;
 
     /**
      * Creates new form InventoryGUI
      */
     public InventoryGUI() {
+        this(AppContext.inventoryBoundary(), null);
+    }
+
+    public InventoryGUI(InventoryBoundary inventoryBoundary) {
+        this(inventoryBoundary, null);
+    }
+
+    public InventoryGUI(Product product) {
+        this(AppContext.inventoryBoundary(), product);
+    }
+
+    public InventoryGUI(InventoryBoundary inventoryBoundary, Product product) {
+        this.inventoryBoundary = inventoryBoundary == null ? AppContext.inventoryBoundary() : inventoryBoundary;
+        this.productContext = product;
         initComponents();
+        prefillFromProduct();
     }
 
     /**
@@ -91,14 +108,6 @@ public class InventoryGUI extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Inventory ID:");
 
-        txtInventoryID.setText("jTextField1");
-
-        txtProductID.setText("jTextField2");
-
-        txtProductName.setText("jTextField3");
-
-        txtWarehouseLocation.setText("jTextField4");
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Product ID:");
 
@@ -167,14 +176,6 @@ public class InventoryGUI extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setText("Current Quantity:");
-
-        txtCurrentQuantity.setText("jTextField1");
-
-        txtAddQuantity.setText("jTextField2");
-
-        txtMinimumStockLevel.setText("TextField3");
-
-        txtLastUpdated.setText("jTextField4");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setText("Add Quantity:");
@@ -316,6 +317,11 @@ public class InventoryGUI extends javax.swing.JFrame {
         btnCheckAvailability.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCheckAvailability.setForeground(new java.awt.Color(242, 242, 242));
         btnCheckAvailability.setText("Check Availability");
+        btnCheckAvailability.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckAvailabilityActionPerformed(evt);
+            }
+        });
 
         btnDetectLowStock.setBackground(new java.awt.Color(244, 67, 54));
         btnDetectLowStock.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -326,11 +332,21 @@ public class InventoryGUI extends javax.swing.JFrame {
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnClear.setForeground(new java.awt.Color(242, 242, 242));
         btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         btnBack.setBackground(new java.awt.Color(96, 125, 139));
         btnBack.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnBack.setForeground(new java.awt.Color(242, 242, 242));
         btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -389,6 +405,281 @@ public class InventoryGUI extends javax.swing.JFrame {
     private void cmbAvailabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAvailabilityActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbAvailabilityActionPerformed
+
+    private void btnAddStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddStockActionPerformed
+        try {
+            int inventoryID = readRequiredInt(txtInventoryID, "Inventory ID");
+            int productID = readRequiredInt(txtProductID, "Product ID");
+            String productName = readRequiredText(txtProductName, "Product Name");
+            String warehouseLocation = readRequiredText(txtWarehouseLocation, "Warehouse Location");
+            Integer currentQuantity = readOptionalInt(txtCurrentQuantity, "Current Quantity");
+            Integer addQuantity = readOptionalInt(txtAddQuantity, "Add Quantity");
+            Integer minimumStockLevel = readOptionalInt(txtMinimumStockLevel, "Minimum Stock Level");
+
+            Inventory inventory = inventoryBoundary.addStock(
+                    inventoryID,
+                    productID,
+                    productName,
+                    warehouseLocation,
+                    currentQuantity,
+                    addQuantity,
+                    minimumStockLevel
+            );
+
+            applyInventoryToForm(inventory);
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Stock added successfully.",
+                    "Inventory Updated",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Validation Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Unexpected error while adding stock.",
+                    "Inventory Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAddStockActionPerformed
+
+    private void btnUpdateStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateStockActionPerformed
+        try {
+            int inventoryID = readRequiredInt(txtInventoryID, "Inventory ID");
+            int productID = readRequiredInt(txtProductID, "Product ID");
+            String productName = readRequiredText(txtProductName, "Product Name");
+            String warehouseLocation = readRequiredText(txtWarehouseLocation, "Warehouse Location");
+            int currentQuantity = readRequiredInt(txtCurrentQuantity, "Current Quantity");
+            Integer minimumStockLevel = readOptionalInt(txtMinimumStockLevel, "Minimum Stock Level");
+
+            Inventory inventory = inventoryBoundary.updateStock(
+                    inventoryID,
+                    productID,
+                    productName,
+                    warehouseLocation,
+                    currentQuantity,
+                    minimumStockLevel
+            );
+
+            applyInventoryToForm(inventory);
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Stock updated successfully.",
+                    "Inventory Updated",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Validation Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Unexpected error while updating stock.",
+                    "Inventory Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnUpdateStockActionPerformed
+
+    private void btnCheckAvailabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckAvailabilityActionPerformed
+        try {
+            int inventoryID = readRequiredInt(txtInventoryID, "Inventory ID");
+            int productID = readRequiredInt(txtProductID, "Product ID");
+            String productName = readRequiredText(txtProductName, "Product Name");
+            String warehouseLocation = readRequiredText(txtWarehouseLocation, "Warehouse Location");
+            Integer currentQuantity = readOptionalInt(txtCurrentQuantity, "Current Quantity");
+            Integer minimumStockLevel = readOptionalInt(txtMinimumStockLevel, "Minimum Stock Level");
+
+            Inventory inventory = inventoryBoundary.checkAvailability(
+                    inventoryID,
+                    productID,
+                    productName,
+                    warehouseLocation,
+                    currentQuantity,
+                    minimumStockLevel
+            );
+
+            applyInventoryToForm(inventory);
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Availability checked: " + inventory.getAvailability(),
+                    "Inventory Status",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Validation Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Unexpected error while checking availability.",
+                    "Inventory Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnCheckAvailabilityActionPerformed
+
+    private void btnDetectLowStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetectLowStockActionPerformed
+        try {
+            int inventoryID = readRequiredInt(txtInventoryID, "Inventory ID");
+            int productID = readRequiredInt(txtProductID, "Product ID");
+            String productName = readRequiredText(txtProductName, "Product Name");
+            String warehouseLocation = readRequiredText(txtWarehouseLocation, "Warehouse Location");
+            Integer currentQuantity = readOptionalInt(txtCurrentQuantity, "Current Quantity");
+            Integer minimumStockLevel = readOptionalInt(txtMinimumStockLevel, "Minimum Stock Level");
+
+            Inventory inventory = inventoryBoundary.detectLowStock(
+                    inventoryID,
+                    productID,
+                    productName,
+                    warehouseLocation,
+                    currentQuantity,
+                    minimumStockLevel
+            );
+
+            applyInventoryToForm(inventory);
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    inventory.getLowStockNotes(),
+                    "Stock Check",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Validation Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Unexpected error while detecting low stock.",
+                    "Inventory Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnDetectLowStockActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        txtInventoryID.setText("");
+        txtProductID.setText("");
+        txtProductName.setText("");
+        txtWarehouseLocation.setText("");
+        txtCurrentQuantity.setText("");
+        txtAddQuantity.setText("");
+        txtMinimumStockLevel.setText("");
+        txtLastUpdated.setText("");
+        jTextArea1.setText("");
+        cmbAvailability.setSelectedIndex(0);
+        cmbStockCondition.setSelectedIndex(0);
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        try {
+            User currentUser = AppContext.getCurrentUser();
+            javax.swing.JFrame dashboard = currentUser == null
+                    ? new LoginGuii(AppContext.authBoundary())
+                    : AppContext.createDashboardForRole(currentUser.getRole());
+
+            if (dashboard == null) {
+                throw new IllegalStateException("No screen is mapped for the current role.");
+            }
+
+            dashboard.setVisible(true);
+            dispose();
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Navigation Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private int readRequiredInt(javax.swing.JTextField field, String fieldName) {
+        Integer value = readOptionalInt(field, fieldName);
+        if (value == null) {
+            throw new IllegalArgumentException(fieldName + " must be provided.");
+        }
+        return value;
+    }
+
+    private Integer readOptionalInt(javax.swing.JTextField field, String fieldName) {
+        String value = normalizeInput(field);
+        if (value == null) {
+            return null;
+        }
+
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException ex) {
+            throw new IllegalArgumentException(fieldName + " must be a valid number.");
+        }
+    }
+
+    private String readRequiredText(javax.swing.JTextField field, String fieldName) {
+        String value = normalizeInput(field);
+        if (value == null) {
+            throw new IllegalArgumentException(fieldName + " cannot be empty.");
+        }
+        return value;
+    }
+
+    private String normalizeInput(javax.swing.JTextField field) {
+        String value = field.getText() == null ? "" : field.getText().trim();
+        if (value.isBlank() || value.startsWith("jTextField") || value.startsWith("TextField")) {
+            return null;
+        }
+        return value;
+    }
+
+    private void applyInventoryToForm(Inventory inventory) {
+        if (inventory == null) {
+            return;
+        }
+
+        txtInventoryID.setText(String.valueOf(inventory.getInventoryID()));
+        txtProductID.setText(String.valueOf(inventory.getProductID()));
+        txtProductName.setText(safeText(inventory.getProductName()));
+        txtWarehouseLocation.setText(safeText(inventory.getWarehouseLocation()));
+        txtCurrentQuantity.setText(String.valueOf(inventory.getStockLevel()));
+        txtAddQuantity.setText("");
+        txtMinimumStockLevel.setText(String.valueOf(inventory.getReorderThreshold()));
+        txtLastUpdated.setText(safeText(inventory.getLastUpdated()));
+        jTextArea1.setText(safeText(inventory.getLowStockNotes()));
+
+        setComboValue(cmbAvailability, inventory.getAvailability());
+        setComboValue(cmbStockCondition, inventory.getStockCondition());
+    }
+
+    private void prefillFromProduct() {
+        if (productContext == null) {
+            return;
+        }
+
+        txtProductID.setText(String.valueOf(productContext.getProductID()));
+        txtProductName.setText(safeText(productContext.getProductName()));
+
+        Inventory inventory = productContext.getInventory();
+        if (inventory != null) {
+            txtInventoryID.setText(String.valueOf(inventory.getInventoryID()));
+            txtWarehouseLocation.setText(safeText(inventory.getWarehouseLocation()));
+            txtCurrentQuantity.setText(String.valueOf(inventory.getStockLevel()));
+            txtMinimumStockLevel.setText(String.valueOf(inventory.getReorderThreshold()));
+            txtLastUpdated.setText(safeText(inventory.getLastUpdated()));
+            jTextArea1.setText(safeText(inventory.getLowStockNotes()));
+            setComboValue(cmbAvailability, inventory.getAvailability());
+            setComboValue(cmbStockCondition, inventory.getStockCondition());
+        }
+    }
+
+    private void setComboValue(javax.swing.JComboBox<String> comboBox, String value) {
+        if (value == null || value.isBlank()) {
+            return;
+        }
+
+        for (int i = 0; i < comboBox.getItemCount(); i++) {
+            if (value.equalsIgnoreCase(comboBox.getItemAt(i))) {
+                comboBox.setSelectedIndex(i);
+                return;
+            }
+        }
+    }
+
+    private String safeText(String value) {
+        return value == null ? "" : value;
+    }
 
     /**
      * @param args the command line arguments

@@ -8,6 +8,7 @@ import java.util.List;
 public class User {
 
     private int userID;
+    private String username;
     private String name;
     private String email;
     private String password;
@@ -22,13 +23,19 @@ public class User {
     private final List<String> activityLog = new ArrayList<>();
 
     public User(int userID, String name, String email, String password, String role) {
+        this(userID, name, name, email, password, role);
+    }
+
+    public User(int userID, String username, String name, String email, String password, String role) {
         validateUserID(userID);
+        validateUsername(username);
         validateName(name);
         validateEmail(email);
         validatePassword(password);
         validateRole(role);
 
         this.userID = userID;
+        this.username = username.trim();
         this.name = name.trim();
         this.email = email.trim().toLowerCase();
         this.password = password;
@@ -154,6 +161,16 @@ public class User {
         return userID;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        validateUsername(username);
+        this.username = username.trim();
+        addLog("Username changed by system/admin.");
+    }
+
     public String getName() {
         return name;
     }
@@ -166,6 +183,10 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setEmail(String email) {
@@ -237,6 +258,20 @@ public class User {
         if (name.trim().length() < 2) {
             throw new IllegalArgumentException("Name must be at least 2 characters.");
         }
+
+        if (!name.trim().matches("[A-Za-z ]+")) {
+            throw new IllegalArgumentException("Name must contain letters only.");
+        }
+    }
+
+    private void validateUsername(String username) {
+        if (username == null || username.isBlank()) {
+            throw new IllegalArgumentException("Username cannot be empty.");
+        }
+
+        if (username.trim().length() < 2) {
+            throw new IllegalArgumentException("Username must be at least 2 characters.");
+        }
     }
 
     private void validateEmail(String email) {
@@ -289,7 +324,10 @@ public class User {
                 "Retailer",
                 "Manufacturer",
                 "Logistics",
-                "Administrator"
+                "Administrator",
+                "System Administrator",
+                "SystemAdministrator",
+                "Regulator"
         );
 
         if (!validRoles.contains(role.trim())) {
@@ -305,6 +343,7 @@ public class User {
     public String toString() {
         return "User{"
                 + "userID=" + userID
+                + ", username='" + username + '\''
                 + ", name='" + name + '\''
                 + ", email='" + email + '\''
                 + ", role='" + role + '\''

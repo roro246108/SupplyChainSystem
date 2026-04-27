@@ -4,17 +4,24 @@
  */
 package supplychaintrackingsystem;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author zeina
  */
 public class RegulatorGUI extends javax.swing.JFrame {
+    private final UserController userController;
+    private Regulator currentRegulator;
 
     /**
      * Creates new form RegulatorGUI
      */
     public RegulatorGUI() {
+        this.userController = AppContext.userController();
         initComponents();
+        configureDefaults();
+        populateFromUserController();
     }
 
     /**
@@ -41,12 +48,10 @@ public class RegulatorGUI extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         txtProductID = new javax.swing.JTextField();
         txtTrackingRecordID = new javax.swing.JTextField();
-        cmbComplianceStatus = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAuditNotes = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         cmbActivityType = new javax.swing.JComboBox<>();
@@ -111,13 +116,7 @@ public class RegulatorGUI extends javax.swing.JFrame {
 
         jLabel6.setText("Audit Region: ");
 
-        txtRegulatorID.setText("jTextField1");
-
-        txtAgencyName.setText("jTextField2");
-
         cmbAccessLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Senior Regulator", "Regional Auditor", "Viewer" }));
-
-        txtAuditRegion.setText("jTextField3");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -169,7 +168,6 @@ public class RegulatorGUI extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Audit Review", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(255, 153, 51))); // NOI18N
 
-        txtProductID.setText("jTextField1");
         txtProductID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtProductIDActionPerformed(evt);
@@ -183,17 +181,13 @@ public class RegulatorGUI extends javax.swing.JFrame {
             }
         });
 
-        cmbComplianceStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending Review", "Compliant", "Non-Compliant", "Needs Investigation" }));
-
         txtAuditNotes.setColumns(20);
         txtAuditNotes.setRows(5);
         jScrollPane1.setViewportView(txtAuditNotes);
 
         jLabel7.setText("Product ID");
 
-        jLabel8.setText("Tracking Record ID");
-
-        jLabel9.setText("Compliance Status");
+        jLabel8.setText("Order ID");
 
         jLabel10.setText("Audit Notes");
 
@@ -206,14 +200,8 @@ public class RegulatorGUI extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jLabel9)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGap(24, 24, 24)))
-                            .addGap(6, 6, 6))
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(30, 30, 30))
                         .addGroup(jPanel4Layout.createSequentialGroup()
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -222,10 +210,8 @@ public class RegulatorGUI extends javax.swing.JFrame {
                         .addGap(60, 60, 60)))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtProductID, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtTrackingRecordID, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(cmbComplianceStatus, 0, 1, Short.MAX_VALUE)))
+                    .addComponent(txtTrackingRecordID, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -239,15 +225,11 @@ public class RegulatorGUI extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTrackingRecordID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbComplianceStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addContainerGap(14, Short.MAX_VALUE))
+                    .addComponent(jLabel10)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tracking & Compliance", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 204, 204))); // NOI18N
@@ -314,36 +296,71 @@ public class RegulatorGUI extends javax.swing.JFrame {
         btnAuditActivity.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAuditActivity.setForeground(new java.awt.Color(255, 255, 255));
         btnAuditActivity.setText("Audit Activity ");
+        btnAuditActivity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAuditActivityActionPerformed(evt);
+            }
+        });
 
         btnViewTracking.setBackground(new java.awt.Color(0, 172, 193));
         btnViewTracking.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnViewTracking.setForeground(new java.awt.Color(255, 255, 255));
         btnViewTracking.setText("View Tracking");
+        btnViewTracking.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewTrackingActionPerformed(evt);
+            }
+        });
 
         btnReviewStorage.setBackground(new java.awt.Color(255, 152, 0));
         btnReviewStorage.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnReviewStorage.setForeground(new java.awt.Color(255, 255, 255));
         btnReviewStorage.setText("Review Storage ");
+        btnReviewStorage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReviewStorageActionPerformed(evt);
+            }
+        });
 
         btnVerifyCompliance.setBackground(new java.awt.Color(76, 175, 80));
         btnVerifyCompliance.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnVerifyCompliance.setForeground(new java.awt.Color(255, 255, 255));
         btnVerifyCompliance.setText("Verify Compliance");
+        btnVerifyCompliance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerifyComplianceActionPerformed(evt);
+            }
+        });
 
         btnGenerateReport.setBackground(new java.awt.Color(106, 27, 154));
         btnGenerateReport.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnGenerateReport.setForeground(new java.awt.Color(255, 255, 255));
         btnGenerateReport.setText("Generate Report");
+        btnGenerateReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerateReportActionPerformed(evt);
+            }
+        });
 
         btnBack.setBackground(new java.awt.Color(96, 125, 139));
         btnBack.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnBack.setForeground(new java.awt.Color(255, 255, 255));
         btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         btnClear.setBackground(new java.awt.Color(158, 158, 158));
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnClear.setForeground(new java.awt.Color(255, 255, 255));
         btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -417,6 +434,279 @@ public class RegulatorGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtProductIDActionPerformed
 
+    private void btnAuditActivityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuditActivityActionPerformed
+        try {
+            int regulatorID = parseRequiredInt(txtRegulatorID.getText(), "Regulator ID");
+            String agencyName = readRequiredText(txtAgencyName.getText(), "Agency Name");
+            String accessLevel = (String) cmbAccessLevel.getSelectedItem();
+            String auditRegion = readRequiredText(txtAuditRegion.getText(), "Audit Region");
+
+            User baseUser = resolveLoggedInUser();
+            if (baseUser == null) {
+                throw new IllegalStateException("No logged-in user was found in UserController.");
+            }
+
+            if (regulatorID != baseUser.getUserID()) {
+                throw new IllegalArgumentException("Regulator ID must match the logged-in user ID.");
+            }
+
+            Regulator regulator = new Regulator(
+                    regulatorID,
+                    agencyName,
+                    accessLevel,
+                    auditRegion,
+                    baseUser.getUserID(),
+                    baseUser.getName(),
+                    baseUser.getEmail(),
+                    baseUser.getPassword(),
+                    baseUser.getRole()
+            );
+
+            currentRegulator = regulator;
+            regulator.auditSupplyChainActivity();
+            txtAuditNotes.setText("Audit activity executed for " + agencyName + " in " + auditRegion + ".");
+            JOptionPane.showMessageDialog(this,
+                    "Audit activity executed successfully.",
+                    "Audit Activity",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Validation Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Unexpected error while auditing activity.",
+                    "Regulator Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAuditActivityActionPerformed
+
+    private void btnViewTrackingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewTrackingActionPerformed
+        try {
+            int orderID = parseRequiredInt(txtTrackingRecordID.getText(), "Order ID");
+            Order order = AppContext.orderController().getOrderByID(orderID);
+            if (order == null) {
+                throw new IllegalArgumentException("Order not found.");
+            }
+
+            Regulator regulator = ensureRegulator();
+            regulator.viewTrackingRecords(order);
+            String trackingInfo = order.trackOrder();
+            txtAuditNotes.setText(trackingInfo);
+            JOptionPane.showMessageDialog(this,
+                    trackingInfo,
+                    "Tracking Records",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Validation Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Unexpected error while viewing tracking.",
+                    "Regulator Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnViewTrackingActionPerformed
+
+    private void btnReviewStorageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReviewStorageActionPerformed
+        try {
+            String productID = readRequiredText(txtProductID.getText(), "Product ID");
+            Regulator regulator = ensureRegulator();
+            regulator.reviewStorageRecord(productID);
+            txtAuditNotes.setText("Storage reviewed for product " + productID + ".");
+            JOptionPane.showMessageDialog(this,
+                    "Storage record reviewed successfully.",
+                    "Storage Review",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Validation Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Unexpected error while reviewing storage.",
+                    "Regulator Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnReviewStorageActionPerformed
+
+    private void btnVerifyComplianceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerifyComplianceActionPerformed
+        try {
+            Regulator regulator = ensureRegulator();
+            String activityType = (String) cmbActivityType.getSelectedItem();
+            String recordStatus = (String) cmbRecordStatus.getSelectedItem();
+            String notes = txtAuditNotes.getText() == null ? "" : txtAuditNotes.getText().trim();
+
+            if (notes.isBlank()) {
+                notes = "No audit notes provided.";
+            }
+
+            String summary = "Compliance verified for " + activityType
+                    + " with status " + recordStatus
+                    + ". Notes: " + notes;
+
+            txtReportSummary.setText(summary);
+            cmbRecordStatus.setSelectedItem("Reviewed");
+            JOptionPane.showMessageDialog(this,
+                    summary,
+                    "Compliance Verification",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Unexpected error while verifying compliance.",
+                    "Regulator Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnVerifyComplianceActionPerformed
+
+    private void btnGenerateReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateReportActionPerformed
+        try {
+            Regulator regulator = ensureRegulator();
+            Report report = regulator.generateAuditReport();
+            txtReportSummary.setText(report.toString());
+            JOptionPane.showMessageDialog(this,
+                    report.toString(),
+                    "Generated Report",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Unexpected error while generating report.",
+                    "Regulator Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGenerateReportActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        txtRegulatorID.setText("");
+        txtAgencyName.setText("");
+        txtAuditRegion.setText("");
+        txtProductID.setText("");
+        txtTrackingRecordID.setText("");
+        txtAuditNotes.setText("");
+        txtReportSummary.setText("");
+        cmbAccessLevel.setSelectedIndex(0);
+        cmbActivityType.setSelectedIndex(0);
+        cmbRecordStatus.setSelectedIndex(0);
+        currentRegulator = null;
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        try {
+            User currentUser = AppContext.getCurrentUser();
+            javax.swing.JFrame dashboard = currentUser == null
+                    ? new LoginGuii(AppContext.authBoundary())
+                    : AppContext.createDashboardForRole(currentUser.getRole());
+
+            if (dashboard == null) {
+                throw new IllegalStateException("No screen is mapped for the current role.");
+            }
+
+            dashboard.setVisible(true);
+            dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Navigation Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void configureDefaults() {
+        txtRegulatorID.setText("");
+        txtAgencyName.setText("");
+        txtAuditRegion.setText("");
+        txtProductID.setText("");
+        txtTrackingRecordID.setText("");
+        txtAuditNotes.setText("");
+        txtReportSummary.setText("");
+    }
+
+    private Regulator ensureRegulator() {
+        if (currentRegulator != null) {
+            return currentRegulator;
+        }
+
+        int regulatorID = parseRequiredInt(txtRegulatorID.getText(), "Regulator ID");
+        String agencyName = readRequiredText(txtAgencyName.getText(), "Agency Name");
+        String accessLevel = (String) cmbAccessLevel.getSelectedItem();
+        String auditRegion = readRequiredText(txtAuditRegion.getText(), "Audit Region");
+
+        User baseUser = resolveLoggedInUser();
+        if (baseUser == null) {
+            throw new IllegalStateException("No logged-in user was found in UserController.");
+        }
+
+        if (regulatorID != baseUser.getUserID()) {
+            throw new IllegalArgumentException("Regulator ID must match the logged-in user ID.");
+        }
+
+        currentRegulator = new Regulator(
+                regulatorID,
+                agencyName,
+                accessLevel,
+                auditRegion,
+                baseUser.getUserID(),
+                baseUser.getName(),
+                baseUser.getEmail(),
+                baseUser.getPassword(),
+                baseUser.getRole()
+        );
+        return currentRegulator;
+    }
+
+    private void populateFromUserController() {
+        User baseUser = resolveLoggedInUser();
+        if (baseUser == null) {
+            return;
+        }
+
+        txtRegulatorID.setText(String.valueOf(baseUser.getUserID()));
+        txtAgencyName.setText(baseUser.getName());
+        if (baseUser.getRole() != null) {
+            for (int i = 0; i < cmbAccessLevel.getItemCount(); i++) {
+                if (baseUser.getRole().equalsIgnoreCase(cmbAccessLevel.getItemAt(i))) {
+                    cmbAccessLevel.setSelectedIndex(i);
+                    break;
+                }
+            }
+        }
+    }
+
+    private User resolveLoggedInUser() {
+        User currentUser = AppContext.getCurrentUser();
+        if (currentUser == null) {
+            return null;
+        }
+
+        User storedUser = userController.getUser(currentUser.getUserID());
+        return storedUser != null ? storedUser : currentUser;
+    }
+
+    private int parseRequiredInt(String value, String fieldName) {
+        String text = value == null ? "" : value.trim();
+        if (text.isBlank() || text.startsWith("jTextField")) {
+            throw new IllegalArgumentException(fieldName + " cannot be empty.");
+        }
+
+        try {
+            return Integer.parseInt(text);
+        } catch (NumberFormatException ex) {
+            throw new IllegalArgumentException(fieldName + " must be a valid number.");
+        }
+    }
+
+    private String readRequiredText(String value, String fieldName) {
+        String text = value == null ? "" : value.trim();
+        if (text.isBlank() || text.startsWith("jTextField")) {
+            throw new IllegalArgumentException(fieldName + " cannot be empty.");
+        }
+        return text;
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -462,7 +752,6 @@ public class RegulatorGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnViewTracking;
     private javax.swing.JComboBox<String> cmbAccessLevel;
     private javax.swing.JComboBox<String> cmbActivityType;
-    private javax.swing.JComboBox<String> cmbComplianceStatus;
     private javax.swing.JComboBox<String> cmbRecordStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -476,7 +765,6 @@ public class RegulatorGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

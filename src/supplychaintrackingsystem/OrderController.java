@@ -9,7 +9,88 @@ public class OrderController {
 
     private final Map<Integer, Order> orders = new HashMap<>();
     private final Map<Integer, Product> productsCatalog = new HashMap<>();
+    private Product currentProduct;
     private int nextOrderID = 1;
+
+    public Product saveProduct(Product product) {
+        try {
+            if (product == null) {
+                throw new NullPointerException("Product cannot be null.");
+            }
+
+            if (product.getProductID() <= 0) {
+                throw new IllegalArgumentException("Product ID must be positive.");
+            }
+
+            productsCatalog.put(product.getProductID(), product);
+            currentProduct = product;
+            return product;
+        } catch (Exception e) {
+            System.out.println("Error saving product: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public Product loadProduct(int productID) {
+        try {
+            if (productID <= 0) {
+                throw new IllegalArgumentException("Product ID must be positive.");
+            }
+
+            Product product = productsCatalog.get(productID);
+            if (product == null) {
+                throw new IllegalArgumentException("Product not found.");
+            }
+
+            currentProduct = product;
+            return product;
+        } catch (Exception e) {
+            System.out.println("Error loading product: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public boolean checkProductAvailability(Product product) {
+        try {
+            if (product == null) {
+                throw new NullPointerException("Product cannot be null.");
+            }
+
+            currentProduct = product;
+            return product.checkAvailability();
+        } catch (Exception e) {
+            System.out.println("Error checking product availability: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public Product reportProductIssue(Product product, String issue) {
+        try {
+            if (product == null) {
+                throw new NullPointerException("Product cannot be null.");
+            }
+
+            if (issue == null || issue.isBlank()) {
+                throw new IllegalArgumentException("Issue details cannot be empty.");
+            }
+
+            product.updateProductStatus("Pending Inspection");
+            productsCatalog.put(product.getProductID(), product);
+            currentProduct = product;
+            return product;
+        } catch (Exception e) {
+            System.out.println("Error reporting product issue: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public Product getCurrentProduct() {
+        return currentProduct;
+    }
+
+    public void clearCurrentProduct() {
+        currentProduct = null;
+    }
 
     public void addProductToCatalog(Product product) {
         try {

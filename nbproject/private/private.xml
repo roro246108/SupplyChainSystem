@@ -3,29 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/Admin.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/SystemController.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/SupplierBoundary.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/ManufacturerBoundary.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/ProductionRecord.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/Inventory.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/Supplier.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/Customer.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/RawMaterial.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/StandardShippingStrategy.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/ShippingStrategy.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/Shipment.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/ProductionController.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/ColdChainShippingStrategy.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/FastShippingStrategy.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/Order.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/CustomerGUI.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/OrderController.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/CustomerBoundary.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/RetailerBoundary.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/User.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/UserController.java</file>
-            <file>file:/C:/Users/Rawan/OneDrive/Desktop/SupplyChainTrackingSystem/SupplyChainSystem/src/supplychaintrackingsystem/AdminBoundary.java</file>
+            <file>file:/C:/Users/M-ABEER/OneDrive%20-%20The%20British%20University%20in%20Egypt/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/SignUpGuiii.java</file>
+            <file>file:/C:/Users/M-ABEER/OneDrive%20-%20The%20British%20University%20in%20Egypt/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/LoginGuii.java</file>
+            <file>file:/C:/Users/M-ABEER/OneDrive%20-%20The%20British%20University%20in%20Egypt/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/InventoryGUI.java</file>
+            <file>file:/C:/Users/M-ABEER/OneDrive%20-%20The%20British%20University%20in%20Egypt/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/LogisticsUI.java</file>
+            <file>file:/C:/Users/M-ABEER/OneDrive%20-%20The%20British%20University%20in%20Egypt/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/RegulatorGUI.java</file>
+            <file>file:/C:/Users/M-ABEER/OneDrive%20-%20The%20British%20University%20in%20Egypt/Desktop/SupplyChainSystem/src/supplychaintrackingsystem/Logistics.java</file>
         </group>
     </open-files>
 </project-private>

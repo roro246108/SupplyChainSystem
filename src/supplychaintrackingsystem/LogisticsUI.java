@@ -4,17 +4,35 @@
  */
 package supplychaintrackingsystem;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author zeina
  */
 public class LogisticsUI extends javax.swing.JFrame {
 
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    private final LogisticsBoundary logisticsBoundary;
+    private final UserController userController;
+
     /**
      * Creates new form LogisticsUI
      */
     public LogisticsUI() {
+        this(AppContext.logisticsBoundary());
+    }
+
+    public LogisticsUI(LogisticsBoundary logisticsBoundary) {
+        this.logisticsBoundary = logisticsBoundary == null ? AppContext.logisticsBoundary() : logisticsBoundary;
+        this.userController = AppContext.userController();
         initComponents();
+        configureLogisticsMode();
+        populateLogisticsProfile();
+        wireActions();
     }
 
     /**
@@ -26,30 +44,42 @@ public class LogisticsUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel10 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        txtShipmentID = new javax.swing.JTextField();
-        txtOrderID = new javax.swing.JTextField();
-        txtOrigin = new javax.swing.JTextField();
-        txtDestination = new javax.swing.JTextField();
-        txtCurrentLocation = new javax.swing.JTextField();
-        txtDepartureDate = new javax.swing.JTextField();
-        txtArrivalDate = new javax.swing.JTextField();
-        cmbShipmentStatus = new javax.swing.JComboBox<>();
-        btnCreateShipment = new javax.swing.JButton();
-        btnCalculateETA = new javax.swing.JButton();
-        btnUpdateStatus = new javax.swing.JButton();
+        ScheduleDelivery = new javax.swing.JButton();
+        ReportIssue = new javax.swing.JButton();
+        MonitorConditions = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
-        btnTrackShipment = new javax.swing.JButton();
+        RecordDelivery = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        logisticsID = new javax.swing.JTextField();
+        Department = new javax.swing.JTextField();
+        AssignedRegion = new javax.swing.JTextField();
+        contactNumber = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        DeliveryDate = new javax.swing.JTextField();
+        ReceverName = new javax.swing.JTextField();
+        DeliveryLocation = new javax.swing.JTextField();
+        DeliveryIssue = new javax.swing.JTextField();
+        ShipmentId = new javax.swing.JTextField();
+        DeliveryStatus = new javax.swing.JComboBox<>();
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel10.setText("Shipment ID:");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,72 +106,25 @@ public class LogisticsUI extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setText("Shipment ID:");
+        ScheduleDelivery.setBackground(new java.awt.Color(33, 150, 243));
+        ScheduleDelivery.setForeground(new java.awt.Color(242, 242, 242));
+        ScheduleDelivery.setText("Schedule Delivery");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel3.setText("Order ID:");
+        ReportIssue.setBackground(new java.awt.Color(255, 152, 0));
+        ReportIssue.setForeground(new java.awt.Color(242, 242, 242));
+        ReportIssue.setText("Report Issue");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel4.setText("Origin:");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel5.setText("Destination:");
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel6.setText("Current Location:");
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel7.setText("Shipment Status:");
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel8.setText("Departure Date:");
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel9.setText("Arrival Date:");
-
-        txtShipmentID.setText("txtShipmentID");
-
-        txtOrderID.setText("txtOrderID");
-
-        txtOrigin.setText("txtOrigin");
-
-        txtDestination.setText("txtDestination");
-
-        txtCurrentLocation.setText("txtCurrentLocation");
-
-        txtDepartureDate.setForeground(new java.awt.Color(102, 102, 102));
-        txtDepartureDate.setText("YYYY-MM-DD");
-
-        txtArrivalDate.setForeground(new java.awt.Color(102, 102, 102));
-        txtArrivalDate.setText("YYYY-MM-DD");
-
-        cmbShipmentStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "In Transit", "Out for Delivery", "Delivered", "Delayed", "Cancelled" }));
-        cmbShipmentStatus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbShipmentStatusActionPerformed(evt);
-            }
-        });
-
-        btnCreateShipment.setBackground(new java.awt.Color(33, 150, 243));
-        btnCreateShipment.setForeground(new java.awt.Color(242, 242, 242));
-        btnCreateShipment.setText("Create Shipment");
-
-        btnCalculateETA.setBackground(new java.awt.Color(255, 152, 0));
-        btnCalculateETA.setForeground(new java.awt.Color(242, 242, 242));
-        btnCalculateETA.setText("Calculate ETA");
-
-        btnUpdateStatus.setBackground(new java.awt.Color(156, 39, 176));
-        btnUpdateStatus.setForeground(new java.awt.Color(242, 242, 242));
-        btnUpdateStatus.setText("Update Status");
+        MonitorConditions.setBackground(new java.awt.Color(156, 39, 176));
+        MonitorConditions.setForeground(new java.awt.Color(242, 242, 242));
+        MonitorConditions.setText("Monitor Conditions");
 
         btnClear.setBackground(new java.awt.Color(158, 158, 158));
         btnClear.setForeground(new java.awt.Color(242, 242, 242));
         btnClear.setText("Clear");
 
-        btnTrackShipment.setBackground(new java.awt.Color(76, 175, 80));
-        btnTrackShipment.setForeground(new java.awt.Color(242, 242, 242));
-        btnTrackShipment.setText("Track Shipment");
+        RecordDelivery.setBackground(new java.awt.Color(76, 175, 80));
+        RecordDelivery.setForeground(new java.awt.Color(242, 242, 242));
+        RecordDelivery.setText("Record Delivery ");
 
         btnBack.setBackground(new java.awt.Color(96, 125, 139));
         btnBack.setForeground(new java.awt.Color(242, 242, 242));
@@ -152,55 +135,178 @@ public class LogisticsUI extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(204, 0, 204));
+        jLabel11.setText("Logistics Profile");
+
+        jLabel13.setText("Logistics ID:");
+
+        jLabel14.setText("Department:");
+
+        jLabel15.setText("Assigned Region");
+
+        jLabel16.setText("Contact Number:");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addGap(18, 18, 18)
+                        .addComponent(AssignedRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel14))
+                        .addGap(40, 40, 40)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Department, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(logisticsID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addGap(18, 18, 18)
+                        .addComponent(contactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(36, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel11)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(logisticsID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(Department, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(AssignedRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(contactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(56, 56, 56))
+        );
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel12.setText("Shipment Operations");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setText("Shipment ID:");
+
+        jLabel17.setText("Delivery Date");
+
+        jLabel18.setText("Receiver Name:");
+
+        jLabel19.setText("Delivery Location:");
+
+        jLabel20.setText("Delivery Status:");
+
+        jLabel21.setText("Delivery Issue:");
+
+        DeliveryLocation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeliveryLocationActionPerformed(evt);
+            }
+        });
+
+        ShipmentId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ShipmentIdActionPerformed(evt);
+            }
+        });
+
+        DeliveryStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "In Transit", "Out for Delivery", "Delivered", "Delayed", "Cancelled" }));
+        DeliveryStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeliveryStatusActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(114, 114, 114))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel18)
+                                    .addComponent(jLabel19)
+                                    .addComponent(jLabel20))
+                                .addGap(46, 46, 46)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(DeliveryLocation, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                    .addComponent(DeliveryStatus, javax.swing.GroupLayout.Alignment.TRAILING, 0, 0, Short.MAX_VALUE)
+                                    .addComponent(ReceverName)
+                                    .addComponent(DeliveryDate)
+                                    .addComponent(ShipmentId)))
+                            .addComponent(jLabel17)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel21)
+                                .addGap(66, 66, 66)
+                                .addComponent(DeliveryIssue, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel12))
+                        .addContainerGap(26, Short.MAX_VALUE))))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel12)
+                .addGap(29, 29, 29)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(ShipmentId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(DeliveryDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(ReceverName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(DeliveryLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel20)
+                    .addComponent(DeliveryStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel21)
+                    .addComponent(DeliveryIssue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtDepartureDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCurrentLocation)
-                    .addComponent(txtOrigin)
-                    .addComponent(txtShipmentID))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel7))
-                        .addGap(2, 2, 2))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(txtOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDestination, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbShipmentStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtArrivalDate, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(12, 12, 12))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCreateShipment, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnCalculateETA, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ScheduleDelivery, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(ReportIssue, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(51, 51, 51)
@@ -209,66 +315,291 @@ public class LogisticsUI extends javax.swing.JFrame {
                         .addComponent(btnBack))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addComponent(btnUpdateStatus)
+                        .addComponent(MonitorConditions)
                         .addGap(37, 37, 37)
-                        .addComponent(btnTrackShipment)))
+                        .addComponent(RecordDelivery)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtShipmentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(txtOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtDestination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5)))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel6)
-                        .addComponent(txtCurrentLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7)
-                        .addComponent(cmbShipmentStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(24, 24, 24)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDepartureDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9)
-                    .addComponent(txtArrivalDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnUpdateStatus)
-                    .addComponent(btnCreateShipment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnTrackShipment))
+                    .addComponent(MonitorConditions)
+                    .addComponent(ScheduleDelivery, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RecordDelivery))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBack)
-                    .addComponent(btnCalculateETA)
-                    .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnClear, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnBack)
+                        .addComponent(ReportIssue)))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
+        new LoginGuii(AppContext.authBoundary()).setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void cmbShipmentStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbShipmentStatusActionPerformed
+    private void DeliveryStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeliveryStatusActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cmbShipmentStatusActionPerformed
+    }//GEN-LAST:event_DeliveryStatusActionPerformed
+
+    private void DeliveryLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeliveryLocationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DeliveryLocationActionPerformed
+
+    private void ShipmentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShipmentIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ShipmentIdActionPerformed
+
+    private void wireActions() {
+        ScheduleDelivery.addActionListener(evt -> {
+            try {
+                int shipmentID = requireShipmentID();
+                Date deliveryDate = parseDate(readRequiredText(DeliveryDate.getText(), "Delivery Date"));
+                logisticsBoundary.scheduleDelivery(shipmentID, deliveryDate);
+                Shipment shipment = logisticsBoundary.loadShipment(shipmentID);
+                applyShipmentToForm(shipment);
+                DeliveryIssue.setText("Delivery scheduled.");
+                JOptionPane.showMessageDialog(this, "Delivery scheduled successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Schedule Delivery Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        MonitorConditions.addActionListener(evt -> {
+            try {
+                int shipmentID = requireShipmentID();
+                logisticsBoundary.monitorTransportConditions(shipmentID);
+                Shipment shipment = logisticsBoundary.loadShipment(shipmentID);
+                applyShipmentToForm(shipment);
+                DeliveryIssue.setText("Conditions monitored.");
+                JOptionPane.showMessageDialog(this, "Transport conditions monitored.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Monitor Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        RecordDelivery.addActionListener(evt -> {
+            try {
+                int shipmentID = requireShipmentID();
+                String receiverName = readRequiredText(ReceverName.getText(), "Receiver Name");
+                String deliveryLocation = readRequiredText(DeliveryLocation.getText(), "Delivery Location");
+                String deliveryStatus = readSelectedStatus();
+                logisticsBoundary.recordDeliveryDetails(shipmentID, receiverName, deliveryLocation, deliveryStatus);
+                Shipment shipment = logisticsBoundary.loadShipment(shipmentID);
+                applyShipmentToForm(shipment);
+                DeliveryIssue.setText("Delivery recorded.");
+                JOptionPane.showMessageDialog(this, "Delivery details recorded successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Record Delivery Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        ReportIssue.addActionListener(evt -> {
+            try {
+                int shipmentID = requireShipmentID();
+                String issue = readRequiredText(DeliveryIssue.getText(), "Delivery Issue");
+                logisticsBoundary.reportDeliveryIssue(shipmentID, issue);
+                Shipment shipment = logisticsBoundary.loadShipment(shipmentID);
+                applyShipmentToForm(shipment);
+                DeliveryIssue.setText(issue);
+                JOptionPane.showMessageDialog(this, "Issue reported successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Issue Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        btnClear.addActionListener(evt -> {
+            ShipmentId.setText("");
+            DeliveryDate.setText("YYYY-MM-DD");
+            ReceverName.setText("");
+            DeliveryLocation.setText("");
+            DeliveryIssue.setText("");
+            DeliveryStatus.setSelectedIndex(0);
+            populateLogisticsProfile();
+        });
+    }
+
+    private void configureLogisticsMode() {
+        jLabel11.setText("Logistics Profile");
+        jLabel12.setText("Shipment Operations");
+        jLabel13.setText("Logistics ID:");
+        jLabel14.setText("Department:");
+        jLabel15.setText("Assigned Region:");
+        jLabel16.setText("Contact Number:");
+        jLabel2.setText("Shipment ID:");
+        jLabel17.setText("Delivery Date:");
+        jLabel18.setText("Receiver Name:");
+        jLabel19.setText("Delivery Location:");
+        jLabel20.setText("Delivery Status:");
+        jLabel21.setText("Delivery Issue:");
+
+        ShipmentId.setText("");
+        DeliveryDate.setText("YYYY-MM-DD");
+        ReceverName.setText("");
+        DeliveryLocation.setText("");
+        DeliveryIssue.setText("");
+        DeliveryStatus.setSelectedIndex(0);
+
+        ScheduleDelivery.setText("Schedule Delivery");
+        MonitorConditions.setText("Monitor Conditions");
+        RecordDelivery.setText("Record Delivery");
+        ReportIssue.setText("Report Issue");
+        DeliveryStatus.setModel(new javax.swing.DefaultComboBoxModel<>(
+                new String[] { "Scheduled", "In Transit", "Received", "Delivered", "Issue Reported", "Delayed" }
+        ));
+        DeliveryStatus.setSelectedIndex(0);
+    }
+
+    private void applyShipmentToForm(Shipment shipment) {
+        if (shipment == null) {
+            return;
+        }
+
+        ShipmentId.setText(shipment.getShipmentID() > 0 ? String.valueOf(shipment.getShipmentID()) : "");
+        DeliveryDate.setText(formatDate(shipment.getScheduledDeliveryDate()));
+        ReceverName.setText(nullToEmpty(shipment.getReceiverName() != null ? shipment.getReceiverName() : shipment.getOrigin()));
+        DeliveryLocation.setText(nullToEmpty(shipment.getDeliveryLocation() != null ? shipment.getDeliveryLocation() : shipment.getDestination()));
+        DeliveryIssue.setText(nullToEmpty(shipment.getDeliveryIssue() != null ? shipment.getDeliveryIssue() : shipment.getConditionNotes()));
+        setComboSelection(normalizeStatusSelection(shipment.getDeliveryStatus() != null ? shipment.getDeliveryStatus() : shipment.getStatus()));
+    }
+
+    private void setComboSelection(String value) {
+        if (value == null || value.isBlank()) {
+            return;
+        }
+
+        for (int i = 0; i < DeliveryStatus.getItemCount(); i++) {
+            String item = DeliveryStatus.getItemAt(i);
+            if (item != null && item.equalsIgnoreCase(value)) {
+                DeliveryStatus.setSelectedIndex(i);
+                return;
+            }
+        }
+    }
+
+    private Integer readOptionalInteger(String value) {
+        if (value == null || value.trim().isEmpty()) {
+            return null;
+        }
+
+        return Integer.parseInt(value.trim());
+    }
+
+    private String readRequiredText(String value, String fieldName) {
+        if (value == null || value.trim().isEmpty()) {
+            throw new IllegalArgumentException(fieldName + " cannot be empty.");
+        }
+
+        return value.trim();
+    }
+
+    private String readSelectedStatus() {
+        Object selected = DeliveryStatus.getSelectedItem();
+        if (selected == null) {
+            return "Scheduled";
+        }
+        return selected.toString();
+    }
+
+    private int requireShipmentID() {
+        Integer shipmentID = readOptionalInteger(ShipmentId.getText());
+        if (shipmentID == null || shipmentID <= 0) {
+            throw new IllegalArgumentException("Shipment ID is required.");
+        }
+
+        return shipmentID;
+    }
+
+    private java.util.Date parseDate(String value) throws ParseException {
+        synchronized (DATE_FORMAT) {
+            return DATE_FORMAT.parse(value.trim());
+        }
+    }
+
+    private String formatDate(java.util.Date date) {
+        if (date == null) {
+            return "";
+        }
+
+        synchronized (DATE_FORMAT) {
+            return DATE_FORMAT.format(date);
+        }
+    }
+
+    private String normalizeStatusSelection(String status) {
+        if (status == null) {
+            return "Pending";
+        }
+
+        String normalized = status.trim().toLowerCase();
+        if (normalized.contains("in transit")) {
+            return "In Transit";
+        }
+        if (normalized.contains("out for delivery")) {
+            return "Out for Delivery";
+        }
+        if (normalized.contains("deliver")) {
+            return "Delivered";
+        }
+        if (normalized.contains("delay")) {
+            return "Delayed";
+        }
+        if (normalized.contains("cancel")) {
+            return "Cancelled";
+        }
+        if (normalized.contains("created") || normalized.contains("pending")) {
+            return "Pending";
+        }
+
+        return status;
+    }
+
+    private String nullToEmpty(String value) {
+        return value == null ? "" : value;
+    }
+
+    private void populateLogisticsProfile() {
+        Logistics logistics = logisticsBoundary.getLogistics();
+        if (logistics == null) {
+            return;
+        }
+
+        logisticsID.setText(logistics.getLogisticsID() > 0 ? String.valueOf(logistics.getLogisticsID()) : "");
+        Department.setText(nullToEmpty(logistics.getDepartment()));
+        AssignedRegion.setText(nullToEmpty(logistics.getAssignedRegion()));
+        contactNumber.setText(resolveContactNumber(logistics));
+    }
+
+    private String resolveContactNumber(Logistics logistics) {
+        if (logistics == null) {
+            return "";
+        }
+
+        String contact = logistics.getContactNumber();
+        if (contact != null && !contact.isBlank()) {
+            return contact;
+        }
+
+        User currentUser = AppContext.getCurrentUser();
+        if (currentUser == null || userController == null) {
+            return "";
+        }
+
+        return userController.getUserPhone(currentUser.getUserID());
+    }
 
     /**
      * @param args the command line arguments
@@ -306,29 +637,38 @@ public class LogisticsUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField AssignedRegion;
+    private javax.swing.JTextField DeliveryDate;
+    private javax.swing.JTextField DeliveryIssue;
+    private javax.swing.JTextField DeliveryLocation;
+    private javax.swing.JComboBox<String> DeliveryStatus;
+    private javax.swing.JTextField Department;
+    private javax.swing.JButton MonitorConditions;
+    private javax.swing.JTextField ReceverName;
+    private javax.swing.JButton RecordDelivery;
+    private javax.swing.JButton ReportIssue;
+    private javax.swing.JButton ScheduleDelivery;
+    private javax.swing.JTextField ShipmentId;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnCalculateETA;
     private javax.swing.JButton btnClear;
-    private javax.swing.JButton btnCreateShipment;
-    private javax.swing.JButton btnTrackShipment;
-    private javax.swing.JButton btnUpdateStatus;
-    private javax.swing.JComboBox<String> cmbShipmentStatus;
+    private javax.swing.JTextField contactNumber;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtArrivalDate;
-    private javax.swing.JTextField txtCurrentLocation;
-    private javax.swing.JTextField txtDepartureDate;
-    private javax.swing.JTextField txtDestination;
-    private javax.swing.JTextField txtOrderID;
-    private javax.swing.JTextField txtOrigin;
-    private javax.swing.JTextField txtShipmentID;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField logisticsID;
     // End of variables declaration//GEN-END:variables
 }

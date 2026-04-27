@@ -8,6 +8,7 @@ import java.util.List;
 public class Shipment implements ShipmentSubject {
 
     private int shipmentID;
+    private int orderID;
     private String origin;
     private String destination;
     private String currentLocation;
@@ -25,6 +26,7 @@ public class Shipment implements ShipmentSubject {
     private String deliveryLocation;
     private String deliveryStatus;
     private String deliveryIssue;
+    private String conditionNotes;
 
     private ShippingStrategy shippingStrategy;
     private final List<ShipmentObserver> shipmentObservers = new ArrayList<>();
@@ -653,6 +655,14 @@ public void setLatestSensorData(SensorData latestSensorData) {
         this.deliveryIssue = deliveryIssue.trim();
     }
 
+    public String getConditionNotes() {
+        return conditionNotes;
+    }
+
+    public void setConditionNotes(String conditionNotes) {
+        this.conditionNotes = conditionNotes == null ? null : conditionNotes.trim();
+    }
+
     public ShippingStrategy getShippingStrategy() {
         return shippingStrategy;
     }
@@ -694,6 +704,18 @@ public void setLatestSensorData(SensorData latestSensorData) {
             throw new NullPointerException("Order cannot be null.");
         }
         this.order = order;
+        this.orderID = order.getOrderID();
+    }
+
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(int orderID) {
+        if (orderID <= 0) {
+            throw new IllegalArgumentException("Order ID must be positive.");
+        }
+        this.orderID = orderID;
     }
 
     public Customer getCustomer() {
@@ -718,6 +740,14 @@ public void setLatestSensorData(SensorData latestSensorData) {
 
     public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
+    }
+
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
+    }
+
+    public void setHumidity(double humidity) {
+        this.humidity = humidity;
     }
 
     public Retailer getRetailer() {

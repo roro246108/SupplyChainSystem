@@ -21,7 +21,8 @@ public class Product {
     private ProductionController production;
     private final List<Shipment> shipments = new ArrayList<>();
     private final List<ProductionRecord> productionRecords = new ArrayList<>();
-
+    private String issueReport;
+      
     public Product() {
         this.productID = nextProductID++;
     }
@@ -62,6 +63,16 @@ public class Product {
     public void updateProductStatus(String newStatus) {
         this.status = newStatus;
     }
+    
+  
+
+public String getIssueReport() {
+    return issueReport;
+}
+
+public void setIssueReport(String issueReport) {
+    this.issueReport = issueReport;
+}
 
     public void viewProductDetails() {
         System.out.println("Product ID: " + productID);

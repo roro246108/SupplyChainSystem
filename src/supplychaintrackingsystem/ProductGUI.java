@@ -4,17 +4,31 @@
  */
 package supplychaintrackingsystem;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author zeina
  */
 public class ProductGUI extends javax.swing.JFrame {
+    private final OrderBoundary orderBoundary;
+    private Product currentProduct;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * Creates new form ProductGUI
      */
     public ProductGUI() {
+        this(AppContext.orderBoundary());
+    }
+
+    public ProductGUI(OrderBoundary orderBoundary) {
+        this.orderBoundary = orderBoundary == null ? AppContext.orderBoundary() : orderBoundary;
         initComponents();
+        configureProductForm();
+        wireActions();
     }
 
     /**
@@ -97,12 +111,6 @@ public class ProductGUI extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setText("Supplier ID:");
 
-        txtProductID.setText("jTextField1");
-
-        txtProductName.setText("TextField2");
-
-        jTextField3.setText("jTextField3");
-
         cmbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Food", "Beverage", "Medicine", "Electronics", "Raw Material", "Other" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -161,12 +169,6 @@ public class ProductGUI extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setText("Quality Status:");
-
-        txtPrice.setText("jTextField1");
-
-        txtQuantity.setText("jTextField2");
-
-        txtExpiryDate.setText("jTextField4");
 
         cmbQualityStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Approved", "Pending Inspection", "Rejected", "Expired" }));
 
@@ -250,26 +252,56 @@ public class ProductGUI extends javax.swing.JFrame {
         btnAddProduct.setBackground(new java.awt.Color(33, 150, 243));
         btnAddProduct.setForeground(new java.awt.Color(242, 242, 242));
         btnAddProduct.setText("Add Product");
+        btnAddProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddProductActionPerformed(evt);
+            }
+        });
 
         btnUpdateProduct.setBackground(new java.awt.Color(156, 39, 176));
         btnUpdateProduct.setForeground(new java.awt.Color(242, 242, 242));
         btnUpdateProduct.setText("Update Product");
+        btnUpdateProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateProductActionPerformed(evt);
+            }
+        });
 
         btnCheckAvailability.setBackground(new java.awt.Color(255, 152, 0));
         btnCheckAvailability.setForeground(new java.awt.Color(255, 255, 255));
         btnCheckAvailability.setText("Check Availability");
+        btnCheckAvailability.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckAvailabilityActionPerformed(evt);
+            }
+        });
 
         btnAddtoInventory.setBackground(new java.awt.Color(76, 175, 80));
         btnAddtoInventory.setForeground(new java.awt.Color(242, 242, 242));
         btnAddtoInventory.setText("Add to Inventory");
+        btnAddtoInventory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddtoInventoryActionPerformed(evt);
+            }
+        });
 
         btnReportIssue.setBackground(new java.awt.Color(244, 67, 54));
         btnReportIssue.setForeground(new java.awt.Color(242, 242, 242));
         btnReportIssue.setText("Report Issue");
+        btnReportIssue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportIssueActionPerformed(evt);
+            }
+        });
 
         btnClear.setBackground(new java.awt.Color(158, 158, 158));
         btnClear.setForeground(new java.awt.Color(242, 242, 242));
         btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         btnBack.setBackground(new java.awt.Color(96, 125, 139));
         btnBack.setForeground(new java.awt.Color(242, 242, 242));
@@ -340,8 +372,491 @@ public class ProductGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
+        try {
+            User currentUser = AppContext.getCurrentUser();
+            javax.swing.JFrame dashboard = currentUser == null
+                    ? new LoginGuii(AppContext.authBoundary())
+                    : AppContext.createDashboardForRole(currentUser.getRole());
+
+            if (dashboard == null) {
+                throw new IllegalStateException("No screen is mapped for the current role.");
+            }
+
+            dashboard.setVisible(true);
+            dispose();
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Navigation Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnAddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProductActionPerformed
+                try {
+            String idText = txtProductID.getText() == null ? "" : txtProductID.getText().trim();
+            String nameText = txtProductName.getText() == null ? "" : txtProductName.getText().trim();
+            String manufactureText = jTextField3.getText() == null ? "" : jTextField3.getText().trim();
+            String expiryText = txtExpiryDate.getText() == null ? "" : txtExpiryDate.getText().trim();
+            String priceText = txtPrice.getText() == null ? "" : txtPrice.getText().trim();
+            String qtyText = txtQuantity.getText() == null ? "" : txtQuantity.getText().trim();
+            String category = (String) cmbCategory.getSelectedItem();
+            String qualityStatus = (String) cmbQualityStatus.getSelectedItem();
+
+            if (nameText.isBlank()) {
+                throw new IllegalArgumentException("Product Name cannot be empty.");
+            }
+            if (category == null || category.isBlank()) {
+                throw new IllegalArgumentException("Category cannot be empty.");
+            }
+            if (manufactureText.isBlank() || manufactureText.startsWith("jTextField")) {
+                throw new IllegalArgumentException("Manufacture Date cannot be empty.");
+            }
+            if (expiryText.isBlank() || expiryText.startsWith("jTextField")) {
+                throw new IllegalArgumentException("Expiry Date cannot be empty.");
+            }
+            if (priceText.isBlank() || priceText.startsWith("jTextField")) {
+                throw new IllegalArgumentException("Price cannot be empty.");
+            }
+
+            Integer productID = null;
+            if (!idText.isBlank() && !idText.startsWith("jTextField")) {
+                try {
+                    productID = Integer.parseInt(idText);
+                } catch (NumberFormatException ex) {
+                    throw new IllegalArgumentException("Product ID must be a valid number.");
+                }
+                if (productID <= 0) {
+                    throw new IllegalArgumentException("Product ID must be positive.");
+                }
+            }
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date manufactureDate;
+            Date expiryDate;
+            try {
+                manufactureDate = sdf.parse(manufactureText);
+            } catch (ParseException ex) {
+                throw new IllegalArgumentException("Manufacture Date must be in yyyy-MM-dd format.");
+            }
+            try {
+                expiryDate = sdf.parse(expiryText);
+            } catch (ParseException ex) {
+                throw new IllegalArgumentException("Expiry Date must be in yyyy-MM-dd format.");
+            }
+            if (expiryDate.before(manufactureDate)) {
+                throw new IllegalArgumentException("Expiry date must be after manufacture date.");
+            }
+
+            double price;
+            try {
+                price = Double.parseDouble(priceText);
+            } catch (NumberFormatException ex) {
+                throw new IllegalArgumentException("Price must be a valid decimal number.");
+            }
+            if (price < 0) {
+                throw new IllegalArgumentException("Price cannot be negative.");
+            }
+
+            Integer stockQuantity = null;
+            if (!qtyText.isBlank() && !qtyText.startsWith("jTextField")) {
+                try {
+                    stockQuantity = Integer.parseInt(qtyText);
+                } catch (NumberFormatException ex) {
+                    throw new IllegalArgumentException("Quantity must be a valid number.");
+                }
+                if (stockQuantity < 0) {
+                    throw new IllegalArgumentException("Quantity cannot be negative.");
+                }
+            }
+
+            Product product = (productID != null)
+                    ? new Product(productID, nameText, category, manufactureDate, expiryDate, price)
+                    : new Product(nameText, price, qualityStatus, category);
+
+            product.setProductName(nameText);
+            product.setCategory(category);
+            product.setManufactureDate(manufactureDate);
+            product.setExpiryDate(expiryDate);
+            product.setUnitPrice(price);
+
+            if (qualityStatus == null || qualityStatus.isBlank()) {
+                product.setStatus("Created");
+            } else if ("Approved".equalsIgnoreCase(qualityStatus)) {
+                product.setStatus("Available");
+            } else if ("Pending Inspection".equalsIgnoreCase(qualityStatus)) {
+                product.setStatus("Pending Inspection");
+            } else if ("Rejected".equalsIgnoreCase(qualityStatus) || "Expired".equalsIgnoreCase(qualityStatus)) {
+                product.setStatus("OUT_OF_STOCK");
+            } else {
+                product.setStatus(qualityStatus);
+            }
+
+            if (stockQuantity != null) {
+                Inventory inventory = product.getInventory();
+                if (inventory == null) {
+                    inventory = new Inventory();
+                }
+                inventory.setProduct(product);
+                inventory.setProductID(product.getProductID());
+                inventory.setProductName(product.getProductName());
+                inventory.setStockLevel(stockQuantity);
+                inventory.setLastUpdated(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+                inventory.syncStockStatus();
+                product.setInventory(inventory);
+            }
+
+            Product saved = orderBoundary.saveProduct(product);
+            currentProduct = saved;
+            if (saved != null) {
+                txtProductID.setText(String.valueOf(saved.getProductID()));
+                txtProductName.setText(saved.getProductName());
+                jTextField3.setText(sdf.format(saved.getManufactureDate()));
+                txtExpiryDate.setText(sdf.format(saved.getExpiryDate()));
+                txtPrice.setText(String.valueOf(saved.getUnitPrice()));
+                txtQuantity.setText(saved.getInventory() == null ? "" : String.valueOf(saved.getInventory().getStockLevel()));
+                txtProductNotes.setText("Product saved successfully.");
+            }
+
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Product created successfully.",
+                    "Product Saved",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Validation Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Unexpected error while creating the product.",
+                    "Product Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAddProductActionPerformed
+
+    private void btnUpdateProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateProductActionPerformed
+                try {
+            String idText = txtProductID.getText() == null ? "" : txtProductID.getText().trim();
+            String nameText = txtProductName.getText() == null ? "" : txtProductName.getText().trim();
+            String manufactureText = jTextField3.getText() == null ? "" : jTextField3.getText().trim();
+            String expiryText = txtExpiryDate.getText() == null ? "" : txtExpiryDate.getText().trim();
+            String priceText = txtPrice.getText() == null ? "" : txtPrice.getText().trim();
+            String qtyText = txtQuantity.getText() == null ? "" : txtQuantity.getText().trim();
+            String category = (String) cmbCategory.getSelectedItem();
+            String qualityStatus = (String) cmbQualityStatus.getSelectedItem();
+
+            Integer productID = null;
+            if (!idText.isBlank() && !idText.startsWith("jTextField")) {
+                try {
+                    productID = Integer.parseInt(idText);
+                } catch (NumberFormatException ex) {
+                    throw new IllegalArgumentException("Product ID must be a valid number.");
+                }
+            } else if (currentProduct != null) {
+                productID = currentProduct.getProductID();
+            } else {
+                throw new IllegalArgumentException("Product ID must be provided for updates.");
+            }
+
+            if (nameText.isBlank()) {
+                throw new IllegalArgumentException("Product Name cannot be empty.");
+            }
+            if (category == null || category.isBlank()) {
+                throw new IllegalArgumentException("Category cannot be empty.");
+            }
+            if (manufactureText.isBlank() || manufactureText.startsWith("jTextField")) {
+                throw new IllegalArgumentException("Manufacture Date cannot be empty.");
+            }
+            if (expiryText.isBlank() || expiryText.startsWith("jTextField")) {
+                throw new IllegalArgumentException("Expiry Date cannot be empty.");
+            }
+            if (priceText.isBlank() || priceText.startsWith("jTextField")) {
+                throw new IllegalArgumentException("Price cannot be empty.");
+            }
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date manufactureDate;
+            Date expiryDate;
+            try {
+                manufactureDate = sdf.parse(manufactureText);
+            } catch (ParseException ex) {
+                throw new IllegalArgumentException("Manufacture Date must be in yyyy-MM-dd format.");
+            }
+            try {
+                expiryDate = sdf.parse(expiryText);
+            } catch (ParseException ex) {
+                throw new IllegalArgumentException("Expiry Date must be in yyyy-MM-dd format.");
+            }
+            if (expiryDate.before(manufactureDate)) {
+                throw new IllegalArgumentException("Expiry date must be after manufacture date.");
+            }
+
+            double price;
+            try {
+                price = Double.parseDouble(priceText);
+            } catch (NumberFormatException ex) {
+                throw new IllegalArgumentException("Price must be a valid decimal number.");
+            }
+
+            Integer stockQuantity = null;
+            if (!qtyText.isBlank() && !qtyText.startsWith("jTextField")) {
+                try {
+                    stockQuantity = Integer.parseInt(qtyText);
+                } catch (NumberFormatException ex) {
+                    throw new IllegalArgumentException("Quantity must be a valid number.");
+                }
+            }
+
+            Product product = new Product(productID, nameText, category, manufactureDate, expiryDate, price);
+            product.setProductName(nameText);
+            product.setCategory(category);
+            product.setManufactureDate(manufactureDate);
+            product.setExpiryDate(expiryDate);
+            product.setUnitPrice(price);
+
+            if (qualityStatus == null || qualityStatus.isBlank()) {
+                product.setStatus("Created");
+            } else if ("Approved".equalsIgnoreCase(qualityStatus)) {
+                product.setStatus("Available");
+            } else if ("Pending Inspection".equalsIgnoreCase(qualityStatus)) {
+                product.setStatus("Pending Inspection");
+            } else if ("Rejected".equalsIgnoreCase(qualityStatus) || "Expired".equalsIgnoreCase(qualityStatus)) {
+                product.setStatus("OUT_OF_STOCK");
+            } else {
+                product.setStatus(qualityStatus);
+            }
+
+            if (stockQuantity != null) {
+                Inventory inventory = product.getInventory();
+                if (inventory == null) {
+                    inventory = new Inventory();
+                }
+                inventory.setProduct(product);
+                inventory.setProductID(product.getProductID());
+                inventory.setProductName(product.getProductName());
+                inventory.setStockLevel(stockQuantity);
+                inventory.setLastUpdated(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+                inventory.syncStockStatus();
+                product.setInventory(inventory);
+            }
+
+            Product saved = orderBoundary.saveProduct(product);
+            currentProduct = saved;
+            if (saved != null) {
+                txtProductID.setText(String.valueOf(saved.getProductID()));
+                txtProductName.setText(saved.getProductName());
+                jTextField3.setText(sdf.format(saved.getManufactureDate()));
+                txtExpiryDate.setText(sdf.format(saved.getExpiryDate()));
+                txtPrice.setText(String.valueOf(saved.getUnitPrice()));
+                txtQuantity.setText(saved.getInventory() == null ? "" : String.valueOf(saved.getInventory().getStockLevel()));
+                txtProductNotes.setText("Product updated successfully.");
+            }
+
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Product updated successfully.",
+                    "Product Updated",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Validation Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Unexpected error while updating the product.",
+                    "Product Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnUpdateProductActionPerformed
+
+    private void btnCheckAvailabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckAvailabilityActionPerformed
+        try {
+            Product product = currentProduct;
+            String idText = txtProductID.getText() == null ? "" : txtProductID.getText().trim();
+
+            if (product == null && !idText.isBlank() && !idText.startsWith("jTextField")) {
+                int productID;
+                try {
+                    productID = Integer.parseInt(idText);
+                } catch (NumberFormatException ex) {
+                    throw new IllegalArgumentException("Product ID must be a valid number.");
+                }
+                product = orderBoundary.loadProduct(productID);
+                if (product != null) {
+                    currentProduct = product;
+                }
+            }
+
+            if (product == null) {
+                throw new IllegalArgumentException("Please add or load a product first.");
+            }
+
+            boolean available = orderBoundary.checkAvailability(product);
+            txtProductNotes.setText(available ? "Product is available." : "Product is not available.");
+            if (available) {
+                cmbQualityStatus.setSelectedItem("Approved");
+            } else {
+                cmbQualityStatus.setSelectedItem("Rejected");
+            }
+
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    available ? "Product is available." : "Product is not available.",
+                    "Availability",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Validation Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Unexpected error while checking availability.",
+                    "Product Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnCheckAvailabilityActionPerformed
+
+    private void btnAddtoInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddtoInventoryActionPerformed
+                try {
+            Product product = currentProduct;
+            String idText = txtProductID.getText() == null ? "" : txtProductID.getText().trim();
+
+            if (product == null && !idText.isBlank() && !idText.startsWith("jTextField")) {
+                int productID;
+                try {
+                    productID = Integer.parseInt(idText);
+                } catch (NumberFormatException ex) {
+                    throw new IllegalArgumentException("Product ID must be a valid number.");
+                }
+                product = orderBoundary.loadProduct(productID);
+                if (product != null) {
+                    currentProduct = product;
+                }
+            }
+
+            if (product == null) {
+                throw new IllegalArgumentException("Please add or load a product first.");
+            }
+
+            InventoryGUI inventoryGUI = new InventoryGUI(product);
+            inventoryGUI.setVisible(true);
+            dispose();
+        } catch (IllegalArgumentException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Validation Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Unexpected error while opening inventory.",
+                    "Product Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAddtoInventoryActionPerformed
+
+    private void btnReportIssueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportIssueActionPerformed
+               try {
+            Product product = currentProduct;
+            String idText = txtProductID.getText() == null ? "" : txtProductID.getText().trim();
+            String issue = txtProductNotes.getText() == null ? "" : txtProductNotes.getText().trim();
+
+            if (product == null && !idText.isBlank() && !idText.startsWith("jTextField")) {
+                int productID;
+                try {
+                    productID = Integer.parseInt(idText);
+                } catch (NumberFormatException ex) {
+                    throw new IllegalArgumentException("Product ID must be a valid number.");
+                }
+                product = orderBoundary.loadProduct(productID);
+                if (product != null) {
+                    currentProduct = product;
+                }
+            }
+
+            if (product == null) {
+                throw new IllegalArgumentException("Please add or load a product first.");
+            }
+
+            if (issue.isBlank() || issue.startsWith("Enter notes")) {
+                throw new IllegalArgumentException("Please enter issue details before reporting.");
+            }
+
+            product = orderBoundary.reportIssue(product, issue);
+            currentProduct = product;
+            if (product != null) {
+                txtProductID.setText(String.valueOf(product.getProductID()));
+                txtProductName.setText(product.getProductName());
+                cmbCategory.setSelectedItem(product.getCategory());
+                if (product.getManufactureDate() != null) {
+                    jTextField3.setText(new SimpleDateFormat("yyyy-MM-dd").format(product.getManufactureDate()));
+                }
+                if (product.getExpiryDate() != null) {
+                    txtExpiryDate.setText(new SimpleDateFormat("yyyy-MM-dd").format(product.getExpiryDate()));
+                }
+                txtPrice.setText(product.getUnitPrice() > 0 ? String.valueOf(product.getUnitPrice()) : "");
+                txtQuantity.setText(product.getInventory() == null ? "" : String.valueOf(product.getInventory().getStockLevel()));
+                cmbQualityStatus.setSelectedItem("Pending Inspection");
+            }
+
+            txtProductNotes.setText(issue);
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Issue reported successfully.",
+                    "Product Issue",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Validation Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Unexpected error while reporting issue.",
+                    "Product Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnReportIssueActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+                txtProductID.setText("");
+        txtProductName.setText("");
+        jTextField3.setText("");
+        txtPrice.setText("");
+        txtQuantity.setText("");
+        txtExpiryDate.setText("");
+        txtProductNotes.setText("");
+        cmbCategory.setSelectedIndex(0);
+        cmbQualityStatus.setSelectedIndex(0);
+        orderBoundary.clearCurrentProduct();
+        currentProduct = null;
+    }
+
+    private void wireActions() {
+        btnAddProduct.addActionListener(this::btnAddProductActionPerformed);
+        btnUpdateProduct.addActionListener(this::btnUpdateProductActionPerformed);
+        btnCheckAvailability.addActionListener(this::btnCheckAvailabilityActionPerformed);
+        btnAddtoInventory.addActionListener(this::btnAddtoInventoryActionPerformed);
+        btnReportIssue.addActionListener(this::btnReportIssueActionPerformed);
+        btnClear.addActionListener(this::btnClearActionPerformed);
+    }
+
+    private void configureProductForm() {
+        jLabel5.setText("Manufacture Date:");
+        jLabel7.setText("Stock Quantity:");
+        jLabel9.setText("Product Status:");
+        txtProductID.setText("");
+        txtProductName.setText("");
+        jTextField3.setText("");
+        txtPrice.setText("");
+        txtQuantity.setText("");
+        txtExpiryDate.setText("");
+        txtProductNotes.setText("");
+        cmbCategory.setSelectedIndex(0);
+        cmbQualityStatus.setSelectedIndex(0);
+    }//GEN-LAST:event_btnClearActionPerformed
+
+
+
 
     /**
      * @param args the command line arguments

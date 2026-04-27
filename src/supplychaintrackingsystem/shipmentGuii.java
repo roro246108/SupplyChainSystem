@@ -4,17 +4,38 @@
  */
 package supplychaintrackingsystem;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Andrew
  */
 public class shipmentGuii extends javax.swing.JFrame {
 
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    private final ShipmentBoundary shipmentBoundary;
+    private Integer currentOrderId;
+    private Integer currentShipmentId;
+    private final String launchMode;
+
     /**
      * Creates new form shipmentGuii
      */
     public shipmentGuii() {
+        this(AppContext.shipmentBoundary(), null, null, null);
+    }
+
+    public shipmentGuii(ShipmentBoundary shipmentBoundary, Shipment shipment, Integer orderId, String launchMode) {
+        this.shipmentBoundary = shipmentBoundary == null ? AppContext.shipmentBoundary() : shipmentBoundary;
+        this.launchMode = launchMode == null ? "create" : launchMode;
+        this.currentOrderId = orderId;
         initComponents();
+        wireActions();
+        if (shipment != null) {
+            applyShipmentToForm(shipment);
+        }
     }
 
     /**
@@ -470,21 +491,330 @@ public class shipmentGuii extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
 
-    private void btnUpdateStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateStatusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnUpdateStatusActionPerformed
-
-    private void btnMarkDeliveredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarkDeliveredActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnMarkDeliveredActionPerformed
-
-    private void btnCalculateETAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalculateETAActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCalculateETAActionPerformed
-
     private void txtHumidityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHumidityActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtHumidityActionPerformed
+
+    private void wireActions() {
+        btnCreateShipment.addActionListener(evt -> handleCreateShipment());
+        btnUpdateLocation.addActionListener(evt -> handleUpdateLocation());
+        btnUpdateConditions.addActionListener(evt -> handleUpdateConditions());
+        btnValidateData.addActionListener(evt -> handleValidateData());
+        btnClear.addActionListener(evt -> handleClear());
+        btnBack.addActionListener(evt -> handleBack());
+        cmbShipmentStatus.addActionListener(evt -> syncStatusField());
+    }
+
+    private void btnUpdateStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateStatusActionPerformed
+        try {
+            int shipmentID = requireShipmentID();
+            String status = resolveStatusText();
+            shipmentBoundary.updateShipmentStatus(shipmentID, status);
+            Shipment shipment = shipmentBoundary.loadShipment(shipmentID);
+            applyShipmentToForm(shipment);
+            JOptionPane.showMessageDialog(this, "Shipment status updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Status Update Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnUpdateStatusActionPerformed
+
+    private void btnMarkDeliveredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarkDeliveredActionPerformed
+        try {
+            int shipmentID = requireShipmentID();
+            shipmentBoundary.markDelivered(shipmentID);
+            Shipment shipment = shipmentBoundary.loadShipment(shipmentID);
+            applyShipmentToForm(shipment);
+            JOptionPane.showMessageDialog(this, "Shipment marked as delivered.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Delivery Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnMarkDeliveredActionPerformed
+
+    private void btnCalculateETAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalculateETAActionPerformed
+        try {
+            int shipmentID = requireShipmentID();
+            java.util.Date eta = shipmentBoundary.calculateEta(shipmentID);
+            txtArrivalDate.setText(formatDate(eta));
+            Shipment shipment = shipmentBoundary.loadShipment(shipmentID);
+            applyShipmentToForm(shipment);
+            JOptionPane.showMessageDialog(this, "ETA calculated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "ETA Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnCalculateETAActionPerformed
+
+    private void handleCreateShipment() {
+        try {
+            Shipment shipment = buildShipmentFromFields();
+            int orderID = resolveOrderID();
+            Shipment saved = shipmentBoundary.saveShipment(orderID, shipment);
+            currentOrderId = saved.getOrderID();
+            currentShipmentId = saved.getShipmentID();
+            applyShipmentToForm(saved);
+            JOptionPane.showMessageDialog(this, "Shipment saved successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Create Shipment Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void handleUpdateLocation() {
+        try {
+            int shipmentID = requireShipmentID();
+            String location = readRequiredText(txtCurrentLocation.getText(), "Current Location");
+            shipmentBoundary.updateShipmentLocation(shipmentID, location);
+            Shipment shipment = shipmentBoundary.loadShipment(shipmentID);
+            applyShipmentToForm(shipment);
+            JOptionPane.showMessageDialog(this, "Location updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Location Update Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void handleUpdateConditions() {
+        try {
+            int shipmentID = requireShipmentID();
+            double temperature = readRequiredDouble(txtTemperature.getText(), "Temperature");
+            double humidity = readRequiredDouble(txtHumidity.getText(), "Humidity");
+            String notes = txtConditionNotes.getText();
+            shipmentBoundary.updateShipmentConditions(shipmentID, temperature, humidity, notes);
+            Shipment shipment = shipmentBoundary.loadShipment(shipmentID);
+            applyShipmentToForm(shipment);
+            JOptionPane.showMessageDialog(this, "Condition data updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Condition Update Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void handleValidateData() {
+        try {
+            validateFormData();
+            JOptionPane.showMessageDialog(this, "Shipment data looks valid.", "Validation", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Validation Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void handleClear() {
+        txtShipmentID.setText("");
+        txtOrigin.setText("");
+        txtDestination.setText("");
+        txtCurrentLocation.setText("");
+        txtWeight.setText("");
+        jTextField6.setText("");
+        txtArrivalDate.setText("");
+        jTextField7.setText("");
+        txtTemperature.setText("");
+        txtHumidity.setText("");
+        txtConditionNotes.setText("");
+        cmbShipmentStatus.setSelectedIndex(0);
+        btnUpdateStatus.setText("");
+        currentShipmentId = null;
+    }
+
+    private void handleBack() {
+        new LoginGuii(AppContext.authBoundary()).setVisible(true);
+        dispose();
+    }
+
+    private void syncStatusField() {
+        Object selected = cmbShipmentStatus.getSelectedItem();
+        if (selected != null) {
+            btnUpdateStatus.setText(selected.toString());
+        }
+    }
+
+    private void applyShipmentToForm(Shipment shipment) {
+        if (shipment == null) {
+            return;
+        }
+
+        currentShipmentId = shipment.getShipmentID() > 0 ? shipment.getShipmentID() : currentShipmentId;
+        currentOrderId = shipment.getOrderID() > 0 ? shipment.getOrderID() : currentOrderId;
+
+        txtShipmentID.setText(shipment.getShipmentID() > 0 ? String.valueOf(shipment.getShipmentID()) : "");
+        txtOrigin.setText(nullToEmpty(shipment.getOrigin()));
+        txtDestination.setText(nullToEmpty(shipment.getDestination()));
+        txtCurrentLocation.setText(nullToEmpty(shipment.getCurrentLocation()));
+        txtWeight.setText(shipment.getWeight() > 0 ? String.valueOf(shipment.getWeight()) : "");
+        jTextField6.setText(shipment.getDistance() > 0 ? String.valueOf(shipment.getDistance()) : "");
+        jTextField7.setText(formatDate(shipment.getDepartureDate()));
+        txtArrivalDate.setText(formatDate(shipment.getArrivalDate()));
+        txtTemperature.setText(shipment.getTemperature() == 0 ? "" : String.valueOf(shipment.getTemperature()));
+        txtHumidity.setText(shipment.getHumidity() == 0 ? "" : String.valueOf(shipment.getHumidity()));
+        txtConditionNotes.setText(nullToEmpty(shipment.getConditionNotes()));
+        setComboSelection(normalizeStatus(shipment.getStatus()));
+        btnUpdateStatus.setText(nullToEmpty(shipment.getStatus()));
+    }
+
+    private Shipment buildShipmentFromFields() throws ParseException {
+        Shipment shipment = new Shipment();
+
+        String shipmentIDText = txtShipmentID.getText().trim();
+        if (!shipmentIDText.isEmpty()) {
+            int shipmentID = Integer.parseInt(shipmentIDText);
+            if (shipmentID > 0) {
+                shipment.setShipmentID(shipmentID);
+            }
+        }
+
+        shipment.setOrigin(readRequiredText(txtOrigin.getText(), "Origin"));
+        shipment.setDestination(readRequiredText(txtDestination.getText(), "Destination"));
+        shipment.setCurrentLocation(readRequiredText(txtCurrentLocation.getText(), "Current Location"));
+        shipment.setWeight(readRequiredDouble(txtWeight.getText(), "Weight"));
+        shipment.setDistance(readRequiredDouble(jTextField6.getText(), "Distance"));
+        shipment.setDepartureDate(parseDate(readRequiredText(jTextField7.getText(), "Departure Date")));
+
+        String arrivalText = txtArrivalDate.getText().trim();
+        if (!arrivalText.isEmpty()) {
+            shipment.setArrivalDate(parseDate(arrivalText));
+        }
+
+        String temperatureText = txtTemperature.getText().trim();
+        if (!temperatureText.isEmpty()) {
+            shipment.setTemperature(Double.parseDouble(temperatureText));
+        }
+
+        String humidityText = txtHumidity.getText().trim();
+        if (!humidityText.isEmpty()) {
+            shipment.setHumidity(Double.parseDouble(humidityText));
+        }
+
+        shipment.setConditionNotes(txtConditionNotes.getText());
+        shipment.setStatus(resolveStatusText());
+
+        if (currentOrderId != null && currentOrderId > 0) {
+            shipment.setOrderID(currentOrderId);
+        }
+
+        return shipment;
+    }
+
+    private void validateFormData() throws ParseException {
+        readRequiredText(txtOrigin.getText(), "Origin");
+        readRequiredText(txtDestination.getText(), "Destination");
+        readRequiredText(txtCurrentLocation.getText(), "Current Location");
+        readRequiredDouble(txtWeight.getText(), "Weight");
+        readRequiredDouble(jTextField6.getText(), "Distance");
+        parseDate(readRequiredText(jTextField7.getText(), "Departure Date"));
+
+        String arrivalText = txtArrivalDate.getText().trim();
+        if (!arrivalText.isEmpty()) {
+            parseDate(arrivalText);
+        }
+    }
+
+    private int requireShipmentID() {
+        Integer shipmentID = readOptionalInteger(txtShipmentID.getText());
+        if (shipmentID == null || shipmentID <= 0) {
+            throw new IllegalArgumentException("Shipment ID is required.");
+        }
+        return shipmentID;
+    }
+
+    private int resolveOrderID() {
+        if (currentOrderId != null && currentOrderId > 0) {
+            return currentOrderId;
+        }
+
+        throw new IllegalArgumentException("Order ID is required to save the shipment.");
+    }
+
+    private String resolveStatusText() {
+        String manualStatus = btnUpdateStatus.getText() == null ? "" : btnUpdateStatus.getText().trim();
+        if (!manualStatus.isEmpty()) {
+            return manualStatus;
+        }
+
+        Object selected = cmbShipmentStatus.getSelectedItem();
+        return selected == null ? "Pending" : selected.toString();
+    }
+
+    private Integer readOptionalInteger(String value) {
+        if (value == null || value.trim().isEmpty()) {
+            return null;
+        }
+
+        return Integer.parseInt(value.trim());
+    }
+
+    private String readRequiredText(String value, String fieldName) {
+        if (value == null || value.trim().isEmpty()) {
+            throw new IllegalArgumentException(fieldName + " cannot be empty.");
+        }
+
+        return value.trim();
+    }
+
+    private double readRequiredDouble(String value, String fieldName) {
+        String trimmed = readRequiredText(value, fieldName);
+        double parsed = Double.parseDouble(trimmed);
+        if (parsed <= 0) {
+            throw new IllegalArgumentException(fieldName + " must be greater than 0.");
+        }
+        return parsed;
+    }
+
+    private java.util.Date parseDate(String value) throws ParseException {
+        synchronized (DATE_FORMAT) {
+            return DATE_FORMAT.parse(value.trim());
+        }
+    }
+
+    private String formatDate(java.util.Date date) {
+        if (date == null) {
+            return "";
+        }
+
+        synchronized (DATE_FORMAT) {
+            return DATE_FORMAT.format(date);
+        }
+    }
+
+    private void setComboSelection(String status) {
+        if (status == null || status.isBlank()) {
+            return;
+        }
+
+        for (int i = 0; i < cmbShipmentStatus.getItemCount(); i++) {
+            String item = cmbShipmentStatus.getItemAt(i);
+            if (item != null && item.equalsIgnoreCase(status)) {
+                cmbShipmentStatus.setSelectedIndex(i);
+                return;
+            }
+        }
+    }
+
+    private String normalizeStatus(String status) {
+        if (status == null) {
+            return "Pending";
+        }
+
+        String normalized = status.trim().replace('_', ' ').toLowerCase();
+        if (normalized.contains("in transit")) {
+            return "In Transit";
+        }
+        if (normalized.contains("out for delivery")) {
+            return "Out for Delivery";
+        }
+        if (normalized.contains("deliver")) {
+            return "Delivered";
+        }
+        if (normalized.contains("delay")) {
+            return "Delayed";
+        }
+        if (normalized.contains("cancel")) {
+            return "Cancelled";
+        }
+        if (normalized.contains("created") || normalized.contains("pending")) {
+            return "Pending";
+        }
+
+        return status;
+    }
+
+    private String nullToEmpty(String value) {
+        return value == null ? "" : value;
+    }
 
     /**
      * @param args the command line arguments

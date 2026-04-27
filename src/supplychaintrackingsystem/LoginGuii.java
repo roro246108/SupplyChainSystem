@@ -9,12 +9,19 @@ package supplychaintrackingsystem;
  * @author Andrew
  */
 public class LoginGuii extends javax.swing.JFrame {
+    private final AuthBoundary authBoundary;
 
     /**
      * Creates new form LoginGuii
      */
     public LoginGuii() {
+        this(AppContext.authBoundary());
+    }
+
+    public LoginGuii(AuthBoundary authBoundary) {
+        this.authBoundary = authBoundary == null ? AppContext.authBoundary() : authBoundary;
         initComponents();
+        Pass.setText("");
     }
 
     /**
@@ -31,10 +38,11 @@ public class LoginGuii extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        Email = new javax.swing.JTextField();
+        Pass = new javax.swing.JPasswordField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        SignUp = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -61,8 +69,6 @@ public class LoginGuii extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(0, 51, 102));
         jLabel5.setText("Role");
 
-        jPasswordField1.setText("jPasswordField1");
-
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Customer", "Supplier", "Retailer", "Distributor", "Regulator", "System Administrator" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,22 +85,38 @@ public class LoginGuii extends javax.swing.JFrame {
             }
         });
 
+        SignUp.setBackground(new java.awt.Color(204, 0, 0));
+        SignUp.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        SignUp.setForeground(new java.awt.Color(255, 255, 255));
+        SignUp.setText("SignUp");
+        SignUp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SignUpActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField1)
-                        .addComponent(jPasswordField1)
-                        .addComponent(jComboBox1, 0, 323, Short.MAX_VALUE)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Email)
+                            .addComponent(Pass)
+                            .addComponent(jComboBox1, 0, 323, Short.MAX_VALUE))
+                        .addContainerGap(17, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(SignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,18 +124,20 @@ public class LoginGuii extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addGap(12, 12, 12)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(SignUp))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(153, 204, 255));
@@ -172,8 +196,54 @@ public class LoginGuii extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            String identifier = Email.getText().trim();
+            String password = new String(Pass.getPassword());
+            String role = (String) jComboBox1.getSelectedItem();
+
+            if (identifier.isBlank()) {
+                throw new IllegalArgumentException("Username or email cannot be empty.");
+            }
+
+            if ((identifier.contains(".") || identifier.contains("@")) && !identifier.contains("@")) {
+                throw new IllegalArgumentException("Email must contain '@'.");
+            }
+
+            User user = authBoundary.login(identifier, password, role);
+            if (user == null) {
+                throw new IllegalArgumentException("Invalid username/email, password, or role.");
+            }
+
+            AppContext.setCurrentUser(user);
+            javax.swing.JFrame dashboard = AppContext.createDashboardForRole(user.getRole());
+            if (dashboard == null) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Login succeeded, but no screen is mapped for role: " + user.getRole(),
+                        "Role Not Mapped",
+                        javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            dashboard.setVisible(true);
+            dispose();
+        } catch (IllegalArgumentException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Login Failed",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+        catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Unexpected error while logging in.",
+                    "Login Failed",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void SignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpActionPerformed
+        new SignUpGuiii(authBoundary).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_SignUpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,6 +281,9 @@ public class LoginGuii extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Email;
+    private javax.swing.JPasswordField Pass;
+    private javax.swing.JButton SignUp;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -221,7 +294,5 @@ public class LoginGuii extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
