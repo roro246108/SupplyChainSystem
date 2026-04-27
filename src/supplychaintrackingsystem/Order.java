@@ -51,6 +51,26 @@ public class Order implements OrderReadOnly {
         this.estimatedDelivery = orderDate.plusDays(5);
         this.status = PENDING;
         this.orderType = OrderType.STANDARD;
+        this.paid = false;
+        this.refunded = false;
+    }
+
+    public Order(int orderID, int customerID) {
+        validateOrderID(orderID);
+
+        if (customerID <= 0) {
+            throw new IllegalArgumentException("Customer ID must be positive.");
+        }
+
+        this.orderID = orderID;
+        this.customerID = customerID;
+        this.orderDate = LocalDate.now();
+        this.estimatedDelivery = orderDate.plusDays(5);
+        this.status = PENDING;
+        this.orderType = OrderType.STANDARD;
+        this.paid = false;
+        this.refunded = false;
+        this.totalAmount = 0;
     }
 
     public Order(int orderID, int customerID, List<Product> products) {
@@ -389,6 +409,10 @@ public class Order implements OrderReadOnly {
     }
 
     public void updateOrderStatus(String status) {
+        updateStatus(status);
+    }
+
+    public void setStatus(String status) {
         updateStatus(status);
     }
 
