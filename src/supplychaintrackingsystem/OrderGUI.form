@@ -227,22 +227,16 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtOrderID">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField1"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtOrderDate">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField2"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtOrderDateActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtEstimatedDelivery">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField3"/>
-          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtEstimatedDeliveryActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="cmbOrderStatus">
           <Properties>
@@ -361,27 +355,18 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtCustomerID">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField1"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtProductID">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField2"/>
-          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtProductIDActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtProductName">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField3"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtProductNameActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtQuantity">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField4"/>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -495,16 +480,12 @@
         <Component class="javax.swing.JTextField" name="txtTotalAmount">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="jTextField1"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTotalAmountActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtUnitPrice">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField2"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtUnitPriceActionPerformed"/>
           </Events>
@@ -521,6 +502,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Create Order"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCreateOrderActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnGetOrders">
       <Properties>
@@ -532,6 +516,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Get Orders"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGetOrdersActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCalculateTotal">
       <Properties>
@@ -543,6 +530,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Calculate Total"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCalculateTotalActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCheckAvailability">
       <Properties>
@@ -554,6 +544,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Check Availability"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCheckAvailabilityActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnUpdateStatus">
       <Properties>
@@ -565,6 +558,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Update Status"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUpdateStatusActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnClear">
       <Properties>

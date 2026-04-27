@@ -1,7 +1,7 @@
 package supplychaintrackingsystem;
 
 public interface ShippingStrategy {
-    double calculateShippingCost(Shipment shipment);
+    double calculateCost(double weight, double distance);
 
-    String estimateDeliveryTime(Shipment shipment);
+    String estimateTime(double distance);
 }

@@ -42,7 +42,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="jPanel4" alignment="0" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="btnGenerateReport" min="-2" max="-2" attributes="0"/>
@@ -52,8 +52,8 @@
                       <Component id="btnBack" min="-2" pref="91" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                      <Component id="btnCreateRecord" min="-2" pref="85" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                      <Component id="btnCreateRecord" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnLinkMaterials" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -62,9 +62,12 @@
                       <Component id="btnNotifyAdmin" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                  <Component id="jPanel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="49" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -351,6 +354,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Create Record "/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCreateRecordActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnLinkMaterials">
       <Properties>
@@ -365,6 +371,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Link Material"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLinkMaterialsActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnSendNotification">
       <Properties>
@@ -379,6 +388,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Send Notification"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSendNotificationActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnNotifyAdmin">
       <Properties>
@@ -393,6 +405,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Notify Admin"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNotifyAdminActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnGenerateReport">
       <Properties>
@@ -407,6 +422,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Generate Report"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGenerateReportActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnClear">
       <Properties>
@@ -421,6 +439,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Clear"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnBack">
       <Properties>

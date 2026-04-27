@@ -4,10 +4,7 @@
  */
 package supplychaintrackingsystem;
 
-/**
- *
- * @author Rawan
- */
+
 public class SupplyChainTrackingSystem {
 
     public static void main(String[] args) {

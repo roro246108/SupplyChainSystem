@@ -4,18 +4,24 @@
  */
 package supplychaintrackingsystem;
 
-/**
- *
- * @author Andrew
- */
 public class shipmentGuii extends javax.swing.JFrame {
 
-    /**
-     * Creates new form shipmentGuii
-     */
+   private Shipment shipment;
     public shipmentGuii() {
         initComponents();
     }
+    
+    private void applySelectedShippingStrategy() {
+    String selectedStrategy = cmbShippingStrategy.getSelectedItem().toString();
+
+    if (selectedStrategy.equals("Fast Shipping")) {
+        shipment.setStrategy(new FastShippingStrategy());
+    } else if (selectedStrategy.equals("Cold Chain Shipping")) {
+        shipment.setStrategy(new ColdChainShippingStrategy());
+    } else if (selectedStrategy.equals("Standard Shipping")) {
+        shipment.setStrategy(new StandardShippingStrategy());
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,7 +48,7 @@ public class shipmentGuii extends javax.swing.JFrame {
         txtDistance = new javax.swing.JLabel();
         txtDepartureDate = new javax.swing.JLabel();
         txtWeight = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        txtDistanceInput = new javax.swing.JTextField();
         jTextField7 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         txtArrivalDate = new javax.swing.JTextField();
@@ -51,7 +57,6 @@ public class shipmentGuii extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txtCurrentLocation = new javax.swing.JTextField();
         btnCreateShipment = new javax.swing.JButton();
-        btnUpdateStatus = new javax.swing.JTextField();
         btnUpdateLocation = new javax.swing.JButton();
         btnUpdateConditions = new javax.swing.JButton();
         btnCalculateETA = new javax.swing.JButton();
@@ -69,6 +74,9 @@ public class shipmentGuii extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtConditionNotes = new javax.swing.JTextArea();
+        UpdateStatus = new javax.swing.JButton();
+        cmbShippingStrategy = new javax.swing.JComboBox<>();
+        btnCalculateShipping = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -127,7 +135,7 @@ public class shipmentGuii extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtDistanceInput, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -154,7 +162,7 @@ public class shipmentGuii extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(txtDistance))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtDistanceInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel11)
                         .addComponent(cmbShipmentStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -201,11 +209,9 @@ public class shipmentGuii extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(22, Short.MAX_VALUE))))
+                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,14 +248,9 @@ public class shipmentGuii extends javax.swing.JFrame {
         btnCreateShipment.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCreateShipment.setForeground(new java.awt.Color(255, 255, 255));
         btnCreateShipment.setText("Create Shipment");
-
-        btnUpdateStatus.setBackground(new java.awt.Color(156, 39, 176));
-        btnUpdateStatus.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnUpdateStatus.setForeground(new java.awt.Color(255, 255, 255));
-        btnUpdateStatus.setText("   Update Status");
-        btnUpdateStatus.addActionListener(new java.awt.event.ActionListener() {
+        btnCreateShipment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateStatusActionPerformed(evt);
+                btnCreateShipmentActionPerformed(evt);
             }
         });
 
@@ -257,11 +258,21 @@ public class shipmentGuii extends javax.swing.JFrame {
         btnUpdateLocation.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnUpdateLocation.setForeground(new java.awt.Color(255, 255, 255));
         btnUpdateLocation.setText("Update Location");
+        btnUpdateLocation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateLocationActionPerformed(evt);
+            }
+        });
 
         btnUpdateConditions.setBackground(new java.awt.Color(255, 152, 0));
         btnUpdateConditions.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnUpdateConditions.setForeground(new java.awt.Color(255, 255, 255));
-        btnUpdateConditions.setText("Update Location");
+        btnUpdateConditions.setText("Update Condition");
+        btnUpdateConditions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateConditionsActionPerformed(evt);
+            }
+        });
 
         btnCalculateETA.setBackground(new java.awt.Color(76, 175, 80));
         btnCalculateETA.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -287,16 +298,31 @@ public class shipmentGuii extends javax.swing.JFrame {
         btnValidateData.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnValidateData.setForeground(new java.awt.Color(255, 255, 255));
         btnValidateData.setText("Vaildate Date");
+        btnValidateData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnValidateDataActionPerformed(evt);
+            }
+        });
 
         btnClear.setBackground(new java.awt.Color(158, 158, 158));
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnClear.setForeground(new java.awt.Color(255, 255, 255));
         btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         btnBack.setBackground(new java.awt.Color(96, 125, 139));
         btnBack.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnBack.setForeground(new java.awt.Color(255, 255, 255));
         btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         jPanel3.setBackground(java.awt.SystemColor.activeCaption);
 
@@ -405,6 +431,30 @@ public class shipmentGuii extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        UpdateStatus.setBackground(new java.awt.Color(255, 153, 102));
+        UpdateStatus.setText("  Update Status");
+        UpdateStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateStatusActionPerformed(evt);
+            }
+        });
+
+        cmbShippingStrategy.setBackground(new java.awt.Color(255, 204, 255));
+        cmbShippingStrategy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fast Shipping", "Cold Chain Shipping", "Standard Shipping", " " }));
+        cmbShippingStrategy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbShippingStrategyActionPerformed(evt);
+            }
+        });
+
+        btnCalculateShipping.setBackground(new java.awt.Color(204, 204, 255));
+        btnCalculateShipping.setText("Calculate Shipping");
+        btnCalculateShipping.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalculateShippingActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -412,32 +462,39 @@ public class shipmentGuii extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(btnCreateShipment, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnUpdateStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnUpdateLocation)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnUpdateConditions, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCalculateETA))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(80, 80, 80)
+                                .addComponent(btnCreateShipment, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(UpdateStatus)
+                                .addGap(10, 10, 10)
+                                .addComponent(btnUpdateLocation)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnUpdateConditions, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCalculateETA))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
                                 .addComponent(btnMarkDelivered)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnValidateData, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(12, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbShippingStrategy, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(48, Short.MAX_VALUE))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCalculateShipping)
+                .addGap(154, 154, 154))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -450,17 +507,20 @@ public class shipmentGuii extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreateShipment)
-                    .addComponent(btnUpdateStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUpdateLocation)
                     .addComponent(btnUpdateConditions)
-                    .addComponent(btnCalculateETA))
+                    .addComponent(btnCalculateETA)
+                    .addComponent(UpdateStatus))
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnMarkDelivered)
                     .addComponent(btnValidateData)
                     .addComponent(btnClear)
-                    .addComponent(btnBack))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnBack)
+                    .addComponent(cmbShippingStrategy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCalculateShipping)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -470,21 +530,169 @@ public class shipmentGuii extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
 
-    private void btnUpdateStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateStatusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnUpdateStatusActionPerformed
-
     private void btnMarkDeliveredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarkDeliveredActionPerformed
         // TODO add your handling code here:
+    try {
+        shipment.markAsDelivered();
+        javax.swing.JOptionPane.showMessageDialog(this, "Shipment Delivered!");
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
     }//GEN-LAST:event_btnMarkDeliveredActionPerformed
 
     private void btnCalculateETAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalculateETAActionPerformed
         // TODO add your handling code here:
+    try {
+        java.util.Date eta = shipment.calculateETA();
+        javax.swing.JOptionPane.showMessageDialog(this, "ETA: " + eta);
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
     }//GEN-LAST:event_btnCalculateETAActionPerformed
 
     private void txtHumidityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHumidityActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtHumidityActionPerformed
+
+    private void UpdateStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateStatusActionPerformed
+        // TODO add your handling code here:
+        
+    try {
+        String status = cmbShipmentStatus.getSelectedItem().toString();
+        shipment.updateStatus(status);
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Status Updated!");
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+    }//GEN-LAST:event_UpdateStatusActionPerformed
+
+    private void btnCreateShipmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateShipmentActionPerformed
+        // TODO add your handling code here:
+      
+    try {
+        int id = Integer.parseInt(txtShipmentID.getText());
+        String origin = txtOrigin.getText();
+        String destination = txtDestination.getText();
+        String location = txtCurrentLocation.getText();
+        double weight = Double.parseDouble(txtWeight.getText());
+        double distance = Double.parseDouble(txtDistanceInput.getText());
+
+        shipment = new Shipment(id, origin, destination, weight, distance);
+        shipment.setCurrentLocation(location);
+
+        applySelectedShippingStrategy();
+
+        double cost = shipment.calculateShippingCost();
+        String time = shipment.estimateDeliveryTime();
+
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Shipment Created Successfully!\n"
+                + "Shipping Cost: " + cost + "\n"
+                + "Estimated Delivery Time: " + time
+        );
+
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Please enter valid numeric values.");
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+
+    }//GEN-LAST:event_btnCreateShipmentActionPerformed
+
+    private void btnUpdateLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateLocationActionPerformed
+        // TODO add your handling code here:
+  
+    try {
+        String location = txtCurrentLocation.getText();
+        shipment.updateLocation(location);
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Location Updated!");
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+    }//GEN-LAST:event_btnUpdateLocationActionPerformed
+
+    private void btnUpdateConditionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateConditionsActionPerformed
+        // TODO add your handling code here:
+    try {
+        double temp = Double.parseDouble(txtTemperature.getText());
+        double humidity = Double.parseDouble(txtHumidity.getText());
+
+        shipment.updateConditions(temp, humidity);
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Conditions Updated!");
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+    }//GEN-LAST:event_btnUpdateConditionsActionPerformed
+
+    private void btnValidateDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidateDataActionPerformed
+        // TODO add your handling code here: 
+    try {
+        shipment.validateShipmentData();
+        javax.swing.JOptionPane.showMessageDialog(this, "Shipment Data is Valid!");
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+    }//GEN-LAST:event_btnValidateDataActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+    txtShipmentID.setText("");
+    txtOrigin.setText("");
+    txtDestination.setText("");
+    txtCurrentLocation.setText("");
+    txtWeight.setText("");
+    txtTemperature.setText("");
+    txtHumidity.setText("");
+
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void cmbShippingStrategyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbShippingStrategyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbShippingStrategyActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnCalculateShippingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalculateShippingActionPerformed
+        // TODO add your handling code here:
+    try {
+        if (shipment == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please create shipment first.");
+            return;
+        }
+
+        applySelectedShippingStrategy();
+
+        double cost = shipment.calculateShippingCost();
+        String time = shipment.estimateDeliveryTime();
+
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Shipping Cost: " + cost + "\n"
+                + "Estimated Delivery Time: " + time
+        );
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+    }//GEN-LAST:event_btnCalculateShippingActionPerformed
 
     /**
      * @param args the command line arguments
@@ -522,16 +730,18 @@ public class shipmentGuii extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton UpdateStatus;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCalculateETA;
+    private javax.swing.JButton btnCalculateShipping;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnCreateShipment;
     private javax.swing.JButton btnMarkDelivered;
     private javax.swing.JButton btnUpdateConditions;
     private javax.swing.JButton btnUpdateLocation;
-    private javax.swing.JTextField btnUpdateStatus;
     private javax.swing.JButton btnValidateData;
     private javax.swing.JComboBox<String> cmbShipmentStatus;
+    private javax.swing.JComboBox<String> cmbShippingStrategy;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -552,7 +762,6 @@ public class shipmentGuii extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField txtArrivalDate;
     private javax.swing.JTextArea txtConditionNotes;
@@ -560,6 +769,7 @@ public class shipmentGuii extends javax.swing.JFrame {
     private javax.swing.JLabel txtDepartureDate;
     private javax.swing.JTextField txtDestination;
     private javax.swing.JLabel txtDistance;
+    private javax.swing.JTextField txtDistanceInput;
     private javax.swing.JTextField txtHumidity;
     private javax.swing.JTextField txtOrigin;
     private javax.swing.JTextField txtShipmentID;

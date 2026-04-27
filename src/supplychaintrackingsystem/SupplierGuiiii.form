@@ -62,9 +62,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel10" alignment="0" min="-2" pref="105" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jButton3" min="-2" pref="150" max="-2" attributes="0"/>
+                              <Component id="ReceiveNotificationButton" min="-2" pref="150" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
-                              <Component id="jButton4" min="-2" pref="137" max="-2" attributes="0"/>
+                              <Component id="ViewNotificationButton" min="-2" pref="137" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jLabel12" alignment="0" min="-2" pref="104" max="-2" attributes="0"/>
                           <Component id="jTextField5" alignment="0" max="32767" attributes="0"/>
@@ -85,9 +85,9 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" pref="168" max="-2" attributes="0"/>
+                      <Component id="GenerateReportButton" min="-2" pref="168" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButton2" min="-2" pref="163" max="-2" attributes="0"/>
+                      <Component id="RequestVerificationButton" min="-2" pref="163" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -100,7 +100,7 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton5" min="-2" pref="159" max="-2" attributes="0"/>
+                      <Component id="RespondtoAdminRequest" min="-2" pref="159" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -138,8 +138,8 @@
               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton2" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="jButton1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="RequestVerificationButton" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="GenerateReportButton" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
               <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
@@ -149,15 +149,15 @@
               <Component id="jTextField5" min="-2" pref="35" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton3" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                  <Component id="jButton4" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="ReceiveNotificationButton" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="ViewNotificationButton" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               <Component id="jLabel12" min="-2" pref="24" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jTextField6" min="-2" pref="30" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton5" min="-2" pref="29" max="-2" attributes="0"/>
+              <Component id="RespondtoAdminRequest" min="-2" pref="29" max="-2" attributes="0"/>
               <EmptySpace pref="52" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -294,7 +294,7 @@
         <Property name="text" type="java.lang.String" value="Account Actions"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="GenerateReportButton">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="98" green="66" red="0" type="rgb"/>
@@ -312,10 +312,10 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GenerateReportButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="RequestVerificationButton">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="98" green="66" red="0" type="rgb"/>
@@ -333,7 +333,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RequestVerificationButtonActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel9">
@@ -354,7 +354,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField5">
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="ReceiveNotificationButton">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="98" green="66" red="0" type="rgb"/>
@@ -364,8 +364,11 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Receive Notification"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ReceiveNotificationButtonActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton4">
+    <Component class="javax.swing.JButton" name="ViewNotificationButton">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="cc" green="0" red="0" type="rgb"/>
@@ -379,6 +382,9 @@
           </Border>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ViewNotificationButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel12">
       <Properties>
@@ -439,7 +445,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jButton5">
+    <Component class="javax.swing.JButton" name="RespondtoAdminRequest">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="98" green="66" red="0" type="rgb"/>
@@ -453,6 +459,9 @@
           </Border>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RespondtoAdminRequestActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

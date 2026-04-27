@@ -4,15 +4,12 @@
  */
 package supplychaintrackingsystem;
 
-/**
- *
- * @author Andrew
- */
+
 public class SystemAdmintratorGuii extends javax.swing.JFrame {
 
-    /**
-     * Creates new form SystemAdmintratorGuii
-     */
+    private SystemAdministrator admin =
+        new SystemAdministrator(1, "Admin", "admin@gmail.com", "1234", "Admin");
+    
     public SystemAdmintratorGuii() {
         initComponents();
     }
@@ -33,29 +30,32 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        txtUserID = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JTextField();
+        txtRole = new javax.swing.JTextField();
+        btnAddUser = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnDeactivate = new javax.swing.JButton();
+        btnPermission = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        txtSupplierID = new javax.swing.JTextField();
+        txtRequestType = new javax.swing.JTextField();
+        txtAlertMessage = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        txtOutput = new javax.swing.JTextArea();
+        btnMonitorSecurity = new javax.swing.JButton();
+        btnReviewVerification = new javax.swing.JButton();
+        btnReviewAlert = new javax.swing.JButton();
+        btnSendRequest = new javax.swing.JButton();
+        btnConfigureSecurity = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        txtSupplierName = new javax.swing.JTextField();
+        btnAddSupplier = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,30 +92,55 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
 
         jLabel6.setText("Role");
 
-        jButton1.setBackground(new java.awt.Color(0, 102, 152));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Add User");
+        btnAddUser.setBackground(new java.awt.Color(0, 102, 152));
+        btnAddUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnAddUser.setForeground(new java.awt.Color(255, 255, 255));
+        btnAddUser.setText("Add User");
+        btnAddUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddUserActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 102, 152));
-        jButton2.setText("Update");
-        jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 152)));
+        btnUpdate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnUpdate.setForeground(new java.awt.Color(0, 102, 152));
+        btnUpdate.setText("Update");
+        btnUpdate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 152)));
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(0, 102, 152));
-        jButton3.setText("Deactivate");
-        jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 152)));
+        btnDeactivate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnDeactivate.setForeground(new java.awt.Color(0, 102, 152));
+        btnDeactivate.setText("Deactivate");
+        btnDeactivate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 152)));
+        btnDeactivate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeactivateActionPerformed(evt);
+            }
+        });
 
-        jButton4.setBackground(new java.awt.Color(0, 102, 152));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Permission");
+        btnPermission.setBackground(new java.awt.Color(0, 102, 152));
+        btnPermission.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnPermission.setForeground(new java.awt.Color(255, 255, 255));
+        btnPermission.setText("Permission");
+        btnPermission.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPermissionActionPerformed(evt);
+            }
+        });
 
-        jButton5.setBackground(new java.awt.Color(255, 0, 51));
-        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Clear");
+        btnClear.setBackground(new java.awt.Color(255, 0, 51));
+        btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnClear.setForeground(new java.awt.Color(255, 255, 255));
+        btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Supplier ID");
 
@@ -123,46 +148,71 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
 
         jLabel9.setText("Alert message");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setForeground(new java.awt.Color(255, 255, 255));
-        jTextArea2.setRows(5);
-        jTextArea2.setBorder(javax.swing.BorderFactory.createTitledBorder("User details"));
-        jScrollPane2.setViewportView(jTextArea2);
+        txtOutput.setColumns(20);
+        txtOutput.setForeground(new java.awt.Color(255, 255, 255));
+        txtOutput.setRows(5);
+        txtOutput.setBorder(javax.swing.BorderFactory.createTitledBorder("User details"));
+        jScrollPane2.setViewportView(txtOutput);
 
-        jButton6.setBackground(new java.awt.Color(0, 102, 152));
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Monitor Security");
-        jButton6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204)));
-
-        jButton7.setBackground(new java.awt.Color(0, 102, 152));
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Review Verification");
-        jButton7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204)));
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        btnMonitorSecurity.setBackground(new java.awt.Color(0, 102, 152));
+        btnMonitorSecurity.setForeground(new java.awt.Color(255, 255, 255));
+        btnMonitorSecurity.setText("Monitor Security");
+        btnMonitorSecurity.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204)));
+        btnMonitorSecurity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                btnMonitorSecurityActionPerformed(evt);
             }
         });
 
-        jButton8.setBackground(new java.awt.Color(0, 102, 152));
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Review Alert");
-        jButton8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204)));
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        btnReviewVerification.setBackground(new java.awt.Color(0, 102, 152));
+        btnReviewVerification.setForeground(new java.awt.Color(255, 255, 255));
+        btnReviewVerification.setText("Review Verification");
+        btnReviewVerification.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204)));
+        btnReviewVerification.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btnReviewVerificationActionPerformed(evt);
             }
         });
 
-        jButton9.setBackground(new java.awt.Color(0, 102, 152));
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("Send request");
-        jButton9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204)));
+        btnReviewAlert.setBackground(new java.awt.Color(0, 102, 152));
+        btnReviewAlert.setForeground(new java.awt.Color(255, 255, 255));
+        btnReviewAlert.setText("Review Alert");
+        btnReviewAlert.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204)));
+        btnReviewAlert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReviewAlertActionPerformed(evt);
+            }
+        });
 
-        jButton10.setBackground(new java.awt.Color(0, 102, 152));
-        jButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jButton10.setText("Configure Security");
-        jButton10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204)));
+        btnSendRequest.setBackground(new java.awt.Color(0, 102, 152));
+        btnSendRequest.setForeground(new java.awt.Color(255, 255, 255));
+        btnSendRequest.setText("Send request");
+        btnSendRequest.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204)));
+        btnSendRequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSendRequestActionPerformed(evt);
+            }
+        });
+
+        btnConfigureSecurity.setBackground(new java.awt.Color(0, 102, 152));
+        btnConfigureSecurity.setForeground(new java.awt.Color(255, 255, 255));
+        btnConfigureSecurity.setText("Configure Security");
+        btnConfigureSecurity.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204)));
+        btnConfigureSecurity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfigureSecurityActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("Supplier Name");
+
+        btnAddSupplier.setBackground(new java.awt.Color(0, 102, 152));
+        btnAddSupplier.setText("Add Supplier");
+        btnAddSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddSupplierActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -172,59 +222,68 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(53, 53, 53)
+                        .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField5)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField4)))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtRole)
+                            .addComponent(txtUserID)
+                            .addComponent(txtName)
+                            .addComponent(txtEmail)
+                            .addComponent(txtPassword)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(48, 48, 48)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(jTextField6)
-                                                .addComponent(jTextField7)
-                                                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLabel7)
-                                                .addComponent(jLabel9)
-                                                .addComponent(jLabel8))
-                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(36, 36, 36)
-                                        .addComponent(jButton7)
-                                        .addGap(33, 33, 33)
-                                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(53, 53, 53)
-                                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(56, 56, 56)
-                                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btnMonitorSecurity, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addComponent(btnReviewVerification)
+                                .addGap(33, 33, 33)
+                                .addComponent(btnReviewAlert, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(53, 53, 53)
+                                .addComponent(btnSendRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(56, 56, 56)
+                                .addComponent(btnConfigureSecurity, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(43, 43, 43)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(62, 62, 62)
-                                .addComponent(jButton4)
+                                .addComponent(btnPermission)
                                 .addGap(62, 62, 62)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(77, 77, 77)
-                                .addComponent(jButton5)
+                                .addComponent(btnClear)
                                 .addGap(69, 69, 69)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(btnDeactivate, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 82, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(146, 146, 146)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtSupplierID)
+                                .addComponent(txtRequestType)
+                                .addComponent(txtAlertMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7)
+                                .addComponent(jLabel9)
+                                .addComponent(jLabel8))
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(267, 267, 267)
+                        .addComponent(btnAddSupplier)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,67 +292,271 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUserID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(51, 51, 51)
+                    .addComponent(txtRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(109, 109, 109)
+                    .addComponent(btnAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDeactivate, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPermission, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
                 .addComponent(jLabel7)
                 .addGap(12, 12, 12)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSupplierID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtRequestType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
+                .addComponent(txtAlertMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnSendRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnConfigureSecurity, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnReviewAlert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(90, 90, 90)
+                            .addComponent(btnMonitorSecurity, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnReviewVerification, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(23, 23, 23)
+                .addComponent(btnAddSupplier)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(38, 38, 38))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void btnReviewAlertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReviewAlertActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+    try {
+        String message = txtAlertMessage.getText();
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        admin.receiveSystemAlert(message);
+
+        txtOutput.setText("Alert reviewed successfully:\n" + message);
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+    }//GEN-LAST:event_btnReviewAlertActionPerformed
+
+    private void btnReviewVerificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReviewVerificationActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+    
+    try {
+        int supplierID = Integer.parseInt(txtSupplierID.getText());
+
+        admin.reviewVerificationRequest(supplierID);
+
+        txtOutput.setText("Supplier verified successfully.\n"
+                + "Supplier ID: " + supplierID);
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+    }//GEN-LAST:event_btnReviewVerificationActionPerformed
+
+    private void btnConfigureSecurityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfigureSecurityActionPerformed
+        // TODO add your handling code here:
+     
+    try {
+        admin.configureSecuritySettings();
+
+        txtOutput.setText("Security settings configured:\n"
+                + "- Role-based access control enabled\n"
+                + "- User monitoring enabled\n"
+                + "- Supplier verification enabled\n"
+                + "- Alert system active");
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+        
+    }//GEN-LAST:event_btnConfigureSecurityActionPerformed
+
+    private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
+        // TODO add your handling code here:
+    try {
+        int id = Integer.parseInt(txtUserID.getText());
+        String name = txtName.getText();
+        String email = txtEmail.getText();
+        String password = txtPassword.getText();
+        String role = txtRole.getText();
+
+        User user = new User(id, name, email, password, role);
+        admin.addUser(user);
+
+        txtOutput.setText("User added successfully:\n"
+                + "ID: " + id + "\n"
+                + "Name: " + name + "\n"
+                + "Email: " + email + "\n"
+                + "Role: " + role);
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+    }//GEN-LAST:event_btnAddUserActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+        
+    try {
+        int id = Integer.parseInt(txtUserID.getText());
+
+        admin.updateUser(id);
+
+        txtOutput.setText("User updated successfully.\nUser ID: " + id);
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnPermissionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPermissionActionPerformed
+        // TODO add your handling code here:
+    try {
+        int id = Integer.parseInt(txtUserID.getText());
+        String role = txtRole.getText();
+
+        admin.managePermissions(id, role);
+
+        txtOutput.setText("Permission updated successfully.\n"
+                + "User ID: " + id + "\n"
+                + "New Role: " + role);
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+    }//GEN-LAST:event_btnPermissionActionPerformed
+
+    private void btnDeactivateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeactivateActionPerformed
+        // TODO add your handling code here:
+    try {
+        int id = Integer.parseInt(txtUserID.getText());
+
+        admin.deactivateUser(id);
+
+        txtOutput.setText("User deactivated successfully.\nUser ID: " + id);
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+    }//GEN-LAST:event_btnDeactivateActionPerformed
+
+    private void btnMonitorSecurityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMonitorSecurityActionPerformed
+        // TODO add your handling code here:
+       
+    try {
+        admin.monitorSystemSecurity();
+
+        txtOutput.setText("Security Monitoring Report:\n"
+                + "Managed Users: " + admin.getManagedUsers().size() + "\n"
+                + "Managed Suppliers: " + admin.getManagedSuppliers().size() + "\n"
+                + "System Alerts: " + admin.getSystemAlerts().size() + "\n"
+                + "Security Logs: " + admin.getSecurityLogs().size());
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+    }//GEN-LAST:event_btnMonitorSecurityActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+           txtUserID.setText("");
+    txtName.setText("");
+    txtEmail.setText("");
+    txtPassword.setText("");
+    txtRole.setText("");
+    txtSupplierID.setText("");
+    txtRequestType.setText("");
+    txtAlertMessage.setText("");
+    txtOutput.setText("");
+
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnAddSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSupplierActionPerformed
+        // TODO add your handling code here:
+      
+
+    try {
+        int supplierID = Integer.parseInt(txtSupplierID.getText());
+        String supplierName = txtSupplierName.getText();
+
+        Supplier supplier = new Supplier(
+                supplierID,
+                supplierName,
+                supplierName.toLowerCase().replace(" ", "") + "@gmail.com",
+                "1234",
+                "Supplier",
+                supplierID,
+                supplierName + " Company",
+                "01000000000",
+                "Cairo"
+        );
+
+        admin.addSupplier(supplier);
+
+        txtOutput.setText("Supplier added successfully.\n"
+                + "Supplier ID: " + supplierID + "\n"
+                + "Supplier Name: " + supplierName);
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+    }//GEN-LAST:event_btnAddSupplierActionPerformed
+
+    private void btnSendRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendRequestActionPerformed
+        // TODO add your handling code here:
+    try {
+        int supplierID = Integer.parseInt(txtSupplierID.getText());
+        String requestType = txtRequestType.getText();
+
+        admin.sendRequestToSupplier(supplierID, requestType);
+
+        txtOutput.setText("Request sent successfully.\n"
+                + "Supplier ID: " + supplierID + "\n"
+                + "Request Type: " + requestType);
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+    }//GEN-LAST:event_btnSendRequestActionPerformed
 
     /**
      * @param args the command line arguments
@@ -331,17 +594,19 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JButton btnAddSupplier;
+    private javax.swing.JButton btnAddUser;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnConfigureSecurity;
+    private javax.swing.JButton btnDeactivate;
+    private javax.swing.JButton btnMonitorSecurity;
+    private javax.swing.JButton btnPermission;
+    private javax.swing.JButton btnReviewAlert;
+    private javax.swing.JButton btnReviewVerification;
+    private javax.swing.JButton btnSendRequest;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -352,14 +617,15 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField txtAlertMessage;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextArea txtOutput;
+    private javax.swing.JTextField txtPassword;
+    private javax.swing.JTextField txtRequestType;
+    private javax.swing.JTextField txtRole;
+    private javax.swing.JTextField txtSupplierID;
+    private javax.swing.JTextField txtSupplierName;
+    private javax.swing.JTextField txtUserID;
     // End of variables declaration//GEN-END:variables
 }

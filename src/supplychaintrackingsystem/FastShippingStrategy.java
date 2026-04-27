@@ -2,12 +2,18 @@ package supplychaintrackingsystem;
 
 public class FastShippingStrategy implements ShippingStrategy {
     @Override
-    public double calculateShippingCost(Shipment shipment) {
-        return shipment == null ? 0.0 : Math.max(20.0, shipment.getWeight() * 2.5);
+    public double calculateCost(double weight, double distance) {
+        return (weight * 2.5) + (distance * 1.8) + 50;
     }
 
     @Override
-    public String estimateDeliveryTime(Shipment shipment) {
-        return "1-2 business days";
+    public String estimateTime(double distance) {
+        if (distance <= 100) {
+            return "Same day delivery";
+        } else if (distance <= 500) {
+            return "1-2 days";
+        } else {
+            return "2-3 days";
+        }
     }
 }

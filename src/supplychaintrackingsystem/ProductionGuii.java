@@ -4,15 +4,11 @@
  */
 package supplychaintrackingsystem;
 
-/**
- *
- * @author Andrew
- */
+
 public class ProductionGuii extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ProductionGuii
-     */
+    private ProductionRecord productionRecord;
+  
     public ProductionGuii() {
         initComponents();
     }
@@ -233,31 +229,61 @@ public class ProductionGuii extends javax.swing.JFrame {
         btnCreateRecord.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCreateRecord.setForeground(new java.awt.Color(255, 255, 255));
         btnCreateRecord.setText("Create Record ");
+        btnCreateRecord.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateRecordActionPerformed(evt);
+            }
+        });
 
         btnLinkMaterials.setBackground(new java.awt.Color(76, 175, 80));
         btnLinkMaterials.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLinkMaterials.setForeground(new java.awt.Color(255, 255, 255));
         btnLinkMaterials.setText("Link Material");
+        btnLinkMaterials.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLinkMaterialsActionPerformed(evt);
+            }
+        });
 
         btnSendNotification.setBackground(new java.awt.Color(0, 172, 193));
         btnSendNotification.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSendNotification.setForeground(new java.awt.Color(255, 255, 255));
         btnSendNotification.setText("Send Notification");
+        btnSendNotification.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSendNotificationActionPerformed(evt);
+            }
+        });
 
         btnNotifyAdmin.setBackground(new java.awt.Color(244, 67, 54));
         btnNotifyAdmin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnNotifyAdmin.setForeground(new java.awt.Color(255, 255, 255));
         btnNotifyAdmin.setText("Notify Admin");
+        btnNotifyAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNotifyAdminActionPerformed(evt);
+            }
+        });
 
         btnGenerateReport.setBackground(new java.awt.Color(255, 152, 0));
         btnGenerateReport.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnGenerateReport.setForeground(new java.awt.Color(255, 255, 255));
         btnGenerateReport.setText("Generate Report");
+        btnGenerateReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerateReportActionPerformed(evt);
+            }
+        });
 
         btnClear.setBackground(new java.awt.Color(158, 158, 158));
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnClear.setForeground(new java.awt.Color(255, 255, 255));
         btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         btnBack.setBackground(new java.awt.Color(96, 125, 139));
         btnBack.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -353,7 +379,7 @@ public class ProductionGuii extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addComponent(btnGenerateReport)
@@ -362,8 +388,8 @@ public class ProductionGuii extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(btnCreateRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addComponent(btnCreateRecord)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnLinkMaterials)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -371,8 +397,10 @@ public class ProductionGuii extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnNotifyAdmin))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -414,6 +442,127 @@ public class ProductionGuii extends javax.swing.JFrame {
     private void txtQuantityUsedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantityUsedActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtQuantityUsedActionPerformed
+
+    private void btnCreateRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateRecordActionPerformed
+        // TODO add your handling code here:
+ 
+    try {
+        int batchID = Integer.parseInt(txtBatchNumber.getText());
+        int productID = Integer.parseInt(txtProductID.getText());
+        String status = cmbProductionStatus.getSelectedItem().toString();
+
+        productionRecord = new ProductionRecord(batchID);
+
+        Product product = new Product(
+                productID,
+                "Product-" + productID,
+                "General",
+                new java.util.Date(),
+                new java.util.Date(),
+                0.0
+        );
+
+        productionRecord.setProduct(product);
+        productionRecord.recordBatchInformation(status);
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Production record created successfully.");
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+
+    }//GEN-LAST:event_btnCreateRecordActionPerformed
+
+    private void btnLinkMaterialsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLinkMaterialsActionPerformed
+        // TODO add your handling code here:
+      
+    try {
+        if (productionRecord == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Create production record first.");
+            return;
+        }
+
+        String materialID = txtMaterialID.getText();
+        String materialName = txtMaterialName.getText();
+
+        RawMaterial material = new RawMaterial(materialID, materialName);
+
+        boolean approved = material.approveMaterial(1);
+
+        if (!approved) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Material could not be approved.");
+            return;
+        }
+
+        boolean added = productionRecord.addMaterial(material);
+
+        if (added) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Material linked successfully.");
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Material could not be linked.");
+        }
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+       
+    }//GEN-LAST:event_btnLinkMaterialsActionPerformed
+
+    private void btnGenerateReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateReportActionPerformed
+        // TODO add your handling code here:
+    try {
+        if (productionRecord == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Create production record first.");
+            return;
+        }
+
+        String report = productionRecord.reviewProductionRecord(txtBatchNumber.getText());
+
+        txtNotes.setText(report);
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+    }//GEN-LAST:event_btnGenerateReportActionPerformed
+
+    private void btnSendNotificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendNotificationActionPerformed
+        // TODO add your handling code here:
+       
+    String message = "Production notification: "
+            + cmbProductionStatus.getSelectedItem().toString()
+            + " | Notes: " + txtNotes.getText();
+
+    javax.swing.JOptionPane.showMessageDialog(this, message);
+
+    }//GEN-LAST:event_btnSendNotificationActionPerformed
+
+    private void btnNotifyAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotifyAdminActionPerformed
+        // TODO add your handling code here:
+       
+    String alert = "Admin Alert: Production record "
+            + txtRecordID.getText()
+            + " requires review. Status: "
+            + cmbProductionStatus.getSelectedItem().toString();
+
+    javax.swing.JOptionPane.showMessageDialog(this, alert);
+
+    }//GEN-LAST:event_btnNotifyAdminActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+    txtRecordID.setText("");
+    txtProductID.setText("");
+    txtProductionDate.setText("");
+    txtBatchNumber.setText("");
+    txtMaterialID.setText("");
+    txtMaterialName.setText("");
+    txtQuantityUsed.setText("");
+    txtNotes.setText("");
+
+    }//GEN-LAST:event_btnClearActionPerformed
 
     /**
      * @param args the command line arguments
