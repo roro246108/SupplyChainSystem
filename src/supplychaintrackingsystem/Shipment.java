@@ -371,12 +371,18 @@ public class Shipment implements ShipmentSubject {
         observers.remove(observer);
     }
 
-    @Override
-    public void notifyObservers(String message) {
-        for (ShipmentObserver observer : observers) {
+   @Override
+public void notifyObservers(String message) {
+
+    for (ShipmentObserver observer : observers) {
+        try {
             observer.update(message);
+        } catch (Exception e) {
+            System.out.println("Observer update failed.");
         }
     }
+}
+
 
     @Override
     public String toString() {

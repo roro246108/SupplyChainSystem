@@ -18,7 +18,7 @@ public class Product {
     private Inventory inventory;
     private Retailer retailer;
     private Order order;
-    private Production production;
+    private ProductionController production;
     private final List<Shipment> shipments = new ArrayList<>();
     private final List<ProductionRecord> productionRecords = new ArrayList<>();
 
@@ -194,11 +194,11 @@ public class Product {
         this.order = order;
     }
 
-    public Production getProduction() {
+    public ProductionController getProduction() {
         return production;
     }
 
-    public void setProduction(Production production) {
+    public void setProduction(ProductionController production) {
         this.production = production;
     }
 
