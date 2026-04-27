@@ -264,15 +264,29 @@ public class Shipment implements ShipmentSubject {
     }
 
     @Override
-    public void notifyObservers(String message) {
-        if (message == null || message.trim().isEmpty()) {
-            throw new IllegalArgumentException("Notification message cannot be empty.");
-        }
+public void notifyObservers(String message) {
 
-        for (ShipmentObserver observer : shipmentObservers) {
+    if (message == null || message.trim().isEmpty()) {
+        return;
+    }
+
+    for (ShipmentObserver observer : shipmentObservers) {
+        try {
             observer.update(message);
+        } catch (Exception e) {
+            System.out.println("Observer update failed.");
         }
     }
+}
+
+public void setLatestSensorData(SensorData latestSensorData) {
+
+    if (latestSensorData == null) {
+        throw new NullPointerException("Sensor data cannot be null.");
+    }
+
+    updateConditions(latestSensorData);
+}
 
     public void updateLocation(String location) {
         if (location == null || location.trim().isEmpty()) {
@@ -750,36 +764,5 @@ public class Shipment implements ShipmentSubject {
         this.manufacturer = manufacturer;
     }
 
-   @Override
-public void notifyObservers(String message) {
-
-    for (ShipmentObserver observer : observers) {
-        try {
-            observer.update(message);
-        } catch (Exception e) {
-            System.out.println("Observer update failed.");
-    public void setLatestSensorData(SensorData latestSensorData) {
-        if (latestSensorData == null) {
-            throw new NullPointerException("Sensor data cannot be null.");
-        }
-
-        updateConditions(latestSensorData);
-    }
-}
-
-
-    @Override
-    public String toString() {
-        return "Shipment{"
-                + "shipmentID=" + shipmentID
-                + ", origin='" + origin + '\''
-                + ", destination='" + destination + '\''
-                + ", currentLocation='" + currentLocation + '\''
-                + ", weight=" + weight
-                + ", distance=" + distance
-                + ", temperature=" + temperature
-                + ", humidity=" + humidity
-                + ", status='" + status + '\''
-                + '}';
-    }
+   
 }

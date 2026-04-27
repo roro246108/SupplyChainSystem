@@ -149,7 +149,7 @@ public String reviewProductionRecord(String batchID) {
         return materials.remove(material);
     }
 
-    // useful extra method
+    
     public void markCompleted() {
 
         if (validateProduction()) {

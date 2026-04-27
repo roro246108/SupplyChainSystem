@@ -439,9 +439,9 @@ public class RegulatorGUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(RegulatorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(RegulatorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RegulatorGUI.class.getName()).log(java.util.logging.Level.SEVEREbtnClearex);
-        }
+       } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+    java.util.logging.Logger.getLogger(RegulatorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+}
         //</editor-fold>
 
         /* Create and display the form */
@@ -492,3 +492,4 @@ public class RegulatorGUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtTrackingRecordID;
     // End of variables declaration//GEN-END:variables
 }
+

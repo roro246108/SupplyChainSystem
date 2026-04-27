@@ -24,9 +24,9 @@ public class OrderController {
         }
     }
 
-    public Order createOrder(int customerID, List<Product> products) {
+    public Order createOrder(int userID, List<Product> products) {
         try {
-            if (customerID <= 0) {
+            if (userID <= 0) {
                 throw new IllegalArgumentException("Customer ID must be positive.");
             }
 
@@ -44,7 +44,7 @@ public class OrderController {
                 }
             }
 
-            Order order = new Order(nextOrderID++, customerID);
+            Order order = new Order(nextOrderID++, userID);
 
             for (Product product : products) {
                 order.addProduct(product);
