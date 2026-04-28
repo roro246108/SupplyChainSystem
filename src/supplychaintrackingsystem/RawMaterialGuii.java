@@ -784,20 +784,11 @@ public class RawMaterialGuii extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void linkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_linkActionPerformed
-         ID.setText(materialID.getText());
-    JOptionPane.showMessageDialog(this,"Material ID Linked");
+    
     }//GEN-LAST:event_linkActionPerformed
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
-       materialID.setText("");
-    MaterialDate.setText("");
-    ID.setText("");
-    date.setText("");
-    adminID.setText("");
-    revokeReason.setText("");
-    newMaterialdate.setText("");
-    issueDescription.setText("");
-    acrivitylog.setText("");
+ 
     }//GEN-LAST:event_clearActionPerformed
 
     private void statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusActionPerformed
@@ -817,21 +808,7 @@ public class RawMaterialGuii extends javax.swing.JFrame {
     }//GEN-LAST:event_checkQualityActionPerformed
 
     private void approvalMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approvalMaterialActionPerformed
-      try{
-        String id = ID.getText().trim();
 
-        String sql = "UPDATE raw_materials SET approved=1 WHERE material_id=?";
-
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1,Integer.parseInt(id));
-
-        ps.executeUpdate();
-
-        JOptionPane.showMessageDialog(this,"Material Approved");
-
-    }catch(Exception e){
-        JOptionPane.showMessageDialog(this,e.getMessage());
-    }
     }//GEN-LAST:event_approvalMaterialActionPerformed
 
     private void reportissueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportissueActionPerformed
@@ -896,20 +873,7 @@ public class RawMaterialGuii extends javax.swing.JFrame {
     }//GEN-LAST:event_adminIDActionPerformed
 
     private void revokeReasonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_revokeReasonActionPerformed
-         try{
-        String id = ID.getText().trim();
-
-        String sql = "UPDATE raw_materials SET approved=0 WHERE material_id=?";
-
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1,Integer.parseInt(id));
-        ps.executeUpdate();
-
-        JOptionPane.showMessageDialog(this,"Approval Revoked");
-
-    }catch(Exception e){
-        JOptionPane.showMessageDialog(this,e.getMessage());
-    }
+       
     }//GEN-LAST:event_revokeReasonActionPerformed
 
     private void revokeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_revokeActionPerformed
@@ -921,23 +885,7 @@ public class RawMaterialGuii extends javax.swing.JFrame {
     }//GEN-LAST:event_newMaterialdateActionPerformed
 
     private void updateMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateMaterialActionPerformed
-    try{
-        String id   = ID.getText().trim();
-        String data = newMaterialdate.getText().trim();
-
-        String sql = "UPDATE raw_materials SET material_data=? WHERE material_id=?";
-
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1,data);
-        ps.setInt(2,Integer.parseInt(id));
-
-        ps.executeUpdate();
-
-        JOptionPane.showMessageDialog(this,"Material Updated");
-
-    }catch(Exception e){
-        JOptionPane.showMessageDialog(this,e.getMessage());
-    }
+  
         
     }//GEN-LAST:event_updateMaterialActionPerformed
 
