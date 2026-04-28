@@ -3,7 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package supplychaintrackingsystem;
-
+import java.sql.*;
+import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 /**
  *
  * @author zeina
@@ -31,86 +36,111 @@ public class CustomerGUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtCustomerID = new javax.swing.JTextField();
-        txtCustomerName = new javax.swing.JTextField();
-        txtCustomerEmail = new javax.swing.JTextField();
-        txtCustomerPhone = new javax.swing.JTextField();
-        txtCustomerAddress = new javax.swing.JTextField();
+        CustomerID = new javax.swing.JTextField();
+        txtProductID = new javax.swing.JTextField();
+        txtProductName = new javax.swing.JTextField();
+        txtQuantity = new javax.swing.JTextField();
+        txtOrderID = new javax.swing.JTextField();
         btnAddCustomer = new javax.swing.JButton();
-        btnUpdateCustomer = new javax.swing.JButton();
-        btnDeleteCustomer = new javax.swing.JButton();
-        btnSearchCustomer = new javax.swing.JButton();
+        btnViewOrders = new javax.swing.JButton();
+        btnTrackOrder = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
+        btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel1.setText("Customer ID:");
+        jLabel1.setText("Customer ID");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setText("Name:");
+        jLabel2.setText("Product ID");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel3.setText("Email:");
+        jLabel3.setText("Product Name:");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel4.setText("Phone:");
+        jLabel4.setText("Quantity:");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel5.setText("Address:");
+        jLabel5.setText("Order ID:");
 
-        txtCustomerID.setText("txtCustomerID");
-        txtCustomerID.addActionListener(new java.awt.event.ActionListener() {
+        CustomerID.setText("txtCustomerID");
+        CustomerID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCustomerIDActionPerformed(evt);
+                CustomerIDActionPerformed(evt);
             }
         });
 
-        txtCustomerName.setText("txtCustomerName");
-        txtCustomerName.addActionListener(new java.awt.event.ActionListener() {
+        txtProductID.setText("Product ID");
+        txtProductID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCustomerNameActionPerformed(evt);
+                txtProductIDActionPerformed(evt);
             }
         });
 
-        txtCustomerEmail.setText("txtCustomerEmail");
+        txtProductName.setText("Product Name");
+        txtProductName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtProductNameActionPerformed(evt);
+            }
+        });
 
-        txtCustomerPhone.setText("txtCustomerPhone");
+        txtQuantity.setText("Quantity");
+        txtQuantity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtQuantityActionPerformed(evt);
+            }
+        });
 
-        txtCustomerAddress.setText("txtCustomerAddress");
+        txtOrderID.setText("Order ID");
+        txtOrderID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtOrderIDActionPerformed(evt);
+            }
+        });
 
         btnAddCustomer.setBackground(new java.awt.Color(76, 175, 80));
         btnAddCustomer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAddCustomer.setForeground(new java.awt.Color(242, 242, 242));
-        btnAddCustomer.setText("Add Customer");
-
-        btnUpdateCustomer.setBackground(new java.awt.Color(33, 150, 243));
-        btnUpdateCustomer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnUpdateCustomer.setForeground(new java.awt.Color(242, 242, 242));
-        btnUpdateCustomer.setText("Update");
-        btnUpdateCustomer.addActionListener(new java.awt.event.ActionListener() {
+        btnAddCustomer.setText("Create Order");
+        btnAddCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateCustomerActionPerformed(evt);
+                btnAddCustomerActionPerformed(evt);
             }
         });
 
-        btnDeleteCustomer.setBackground(new java.awt.Color(244, 67, 54));
-        btnDeleteCustomer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnDeleteCustomer.setForeground(new java.awt.Color(242, 242, 242));
-        btnDeleteCustomer.setText("Delete");
+        btnViewOrders.setBackground(new java.awt.Color(33, 150, 243));
+        btnViewOrders.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnViewOrders.setForeground(new java.awt.Color(242, 242, 242));
+        btnViewOrders.setText("View Orders");
+        btnViewOrders.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewOrdersActionPerformed(evt);
+            }
+        });
 
-        btnSearchCustomer.setBackground(new java.awt.Color(156, 39, 176));
-        btnSearchCustomer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnSearchCustomer.setForeground(new java.awt.Color(255, 255, 255));
-        btnSearchCustomer.setText("Search");
+        btnTrackOrder.setBackground(new java.awt.Color(156, 39, 176));
+        btnTrackOrder.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnTrackOrder.setForeground(new java.awt.Color(255, 255, 255));
+        btnTrackOrder.setText("TrackOrder");
+        btnTrackOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTrackOrderActionPerformed(evt);
+            }
+        });
 
         btnClear.setBackground(new java.awt.Color(255, 152, 0));
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnClear.setForeground(new java.awt.Color(242, 242, 242));
         btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         btnBack.setBackground(new java.awt.Color(158, 158, 158));
         btnBack.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -146,6 +176,16 @@ public class CustomerGUI extends javax.swing.JFrame {
                 .addGap(24, 24, 24))
         );
 
+        btnDelete.setBackground(new java.awt.Color(255, 0, 51));
+        btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnDelete.setForeground(new java.awt.Color(242, 242, 242));
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -156,36 +196,37 @@ public class CustomerGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCustomerPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCustomerEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCustomerAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAddCustomer)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnUpdateCustomer)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDeleteCustomer)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSearchCustomer)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnClear)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBack)
+                            .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtCustomerID)
-                            .addComponent(txtCustomerName, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(CustomerID)
+                                .addComponent(txtProductID, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAddCustomer)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnViewOrders)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnTrackOrder)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnClear)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addComponent(btnDelete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBack)
+                        .addGap(26, 26, 26))))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -195,54 +236,528 @@ public class CustomerGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtCustomerID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CustomerID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtProductID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtCustomerEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtProductName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtCustomerPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txtCustomerAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+                    .addComponent(txtOrderID, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddCustomer)
-                    .addComponent(btnUpdateCustomer)
-                    .addComponent(btnDeleteCustomer)
-                    .addComponent(btnSearchCustomer)
-                    .addComponent(btnClear)
-                    .addComponent(btnBack))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnTrackOrder, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAddCustomer)
+                        .addComponent(btnBack)
+                        .addComponent(btnViewOrders)
+                        .addComponent(btnDelete)
+                        .addComponent(btnClear)))
                 .addGap(19, 19, 19))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtCustomerNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCustomerNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCustomerNameActionPerformed
+    private void txtProductIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductIDActionPerformed
+       
+       try {
+        int productId = Integer.parseInt(txtProductID.getText());
 
-    private void btnUpdateCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateCustomerActionPerformed
+        Connection con = DBConnection.connect();
+
+        if (con == null) {
+            JOptionPane.showMessageDialog(this, "Database connection failed");
+            return;
+        }
+
+        PreparedStatement ps = con.prepareStatement(
+            "SELECT product_name, unit_price, stock_quantity FROM products WHERE product_id = ?"
+        );
+
+        ps.setInt(1, productId);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            txtProductName.setText(rs.getString("product_name"));
+
+            JOptionPane.showMessageDialog(
+                this,
+                "Price: " + rs.getDouble("unit_price")
+                + "\nStock: " + rs.getInt("stock_quantity")
+            );
+        } else {
+            JOptionPane.showMessageDialog(this, "Product not found");
+            txtProductName.setText("");
+        }
+
+        con.close();
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+    }//GEN-LAST:event_txtProductIDActionPerformed
+
+    private void btnViewOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrdersActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnUpdateCustomerActionPerformed
+        try {
+
+        int customerId = Integer.parseInt(CustomerID.getText());
+
+        Connection con = DBConnection.connect();
+
+        String sql =
+        "SELECT order_id, order_date, status, total_amount " +
+        "FROM orders WHERE customer_id = ?";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, customerId);
+
+        ResultSet rs = ps.executeQuery();
+
+        String data = "";
+
+        while (rs.next()) {
+
+            data += "Order ID: " + rs.getInt("order_id")
+                 + " | Date: " + rs.getString("order_date")
+                 + " | Status: " + rs.getString("status")
+                 + " | Total: " + rs.getDouble("total_amount")
+                 + "\n";
+
+        }
+
+        if (data.equals("")) {
+            JOptionPane.showMessageDialog(this, "No orders found");
+        } else {
+            txtOrderID.setText(data);
+        }
+
+        con.close();
+
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(this, e.getMessage());
+
+    }
+    }//GEN-LAST:event_btnViewOrdersActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+        this.dispose(); 
+       new LoginGUI().setVisible(true);
+    
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void txtCustomerIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCustomerIDActionPerformed
+    private void CustomerIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerIDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtCustomerIDActionPerformed
+         try {
+
+        int customerId = Integer.parseInt(CustomerID.getText());
+
+        Connection con = DBConnection.connect();
+
+        String sql = "SELECT customer_id FROM orders WHERE customer_id = ? LIMIT 1";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, customerId);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            JOptionPane.showMessageDialog(this, "Customer ID found");
+        } else {
+            JOptionPane.showMessageDialog(this, "Customer ID not found");
+        }
+
+        con.close();
+
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(this, e.getMessage());
+
+    }
+    }//GEN-LAST:event_CustomerIDActionPerformed
+
+    private void txtProductNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductNameActionPerformed
+       
+         try {
+
+        String productName = txtProductName.getText().trim();
+
+        Connection con = DBConnection.connect();
+
+        String sql =
+        "SELECT product_id, unit_price, stock_quantity " +
+        "FROM products WHERE product_name = ?";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, productName);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+
+            txtProductID.setText(String.valueOf(rs.getInt("product_id")));
+
+            JOptionPane.showMessageDialog(this,
+                    "Product Found"
+                    + "\nID: " + rs.getInt("product_id")
+                    + "\nPrice: " + rs.getDouble("unit_price")
+                    + "\nStock: " + rs.getInt("stock_quantity"));
+
+        } else {
+
+            JOptionPane.showMessageDialog(this, "Product not found");
+
+        }
+
+        con.close();
+
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(this, e.getMessage());
+
+    }
+    }//GEN-LAST:event_txtProductNameActionPerformed
+
+    private void txtOrderIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOrderIDActionPerformed
+         try {
+
+        int orderId = Integer.parseInt(txtOrderID.getText());
+
+        Connection con = DBConnection.connect();
+
+        String sql =
+        "SELECT customer_id, order_date, status, total_amount " +
+        "FROM orders WHERE order_id = ?";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, orderId);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+
+            CustomerID.setText(String.valueOf(rs.getInt("customer_id")));
+
+            JOptionPane.showMessageDialog(this,
+                    "Order Found"
+                    + "\nCustomer ID: " + rs.getInt("customer_id")
+                    + "\nDate: " + rs.getString("order_date")
+                    + "\nStatus: " + rs.getString("status")
+                    + "\nTotal: " + rs.getDouble("total_amount"));
+
+        } else {
+
+            JOptionPane.showMessageDialog(this, "Order not found");
+
+        }
+
+        con.close();
+
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(this, e.getMessage());
+
+    }
+    }//GEN-LAST:event_txtOrderIDActionPerformed
+
+    private void txtQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantityActionPerformed
+         try {
+
+        int quantity = Integer.parseInt(txtQuantity.getText());
+
+        if (quantity <= 0) {
+            JOptionPane.showMessageDialog(this, "Quantity must be greater than 0");
+            txtQuantity.setText("");
+            return;
+        }
+
+        if (txtProductID.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Enter Product ID first");
+            return;
+        }
+
+        int productId = Integer.parseInt(txtProductID.getText());
+
+        Connection con = DBConnection.connect();
+
+        String sql =
+        "SELECT stock_quantity, unit_price FROM products WHERE product_id = ?";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, productId);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+
+            int stock = rs.getInt("stock_quantity");
+            double price = rs.getDouble("unit_price");
+
+            if (quantity > stock) {
+
+                JOptionPane.showMessageDialog(this,
+                        "Only " + stock + " items available");
+
+            } else {
+
+                double total = quantity * price;
+
+                JOptionPane.showMessageDialog(this,
+                        "Available\nTotal Price: " + total);
+            }
+
+        } else {
+
+            JOptionPane.showMessageDialog(this, "Product not found");
+
+        }
+
+        con.close();
+
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(this, e.getMessage());
+
+    }
+    }//GEN-LAST:event_txtQuantityActionPerformed
+
+    private void btnAddCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCustomerActionPerformed
+        try {
+
+        int customerId = Integer.parseInt(CustomerID.getText());
+        int productId = Integer.parseInt(txtProductID.getText());
+        int quantity = Integer.parseInt(txtQuantity.getText());
+
+        Connection con = DBConnection.connect();
+
+        if (con == null) {
+            JOptionPane.showMessageDialog(this, "Database connection failed");
+            return;
+        }
+
+        PreparedStatement ps1 = con.prepareStatement(
+            "SELECT unit_price, stock_quantity FROM products WHERE product_id = ?"
+        );
+
+        ps1.setInt(1, productId);
+
+        ResultSet rs = ps1.executeQuery();
+
+        if (!rs.next()) {
+            JOptionPane.showMessageDialog(this, "Product not found");
+            return;
+        }
+
+        double price = rs.getDouble("unit_price");
+        int stock = rs.getInt("stock_quantity");
+
+        if (quantity > stock) {
+            JOptionPane.showMessageDialog(this, "Not enough stock");
+            return;
+        }
+
+        double total = price * quantity;
+
+        PreparedStatement ps2 = con.prepareStatement(
+            "INSERT INTO orders (customer_id, status, total_amount) VALUES (?, ?, ?)",
+            Statement.RETURN_GENERATED_KEYS
+        );
+
+        ps2.setInt(1, customerId);
+        ps2.setString(2, "Pending");
+        ps2.setDouble(3, total);
+
+        ps2.executeUpdate();
+
+        ResultSet keys = ps2.getGeneratedKeys();
+
+        int orderId = 0;
+
+        if (keys.next()) {
+            orderId = keys.getInt(1);
+        }
+
+        PreparedStatement ps3 = con.prepareStatement(
+            "INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)"
+        );
+
+        ps3.setInt(1, orderId);
+        ps3.setInt(2, productId);
+        ps3.setInt(3, quantity);
+        ps3.setDouble(4, price);
+
+        ps3.executeUpdate();
+
+        PreparedStatement ps4 = con.prepareStatement(
+            "UPDATE products SET stock_quantity = stock_quantity - ? WHERE product_id = ?"
+        );
+
+        ps4.setInt(1, quantity);
+        ps4.setInt(2, productId);
+
+        ps4.executeUpdate();
+
+        txtOrderID.setText(String.valueOf(orderId));
+
+        JOptionPane.showMessageDialog(this, "Order created successfully");
+
+        con.close();
+
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(this, e.getMessage());
+
+    }
+    }//GEN-LAST:event_btnAddCustomerActionPerformed
+
+    private void btnTrackOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrackOrderActionPerformed
+      try {
+
+        int orderId = Integer.parseInt(txtOrderID.getText());
+
+        Connection con = DBConnection.connect();
+
+        String sql =
+        "SELECT order_id, customer_id, order_date, status, total_amount " +
+        "FROM orders WHERE order_id = ?";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, orderId);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+
+            CustomerID.setText(String.valueOf(rs.getInt("customer_id")));
+
+            JOptionPane.showMessageDialog(this,
+                    "Order Tracking"
+                    + "\nOrder ID: " + rs.getInt("order_id")
+                    + "\nCustomer ID: " + rs.getInt("customer_id")
+                    + "\nDate: " + rs.getString("order_date")
+                    + "\nStatus: " + rs.getString("status")
+                    + "\nTotal: " + rs.getDouble("total_amount"));
+
+        } else {
+
+            JOptionPane.showMessageDialog(this, "Order not found");
+
+        }
+
+        con.close();
+
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(this, e.getMessage());
+
+    }
+    }//GEN-LAST:event_btnTrackOrderActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        CustomerID.setText("");
+    txtProductID.setText("");
+    txtProductName.setText("");
+    txtQuantity.setText("");
+    txtOrderID.setText("");
+
+    CustomerID.requestFocus();
+
+    JOptionPane.showMessageDialog(this, "Fields cleared");
+
+
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+      try {
+
+        int orderId = Integer.parseInt(txtOrderID.getText().trim());
+
+        Connection con = DBConnection.connect();
+
+        if (con == null) {
+            JOptionPane.showMessageDialog(this, "Database connection failed");
+            return;
+        }
+
+        PreparedStatement check = con.prepareStatement(
+            "SELECT order_id FROM orders WHERE order_id = ?"
+        );
+        check.setInt(1, orderId);
+
+        ResultSet rs = check.executeQuery();
+
+        if (!rs.next()) {
+            JOptionPane.showMessageDialog(this, "Order not found");
+            con.close();
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Delete Order ID " + orderId + " ?",
+                "Confirm Delete",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            con.close();
+            return;
+        }
+
+        PreparedStatement ps1 = con.prepareStatement(
+            "DELETE FROM order_items WHERE order_id = ?"
+        );
+        ps1.setInt(1, orderId);
+        ps1.executeUpdate();
+
+        PreparedStatement ps2 = con.prepareStatement(
+            "DELETE FROM orders WHERE order_id = ?"
+        );
+        ps2.setInt(1, orderId);
+
+        int rows = ps2.executeUpdate();
+
+        if (rows > 0) {
+
+            JOptionPane.showMessageDialog(this,
+                    "Order deleted successfully");
+
+            CustomerID.setText("");
+            txtOrderID.setText("");
+            txtProductID.setText("");
+            txtProductName.setText("");
+            txtQuantity.setText("");
+
+        } else {
+
+            JOptionPane.showMessageDialog(this,
+                    "Delete failed");
+
+        }
+
+        con.close();
+
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(this, e.getMessage());
+
+    }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -280,12 +795,13 @@ public class CustomerGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField CustomerID;
     private javax.swing.JButton btnAddCustomer;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnClear;
-    private javax.swing.JButton btnDeleteCustomer;
-    private javax.swing.JButton btnSearchCustomer;
-    private javax.swing.JButton btnUpdateCustomer;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnTrackOrder;
+    private javax.swing.JButton btnViewOrders;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -293,10 +809,9 @@ public class CustomerGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtCustomerAddress;
-    private javax.swing.JTextField txtCustomerEmail;
-    private javax.swing.JTextField txtCustomerID;
-    private javax.swing.JTextField txtCustomerName;
-    private javax.swing.JTextField txtCustomerPhone;
+    private javax.swing.JTextField txtOrderID;
+    private javax.swing.JTextField txtProductID;
+    private javax.swing.JTextField txtProductName;
+    private javax.swing.JTextField txtQuantity;
     // End of variables declaration//GEN-END:variables
 }

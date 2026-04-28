@@ -7,7 +7,7 @@ public class DBConnection {
 
     public static Connection connect() {
         try {
-            String url = "jdbc:mysql://localhost:3306/supply_chain";
+            String url = "jdbc:mysql://localhost:3306/supplychain";
             String user = "root";
             String password = "";
 
