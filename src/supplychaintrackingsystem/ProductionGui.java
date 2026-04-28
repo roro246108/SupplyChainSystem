@@ -3,13 +3,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package supplychaintrackingsystem;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+/**
+ *
+ * @author Andrew
+ */
+public class ProductionGui extends javax.swing.JFrame {
 
-
-public class ProductionGuii extends javax.swing.JFrame {
-
-    private ProductionRecord productionRecord;
-  
-    public ProductionGuii() {
+    /**
+     * Creates new form ProductionGuii
+     */
+    public ProductionGui() {
         initComponents();
     }
 
@@ -46,7 +53,6 @@ public class ProductionGuii extends javax.swing.JFrame {
         btnCreateRecord = new javax.swing.JButton();
         btnLinkMaterials = new javax.swing.JButton();
         btnSendNotification = new javax.swing.JButton();
-        btnNotifyAdmin = new javax.swing.JButton();
         btnGenerateReport = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
@@ -92,6 +98,12 @@ public class ProductionGuii extends javax.swing.JFrame {
             }
         });
 
+        txtProductID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtProductIDActionPerformed(evt);
+            }
+        });
+
         txtProductionDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtProductionDateActionPerformed(evt);
@@ -116,6 +128,18 @@ public class ProductionGuii extends javax.swing.JFrame {
 
         jLabel10.setText("Unit");
 
+        txtMaterialID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMaterialIDActionPerformed(evt);
+            }
+        });
+
+        txtMaterialName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMaterialNameActionPerformed(evt);
+            }
+        });
+
         txtQuantityUsed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtQuantityUsedActionPerformed(evt);
@@ -123,6 +147,11 @@ public class ProductionGuii extends javax.swing.JFrame {
         });
 
         cmbUnit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kg", "Liters", "Pieces", "Boxes", "Other" }));
+        cmbUnit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbUnitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -255,16 +284,6 @@ public class ProductionGuii extends javax.swing.JFrame {
             }
         });
 
-        btnNotifyAdmin.setBackground(new java.awt.Color(244, 67, 54));
-        btnNotifyAdmin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnNotifyAdmin.setForeground(new java.awt.Color(255, 255, 255));
-        btnNotifyAdmin.setText("Notify Admin");
-        btnNotifyAdmin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNotifyAdminActionPerformed(evt);
-            }
-        });
-
         btnGenerateReport.setBackground(new java.awt.Color(255, 152, 0));
         btnGenerateReport.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnGenerateReport.setForeground(new java.awt.Color(255, 255, 255));
@@ -289,6 +308,11 @@ public class ProductionGuii extends javax.swing.JFrame {
         btnBack.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnBack.setForeground(new java.awt.Color(255, 255, 255));
         btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         jPanel4.setBackground(java.awt.SystemColor.activeCaption);
 
@@ -322,8 +346,18 @@ public class ProductionGuii extends javax.swing.JFrame {
         jLabel14.setText("Notes");
 
         cmbProductionStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "In Production", "Completed", "Failed" }));
+        cmbProductionStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbProductionStatusActionPerformed(evt);
+            }
+        });
 
         cmbQualityCheck.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Approved", "Rejected", "Needs Inspection" }));
+        cmbQualityCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbQualityCheckActionPerformed(evt);
+            }
+        });
 
         txtNotes.setColumns(20);
         txtNotes.setForeground(new java.awt.Color(102, 102, 102));
@@ -379,28 +413,23 @@ public class ProductionGuii extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(btnGenerateReport)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(btnCreateRecord)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnLinkMaterials)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSendNotification, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnNotifyAdmin))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(49, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnGenerateReport, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCreateRecord, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnLinkMaterials, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnSendNotification, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -414,8 +443,7 @@ public class ProductionGuii extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreateRecord)
                     .addComponent(btnLinkMaterials)
-                    .addComponent(btnSendNotification)
-                    .addComponent(btnNotifyAdmin))
+                    .addComponent(btnSendNotification))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGenerateReport)
@@ -429,140 +457,175 @@ public class ProductionGuii extends javax.swing.JFrame {
 
     private void txtRecordIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRecordIDActionPerformed
         // TODO add your handling code here:
+         txtProductID.requestFocus();
     }//GEN-LAST:event_txtRecordIDActionPerformed
 
     private void txtProductionDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductionDateActionPerformed
         // TODO add your handling code here:
+          txtBatchNumber.requestFocus();
     }//GEN-LAST:event_txtProductionDateActionPerformed
 
     private void txtBatchNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBatchNumberActionPerformed
         // TODO add your handling code here:
+            txtMaterialID.requestFocus();
     }//GEN-LAST:event_txtBatchNumberActionPerformed
 
     private void txtQuantityUsedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantityUsedActionPerformed
         // TODO add your handling code here:
+         btnCreateRecord.doClick();
     }//GEN-LAST:event_txtQuantityUsedActionPerformed
 
-    private void btnCreateRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateRecordActionPerformed
+    private void txtProductIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductIDActionPerformed
         // TODO add your handling code here:
- 
-    try {
-        int batchID = Integer.parseInt(txtBatchNumber.getText());
-        int productID = Integer.parseInt(txtProductID.getText());
+          txtProductionDate.requestFocus();
+    }//GEN-LAST:event_txtProductIDActionPerformed
+
+    private void txtMaterialIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaterialIDActionPerformed
+        // TODO add your handling code here:
+           txtMaterialName.requestFocus();
+    }//GEN-LAST:event_txtMaterialIDActionPerformed
+
+    private void txtMaterialNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaterialNameActionPerformed
+          txtQuantityUsed.requestFocus();
+        
+    }//GEN-LAST:event_txtMaterialNameActionPerformed
+
+    private void cmbUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbUnitActionPerformed
+        
+         JOptionPane.showMessageDialog(this,
+        "Unit Selected: " + cmbUnit.getSelectedItem().toString());
+    }//GEN-LAST:event_cmbUnitActionPerformed
+
+    private void cmbQualityCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbQualityCheckActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this,
+        "Quality Check: " + cmbQualityCheck.getSelectedItem().toString());
+    }//GEN-LAST:event_cmbQualityCheckActionPerformed
+
+    private void cmbProductionStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProductionStatusActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this,
+        "Status: " + cmbProductionStatus.getSelectedItem().toString());
+    }//GEN-LAST:event_cmbProductionStatusActionPerformed
+
+    private void btnCreateRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateRecordActionPerformed
+        // TODO add your handling code here: 
+        try {
+        String batch = txtBatchNumber.getText();
+        String product = txtProductID.getText();
         String status = cmbProductionStatus.getSelectedItem().toString();
 
-        productionRecord = new ProductionRecord(batchID);
+        if(batch.isEmpty() || product.isEmpty()){
+            JOptionPane.showMessageDialog(this,"Fill required fields");
+            return;
+        }
 
-        Product product = new Product(
-                productID,
-                "Product-" + productID,
-                "General",
-                new java.util.Date(),
-                new java.util.Date(),
-                0.0
-        );
+        Connection con = DBConnection.connect();
 
-        productionRecord.setProduct(product);
-        productionRecord.recordBatchInformation(status);
+        String sql = "INSERT INTO production_records(batch_id,product_id,status) VALUES(?,?,?)";
 
-        javax.swing.JOptionPane.showMessageDialog(this, "Production record created successfully.");
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, Integer.parseInt(batch));
+        ps.setInt(2, Integer.parseInt(product));
+        ps.setString(3, status);
 
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+        ps.executeUpdate();
+
+        JOptionPane.showMessageDialog(this,"Production Record Created");
+
+        con.close();
+
+    } catch(Exception e){
+        JOptionPane.showMessageDialog(this,e.getMessage());
     }
-
-
+        
     }//GEN-LAST:event_btnCreateRecordActionPerformed
 
     private void btnLinkMaterialsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLinkMaterialsActionPerformed
         // TODO add your handling code here:
-      
-    try {
-        if (productionRecord == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Create production record first.");
-            return;
+        try {
+        int id = Integer.parseInt(txtMaterialID.getText());
+
+        Connection con = DBConnection.connect();
+
+        String sql = "SELECT material_name, quantity FROM raw_materials WHERE material_id=?";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1,id);
+
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next()){
+            txtMaterialName.setText(rs.getString("material_name"));
+            JOptionPane.showMessageDialog(this,
+                "Available Quantity: " + rs.getInt("quantity"));
+        }else{
+            JOptionPane.showMessageDialog(this,"Material not found");
         }
 
-        String materialID = txtMaterialID.getText();
-        String materialName = txtMaterialName.getText();
+        con.close();
 
-        RawMaterial material = new RawMaterial(materialID, materialName);
-
-        boolean approved = material.approveMaterial(1);
-
-        if (!approved) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Material could not be approved.");
-            return;
-        }
-
-        boolean added = productionRecord.addMaterial(material);
-
-        if (added) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Material linked successfully.");
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Material could not be linked.");
-        }
-
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    } catch(Exception e){
+        JOptionPane.showMessageDialog(this,e.getMessage());
     }
-
-       
     }//GEN-LAST:event_btnLinkMaterialsActionPerformed
+
+    private void btnSendNotificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendNotificationActionPerformed
+        try{
+        Connection con = DBConnection.connect();
+
+        String sql = "INSERT INTO notifications(user_id, shipment_id, message, is_read) VALUES (?, ?, ?, ?)";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        ps.setInt(1, 1); // admin user
+        ps.setNull(2, java.sql.Types.INTEGER);
+
+        ps.setString(3,
+            "Production Batch " + txtBatchNumber.getText() +
+            " Status: " + cmbProductionStatus.getSelectedItem().toString()
+        );
+
+        ps.setInt(4, 0);
+
+        ps.executeUpdate();
+
+        JOptionPane.showMessageDialog(this,"Notification Sent Successfully");
+
+        con.close();
+
+    }catch(Exception e){
+        JOptionPane.showMessageDialog(this,e.getMessage());
+    }
+    }//GEN-LAST:event_btnSendNotificationActionPerformed
 
     private void btnGenerateReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateReportActionPerformed
         // TODO add your handling code here:
-    try {
-        if (productionRecord == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Create production record first.");
-            return;
-        }
+         String report =
+            "Batch: " + txtBatchNumber.getText()
+            + "\nProduct ID: " + txtProductID.getText()
+            + "\nMaterial: " + txtMaterialName.getText()
+            + "\nQuantity: " + txtQuantityUsed.getText()
+            + "\nStatus: " + cmbProductionStatus.getSelectedItem().toString();
 
-        String report = productionRecord.reviewProductionRecord(txtBatchNumber.getText());
-
-        txtNotes.setText(report);
-
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
-    }
-
+    JOptionPane.showMessageDialog(this, report);
     }//GEN-LAST:event_btnGenerateReportActionPerformed
-
-    private void btnSendNotificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendNotificationActionPerformed
-        // TODO add your handling code here:
-       
-    String message = "Production notification: "
-            + cmbProductionStatus.getSelectedItem().toString()
-            + " | Notes: " + txtNotes.getText();
-
-    javax.swing.JOptionPane.showMessageDialog(this, message);
-
-    }//GEN-LAST:event_btnSendNotificationActionPerformed
-
-    private void btnNotifyAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotifyAdminActionPerformed
-        // TODO add your handling code here:
-       
-    String alert = "Admin Alert: Production record "
-            + txtRecordID.getText()
-            + " requires review. Status: "
-            + cmbProductionStatus.getSelectedItem().toString();
-
-    javax.swing.JOptionPane.showMessageDialog(this, alert);
-
-    }//GEN-LAST:event_btnNotifyAdminActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
-    txtRecordID.setText("");
-    txtProductID.setText("");
+     txtRecordID.setText("");
     txtProductionDate.setText("");
     txtBatchNumber.setText("");
+    txtQuantityUsed.setText("");
+    txtProductID.setText("");
     txtMaterialID.setText("");
     txtMaterialName.setText("");
-    txtQuantityUsed.setText("");
-    txtNotes.setText("");
-
     }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+         new MainGUI().setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -581,20 +644,21 @@ public class ProductionGuii extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ProductionGuii.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProductionGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ProductionGuii.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProductionGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ProductionGuii.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProductionGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ProductionGuii.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProductionGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ProductionGuii().setVisible(true);
+                new ProductionGui().setVisible(true);
             }
         });
     }
@@ -605,7 +669,6 @@ public class ProductionGuii extends javax.swing.JFrame {
     private javax.swing.JButton btnCreateRecord;
     private javax.swing.JButton btnGenerateReport;
     private javax.swing.JButton btnLinkMaterials;
-    private javax.swing.JButton btnNotifyAdmin;
     private javax.swing.JButton btnSendNotification;
     private javax.swing.JComboBox<String> cmbProductionStatus;
     private javax.swing.JComboBox<String> cmbQualityCheck;

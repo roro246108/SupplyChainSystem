@@ -3,7 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package supplychaintrackingsystem;
-
+import java.sql.*;
+import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 /**
  *
  * @author zeina
@@ -32,7 +37,7 @@ public class DistributorGUI extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        Password = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -43,14 +48,14 @@ public class DistributorGUI extends javax.swing.JFrame {
         btnViewShipments = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        Status = new javax.swing.JComboBox<>();
+        userid = new javax.swing.JTextField();
+        fullname = new javax.swing.JTextField();
+        password = new javax.swing.JTextField();
+        Area = new javax.swing.JTextField();
+        Email = new javax.swing.JTextField();
+        Destination = new javax.swing.JTextField();
+        Origin = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,22 +83,22 @@ public class DistributorGUI extends javax.swing.JFrame {
         );
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel4.setText("Distributor ID:");
+        jLabel4.setText("User ID:");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel11.setText("Distributor Name:");
+        jLabel11.setText("Email:");
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel12.setText("Company Name: ");
+        jLabel12.setText("Full Name:");
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel13.setText("Location:");
+        jLabel13.setText("Destination:");
 
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel14.setText("Phone: ");
+        Password.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Password.setText("Password:");
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel15.setText("Email:");
+        jLabel15.setText("Origin:");
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel16.setText("Distribution Area:");
@@ -105,57 +110,120 @@ public class DistributorGUI extends javax.swing.JFrame {
         btnAddDistributer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAddDistributer.setForeground(new java.awt.Color(242, 242, 242));
         btnAddDistributer.setText("Add Distributor");
+        btnAddDistributer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddDistributerActionPerformed(evt);
+            }
+        });
 
         btnUpdateDistributer.setBackground(new java.awt.Color(156, 39, 176));
         btnUpdateDistributer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnUpdateDistributer.setForeground(new java.awt.Color(242, 242, 242));
         btnUpdateDistributer.setText("Update Distributor");
+        btnUpdateDistributer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateDistributerActionPerformed(evt);
+            }
+        });
 
         btnReceiveProducts.setBackground(new java.awt.Color(76, 175, 80));
         btnReceiveProducts.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnReceiveProducts.setForeground(new java.awt.Color(242, 242, 242));
         btnReceiveProducts.setText(" Receive Products");
+        btnReceiveProducts.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReceiveProductsActionPerformed(evt);
+            }
+        });
 
         btnSendProducts.setBackground(new java.awt.Color(255, 152, 0));
         btnSendProducts.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSendProducts.setForeground(new java.awt.Color(242, 242, 242));
         btnSendProducts.setText("Send Products");
+        btnSendProducts.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSendProductsActionPerformed(evt);
+            }
+        });
 
         btnViewShipments.setBackground(new java.awt.Color(0, 172, 193));
         btnViewShipments.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnViewShipments.setForeground(new java.awt.Color(242, 242, 242));
         btnViewShipments.setText("View Shipments");
+        btnViewShipments.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewShipmentsActionPerformed(evt);
+            }
+        });
 
         btnClear.setBackground(new java.awt.Color(158, 158, 158));
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnClear.setForeground(new java.awt.Color(242, 242, 242));
         btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         btnBack.setBackground(new java.awt.Color(96, 125, 139));
         btnBack.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnBack.setForeground(new java.awt.Color(242, 242, 242));
         btnBack.setText("Back       ");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Inactive", "Pending Approval", "Suspended" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
 
-        jTextField1.setText("jTextField1");
+        Status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Inactive", "Pending Approval", "Suspended" }));
+        Status.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StatusActionPerformed(evt);
+            }
+        });
 
-        jTextField2.setText("jTextField2");
+        userid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                useridActionPerformed(evt);
+            }
+        });
 
-        jTextField3.setText("jTextField3");
+        fullname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fullnameActionPerformed(evt);
+            }
+        });
 
-        jTextField4.setText("jTextField4");
+        password.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordActionPerformed(evt);
+            }
+        });
 
-        jTextField5.setText("jTextField5");
+        Area.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AreaActionPerformed(evt);
+            }
+        });
 
-        jTextField6.setText("jTextField6");
+        Email.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmailActionPerformed(evt);
+            }
+        });
 
-        jTextField7.setText("jTextField7");
+        Destination.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DestinationActionPerformed(evt);
+            }
+        });
+
+        Origin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OriginActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -176,27 +244,28 @@ public class DistributorGUI extends javax.swing.JFrame {
                         .addGap(130, 130, 130))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11))
-                                .addGap(22, 22, 22))
+                                .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(168, 168, 168))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel16)
                                 .addGap(22, 22, 22)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(Area, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(Destination, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Origin, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Status, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,12 +274,9 @@ public class DistributorGUI extends javax.swing.JFrame {
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(251, 251, 251)
-                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(fullname, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(userid, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(86, 86, 86)
                         .addComponent(btnViewShipments)
@@ -228,31 +294,31 @@ public class DistributorGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(userid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Destination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(fullname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel12)
                     .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
+                    .addComponent(Password)
                     .addComponent(jLabel15)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Origin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Area, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel16)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(4, 4, 4)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel17))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -271,9 +337,205 @@ public class DistributorGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void StatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StatusActionPerformed
+       String selectedStatus = Status.getSelectedItem().toString();
+        JOptionPane.showMessageDialog(this,
+        "Selected Status: " + selectedStatus);
+
+btnAddDistributer.setEnabled(true);
+btnUpdateDistributer.setEnabled(true);
+
+if (selectedStatus.equals("Inactive")) {
+    JOptionPane.showMessageDialog(this,
+            "Distributor will be saved as Inactive");
+    }
+    }//GEN-LAST:event_StatusActionPerformed
+
+    private void btnAddDistributerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDistributerActionPerformed
+          try {
+
+        String id = userid.getText();
+        String name = fullname.getText();
+        String password = Password.getText();
+        String area = Area.getText();
+        String email = Email.getText();
+        String destination = Destination.getText();
+        String origin = Origin.getText();
+        String status = Status.getSelectedItem().toString();
+
+        if (id.isEmpty() || name.isEmpty() || password.isEmpty()
+                || area.isEmpty() || email.isEmpty()
+                || destination.isEmpty() || origin.isEmpty()) {
+
+            JOptionPane.showMessageDialog(this, "Fill all fields");
+            return;
+        }
+
+        Connection con = DBConnection.connect();
+
+        String sql = "INSERT INTO users "
+                + "(user_id, full_name, email, password, role, status, distribution_area, origin, destination) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        ps.setInt(1, Integer.parseInt(id));
+        ps.setString(2, name);
+        ps.setString(3, email);
+        ps.setString(4, password);
+        ps.setString(5, "Distributor");
+        ps.setString(6, status);
+        ps.setString(7, area);
+        ps.setString(8, origin);
+        ps.setString(9, destination);
+
+        ps.executeUpdate();
+
+        JOptionPane.showMessageDialog(this, "Distributor Added Successfully");
+
+        con.close();
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+    }//GEN-LAST:event_btnAddDistributerActionPerformed
+
+    private void btnUpdateDistributerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDistributerActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+        try {
+        Connection con = DBConnection.connect();
+
+        String sql = "UPDATE users SET full_name=?, email=?, password=?, status=? WHERE user_id=?";
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        ps.setString(1, fullname.getText());
+        ps.setString(2, Email.getText());
+        ps.setString(3, password.getText());
+        ps.setString(4, Status.getSelectedItem().toString());
+        ps.setInt(5, Integer.parseInt(userid.getText()));
+
+        ps.executeUpdate();
+
+        JOptionPane.showMessageDialog(this , "Distributor Updated");
+        con.close();
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this , e.getMessage());
+    }
+        
+        
+    }//GEN-LAST:event_btnUpdateDistributerActionPerformed
+
+    private void btnReceiveProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReceiveProductsActionPerformed
+        // TODO add your handling code here:
+        try {
+        Connection con = DBConnection.connect();
+
+        String sql = "UPDATE products SET stock_quantity = stock_quantity + 10 WHERE product_id=?";
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        ps.setInt(1, Integer.parseInt(Area.getText()));
+
+        ps.executeUpdate();
+
+        JOptionPane.showMessageDialog(this , "Products Received");
+        con.close();
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this , e.getMessage());
+    }
+    }//GEN-LAST:event_btnReceiveProductsActionPerformed
+
+    private void btnSendProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendProductsActionPerformed
+        try {
+        Connection con = DBConnection.connect();
+
+        String sql = "INSERT INTO shipments(order_id,origin,destination,status) VALUES(?,?,?,?)";
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        ps.setInt(1, 1);
+        ps.setString(2, Origin.getText());
+        ps.setString(3, Destination.getText());
+        ps.setString(4, "CREATED");
+
+        ps.executeUpdate();
+
+        JOptionPane.showMessageDialog(this , "Shipment Sent");
+        con.close();
+
+    } catch (Exception e) {
+    }
+    }//GEN-LAST:event_btnSendProductsActionPerformed
+
+    private void btnViewShipmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewShipmentsActionPerformed
+        try {
+        Connection con = DBConnection.connect();
+
+        String sql = "SELECT * FROM shipments";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        String data = "";
+
+        while (rs.next()) {
+            data += "ID: " + rs.getInt("shipment_id")
+                  + " | " + rs.getString("origin")
+                  + " -> " + rs.getString("destination")
+                  + " | " + rs.getString("status") + "\n";
+        }
+
+        JOptionPane.showMessageDialog(this , data);
+
+        con.close();
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this , e.getMessage());
+    }
+    }//GEN-LAST:event_btnViewShipmentsActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+      userid.setText("");
+    fullname.setText("");
+    password.setText("");
+    Area.setText("");
+    Email.setText("");
+    Destination.setText("");
+    Origin.setText("");
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+            dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void useridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useridActionPerformed
+          JOptionPane.showMessageDialog(this , "Distributor ID Entered");
+    }//GEN-LAST:event_useridActionPerformed
+
+    private void fullnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullnameActionPerformed
+        JOptionPane.showMessageDialog(this , "Name Entered");
+    }//GEN-LAST:event_fullnameActionPerformed
+
+    private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
+     JOptionPane.showMessageDialog(this , "Password Entered");
+    }//GEN-LAST:event_passwordActionPerformed
+
+    private void AreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AreaActionPerformed
+         JOptionPane.showMessageDialog(this , "Product ID Entered");
+    }//GEN-LAST:event_AreaActionPerformed
+
+    private void EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailActionPerformed
+        // TODO add your handling code here:
+         JOptionPane.showMessageDialog(this , "Email Entered");
+    }//GEN-LAST:event_EmailActionPerformed
+
+    private void DestinationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DestinationActionPerformed
+       JOptionPane.showMessageDialog(this , "Destination Entered");
+    }//GEN-LAST:event_DestinationActionPerformed
+
+    private void OriginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OriginActionPerformed
+           JOptionPane.showMessageDialog(this , "Origin Entered");
+
+    }//GEN-LAST:event_OriginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -311,6 +573,12 @@ public class DistributorGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Area;
+    private javax.swing.JTextField Destination;
+    private javax.swing.JTextField Email;
+    private javax.swing.JTextField Origin;
+    private javax.swing.JLabel Password;
+    private javax.swing.JComboBox<String> Status;
     private javax.swing.JButton btnAddDistributer;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnClear;
@@ -318,23 +586,17 @@ public class DistributorGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnSendProducts;
     private javax.swing.JButton btnUpdateDistributer;
     private javax.swing.JButton btnViewShipments;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JTextField fullname;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField password;
+    private javax.swing.JTextField userid;
     // End of variables declaration//GEN-END:variables
 }
